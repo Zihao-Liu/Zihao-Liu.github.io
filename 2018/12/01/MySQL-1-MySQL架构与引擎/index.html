@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
 <meta property="og:description" content="基础架构MySQL服务器逻辑架构  最上层服务负责连接处理、授权认证。安全等。  第二层包含了MySQL的大多核心功能，包括查询解析、分析、优化、缓存以及所有内置函数，所有跨存储引擎的功能都在这一层实现：存储过程、触发器、视图等。  第三层为存储引擎，存储引擎负责MySQL中数据的存储和提取。存储引擎不负责解析SQL(InnoDB是例外，它会解析外键定义)，不同存储引擎也不会相互通信。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-01T09:32:35.783Z">
+<meta property="og:updated_time" content="2018-12-01T09:36:55.252Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[MySQL] 1.MySQL架构与引擎">
 <meta name="twitter:description" content="基础架构MySQL服务器逻辑架构  最上层服务负责连接处理、授权认证。安全等。  第二层包含了MySQL的大多核心功能，包括查询解析、分析、优化、缓存以及所有内置函数，所有跨存储引擎的功能都在这一层实现：存储过程、触发器、视图等。  第三层为存储引擎，存储引擎负责MySQL中数据的存储和提取。存储引擎不负责解析SQL(InnoDB是例外，它会解析外键定义)，不同存储引擎也不会相互通信。">
@@ -456,9 +456,15 @@
 <li>未提交读(Read Uncommitted)：事务中的修改，即使没有提交，对其他事务也是可见的。事务可以读取未提交的数据，也被称为脏读(Dirty Read)。一般很少使用</li>
 <li>提交读(Read Committed)：一个事务开始时，只能看见已经提交的事务所做的修改。即一个事务从开始到提交之前，所做的任何修改对其他事务都是不可见的。也叫做不可重复读(nonrepeatable read)，因为两次同样的查询，可能得到不一样的结果。</li>
 <li>可重复读(Repeatable Read)：解决了脏读问题，同时保证了在同一个事务中多次读取同样记录的结果是一致的。但无法解决幻读(Phantom Read)问题，即当某个事务在读取某个范围内的记录时，另外一个事务又在该范围内插入了新的记录，当之前的事务再次读取该范围的记录时，会产生幻行。InnoDB和XtraDB通过多版本并发控制(MVCC)解决了幻读问题。</li>
-<li>可串行化(Serializable)：通过强制事务串行执行，避免了幻读。会在读取的每一行数据上都加锁。<br><br><br><br>   隔离级别|脏读|不可重复读|幻读|加锁读<br>   —|—|—|—|—<br>   未提交读|√|√|√|×<br>   提交读|×|√|√|×<br>   可重复读|×|×|√|×<br>   可串行读|×|×|×|√</li>
+<li>可串行化(Serializable)：通过强制事务串行执行，避免了幻读。会在读取的每一行数据上都加锁。</li>
 </ul>
-<p><br> </p>
+<pre><code>|隔离级别|脏读|不可重复读|幻读|加锁读|
+|---|---|---|---|---|
+|未提交读|√|√|√|×|
+|提交读|×|√|√|×|
+|可重复读|×|×|√|×|
+|可串行读|×|×|×|√|
+</code></pre><p><br> </p>
 <pre><code>可以通过SET TRANSACTION ISOLATION LEVEL设置隔离级别。
 
 mysql &gt; SET SESSION TRANSACTION ISOLATION LEVER ***;
