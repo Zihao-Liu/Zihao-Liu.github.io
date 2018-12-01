@@ -12,6 +12,7 @@
 }
 .need-share-button-opened {
   position: relative;
+  margin-bottom:200px;
 }
 .need-share-button-opened img.need-share-wechat-code-image {
   display: block;
