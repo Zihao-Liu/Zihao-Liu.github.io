@@ -12,6 +12,7 @@
 }
 .need-share-button-opened {
   position: relative;
+  margin-bottom:100px;
 }
 .need-share-button-opened img.need-share-wechat-code-image {
   display: block;
@@ -22,7 +23,7 @@
 }
 .need-share-button_dropdown {
   position: absolute;
-  z-index: 50;
+  z-index: 10;
 
   visibility: hidden;
   overflow: hidden;
