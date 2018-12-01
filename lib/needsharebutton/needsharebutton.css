@@ -9,10 +9,10 @@
 @import url('font-embedded.css');
 .need-share-button {
   position: relative;
+  margin-bottom:100px;
 }
 .need-share-button-opened {
   position: relative;
-  margin-bottom:100px;
 }
 .need-share-button-opened img.need-share-wechat-code-image {
   display: block;
