@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="MySQL,MySQL数据类型,MySQL优化,">
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="LLLZH&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/tags/事务/index.html">
+<meta name="description" content="数据类型选择原则 更小的通常更好(占用空间少)：但需要注意，不要低估值的范围 简单的更好：如整形比字符型好 尽量避免NULL：如果查询中包含可为NULL的列，对MySQL来说更难优化，因为可为NULL的列使得索引、索引统计和值比较更为复杂，并且会使用更多存储空间。当可为NULL的列被索引时，每个索引记录需要一个额外的字节。尤其是有索引的列，应该避免可以为NULL。InnoDB对于稀疏数据(只有少数">
+<meta name="keywords" content="MySQL,MySQL数据类型,MySQL优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[MySQL] 2.数据类型及优化">
+<meta property="og:url" content="http://yoursite.com/2018/12/02/MySQL-2-数据类型及优化/index.html">
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
+<meta property="og:description" content="数据类型选择原则 更小的通常更好(占用空间少)：但需要注意，不要低估值的范围 简单的更好：如整形比字符型好 尽量避免NULL：如果查询中包含可为NULL的列，对MySQL来说更难优化，因为可为NULL的列使得索引、索引统计和值比较更为复杂，并且会使用更多存储空间。当可为NULL的列被索引时，每个索引记录需要一个额外的字节。尤其是有索引的列，应该避免可以为NULL。InnoDB对于稀疏数据(只有少数">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-01T13:52:08.779Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LLLZH&#39;s Blog">
+<meta name="twitter:title" content="[MySQL] 2.数据类型及优化">
+<meta name="twitter:description" content="数据类型选择原则 更小的通常更好(占用空间少)：但需要注意，不要低估值的范围 简单的更好：如整形比字符型好 尽量避免NULL：如果查询中包含可为NULL的列，对MySQL来说更难优化，因为可为NULL的列使得索引、索引统计和值比较更为复杂，并且会使用更多存储空间。当可为NULL的列被索引时，每个索引记录需要一个额外的字节。尤其是有索引的列，应该避免可以为NULL。InnoDB对于稀疏数据(只有少数">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/事务/">
+  <link rel="canonical" href="http://yoursite.com/2018/12/02/MySQL-2-数据类型及优化/">
 
 
 
 
 
-  <title>标签: 事务 | LLLZH's Blog</title>
+  <title>[MySQL] 2.数据类型及优化 | LLLZH's Blog</title>
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -276,52 +281,415 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>事务<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/02/MySQL-2-数据类型及优化/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zihao Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LLLZH's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/12/01/MySQL-1-MySQL架构与引擎/" itemprop="url">
-              
-                <span itemprop="name">[MySQL] 1.MySQL架构与引擎</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">[MySQL] 2.数据类型及优化</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-01T19:55:32+11:00" content="2018-12-01">
-          12-01
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-02T00:23:27+11:00">
+                2018-12-02
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/02/MySQL-2-数据类型及优化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/02/MySQL-2-数据类型及优化/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.6k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    </div>
+      
 
+      
+        <h2 id="数据类型选择原则"><a href="#数据类型选择原则" class="headerlink" title="数据类型选择原则"></a>数据类型选择原则</h2><ol>
+<li>更小的通常更好(占用空间少)：但需要注意，不要低估值的范围</li>
+<li>简单的更好：如整形比字符型好</li>
+<li>尽量避免NULL：如果查询中包含可为NULL的列，对MySQL来说更难优化，因为可为NULL的列使得索引、索引统计和值比较更为复杂，并且会使用更多存储空间。当可为NULL的列被索引时，每个索引记录需要一个额外的字节。尤其是有索引的列，应该避免可以为NULL。InnoDB对于稀疏数据(只有少数行为非NULL)，可以使用可以为NULL的列。</li>
+</ol>
+<hr>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><h3 id="整数类型："><a href="#整数类型：" class="headerlink" title="整数类型："></a>整数类型：</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>位数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TINYINT</td>
+<td>8</td>
+</tr>
+<tr>
+<td>SMALLINT</td>
+<td>16</td>
+</tr>
+<tr>
+<td>MEDIUMINT</td>
+<td>24</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>32</td>
+</tr>
+<tr>
+<td>BIGINT</td>
+<td>64</td>
+</tr>
+</tbody>
+</table>
+<p><code>UNSIGNED</code>为可选属性。为整形类型指定宽度，如int(11)，并不会限制值的合法范围，只是规定了MySQL的一些交互工具用来显示字符的个数。对于存储来说int(1)和int(20)是一样的。</p>
+<a id="more"></a>
+<h3 id="实数类型："><a href="#实数类型：" class="headerlink" title="实数类型："></a>实数类型：</h3><p>不仅只是为了存储小数部分，还可以存储比BIGINT还大的数。MySQL既支持精确类型，也支持不精确类型。</p>
+<ol>
+<li>FLOAT和DOUBLE类型支持使用标准的浮点运算进行近似计算。</li>
+</ol>
+<ol start="2">
+<li>DECIMAL类型用于存储精确的小数。在5.0版本及之后，支持精确计算。CPU不支持对DECIMAL直接计算，所以在5.0及更高版本中，MySQL服务器自身实现了DECIMAL的高精度计算，所以，浮点运算速度更快。</li>
+</ol>
+<p>浮点和DECIMAL类型都可以指定精度。MySQL5.0及更高版本将数字打包保存到一个二进制字符串中。</p>
+<p>MySQL5.0和更高版本DECIMAL最多允许65个数字。早期版本限制为254个数字且每个数字为一个字节。但其实并不能在计算中使用这么大的数字，因为早期版本DECIMAL只是一种存储格式，计算时会转换为浮点型。</p>
+<p>应该只在对小数进行精确计算时才使用DECIMAL，在数据量比较大时，可以考虑BIGINT代替DECIMAL，将需要的单位根据小数位数乘以相应倍数即可。</p>
+<h3 id="字符串类型："><a href="#字符串类型：" class="headerlink" title="字符串类型："></a>字符串类型：</h3><p>VARCHAR和CHAR是两种最主要的字符串类型。</p>
+<h4 id="VARCHAR："><a href="#VARCHAR：" class="headerlink" title="VARCHAR："></a>VARCHAR：</h4><p>VARCHAR类型用于存储可变长字符串。比定长类型更节省空间。但如果MySQL表使用ROW_FORMAT = FIXED创建的话，每一行都会使用定长存储，会很浪费空间。VARCHAR需要使用1或两个额外字节记录字符串长度：如果列的最大长度小于或等于255字节，则只需要使用1个字节表示，否则需要两个。</p>
+<p>由于行是可变的，UPDATE时可能需要做额外的工作。如果一个行占用的空间增长，并且在页内没有更多的空间可以存储，不同的存储引擎处理方式不一样。例如，MyISAM会将行拆成不同的片段存储，InnoDB则需要分裂页使行可以放进页内。</p>
+<p>在5.0或更高版本，MySQL在存储和检索时，会保留末尾空格。早期版本会剔除。</p>
+<p><strong>下面情况使用VARCHAR比较合适：</strong></p>
+<pre><code>字符串列的最大长度比平均长度大很多；列的更新很少，所以碎片不是问题；
+使用了像UTF-8这样复杂的字符集，每个字符都使用不同的字节数进行存储；
+</code></pre><h4 id="CHAR："><a href="#CHAR：" class="headerlink" title="CHAR："></a>CHAR：</h4><p>CHAR类型是定长的：MySQL总是根据定义的字符串长度分配足够的空间。当存储CHAR值时，MySQL会删除所有的末尾空格。</p>
+<p><strong>下面情况使用CHAR比较合适：</strong></p>
+<pre><code>很短的字符串；
+数据经常变更；
+所有值都接近同一个长度。
+</code></pre><h4 id="BLOB类型和TEXT类型："><a href="#BLOB类型和TEXT类型：" class="headerlink" title="BLOB类型和TEXT类型："></a>BLOB类型和TEXT类型：</h4><p>都是为存储很大的数据而设计的字符串数据类型，分别采用二进制和字符方式存储。它们分别属于两组不同的数据类型</p>
+<table>
+<thead>
+<tr>
+<th>字符类型</th>
+<th>对应二进制类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TINYTEXT</td>
+<td>TINYBLOB</td>
+</tr>
+<tr>
+<td>SMALLTEXT</td>
+<td>SMALLBLOB</td>
+</tr>
+<tr>
+<td>TEXT</td>
+<td>BLOB</td>
+</tr>
+<tr>
+<td>MEDIUMTEXT</td>
+<td>MEDIUMBLOB</td>
+</tr>
+<tr>
+<td>LONGTEXT</td>
+<td>LONGBLOB</td>
+</tr>
+</tbody>
+</table>
+<p>MySQL把每个BLOB和TEXT值当作一个独立的对象处理。存储引擎在存储时通常会做特殊处理。当BLOB和TEXT值太大时，InnoDB会使用专门的“外部”存储区域来进行存储，此时每个值在行内需要1~4个字节存储一个指针，然后在外部存储区域存储实际的值。这两种类型的排序也和其他类型不同：只对每个列的最前max_sort_length字节而不是整个字符串做排序。</p>
+<h3 id="枚举类型："><a href="#枚举类型：" class="headerlink" title="枚举类型："></a>枚举类型：</h3><p>枚举列可以把一些不重复的字符串存储成一个预定义的集合。MySQL在存储枚举时非常紧凑，会根据列表值的数量压缩到一个或者两个字节中。MySQL内部会将每个值在列中的位置保存为整数，并在表的.frm文件中保存“数字-字符串”的映射关系。所以实际存储的为整数，而不是字符串。</p>
+<p>例如：</p>
+<pre><code>mysql &gt; CREATE TABLE enum_test(
+     -&gt; e ENUM(&apos;fish&apos;, &apos;apple&apos;, &apos;dog&apos;) NOT NULL);
+
+mysql &gt; INSERT INTO enum_test(e) VALUES(&apos;fish&apos;), (&apos;dog&apos;), (&apos;apple&apos;);
+
+mysql &gt; SELECT e + 0 FROM enum_test;
+
+结果：
+| e + 0 |
+|   1   |
+|   3   |
+|   2   |
+</code></pre><p>如果使用数字本身作为枚举常量，会造成混乱，应避免这么做。</p>
+<p>同样，枚举字段按照存储的整数而不是预定义的字符串进行排序。</p>
+<pre><code>mysql &gt; SELECT e FROM enum_test ORDER BY e;
+
+结果：
+|   e    |
+|  fish  |
+|  apple |
+|  dog   |
+</code></pre><p>可以使用<code>FIELD()</code>函数显式地指定排序顺序，但会导致MySQL无法利用索引消除排序。</p>
+<pre><code>mysql &gt; SELECT e FROM enum_test ORDER BY FIELD(e, &apos;apple&apos;,&apos;dog&apos;,&apos;fish&apos;);
+
+结果：
+|   e    |
+|  apple |
+|  dog   |
+|  fish  |
+</code></pre><p>枚举的缺点是，字符串列表固定，添加或删除预定义字符串，必须使用<code>ALTER TABLE</code>会花费许多时间。</p>
+<p>优点是可能缩小表的大小。</p>
+<h3 id="日期和时间类型："><a href="#日期和时间类型：" class="headerlink" title="日期和时间类型："></a>日期和时间类型：</h3><ol>
+<li><p>DATETIME：能保存大范围的值，从1001年到9999年，精度为秒，与时区无关。使用8个字节的存储空间。</p>
+</li>
+<li><p>TIMESTAMP：从1970年1月1日午夜以来的秒数，使用4个字节的存储空间，只能表示1970年到2038年。MySQL提供了FROM_UNIXTIME()函数把Unix时间戳转换为日期，及UNIX_TIMESTAMP()函数把日期转换我Unix时间戳。显示值依赖于时区。默认情况下，如果插入时没有指定第一个TIMESTAMP的列的值，MySQL则设置这个列的值为当前时间。在插入一行记录时，MySQL默认也会更新第一个TIMESTAMP列的值(除非在UPDATE语句中明确指定了值)。可以配置任何TIMESTAMP列的插入和更新行为。TIMESTAMP列默认为NOT NULL。</p>
+</li>
+</ol>
+<h3 id="位数据类型："><a href="#位数据类型：" class="headerlink" title="位数据类型："></a>位数据类型：</h3><p>所有位类型，不管底层存储格式还是处理方式如何，从技术上来说都是字符串类型。在MySQL5.0之前，BIT与TINYINT相同。但在5.0及之后版本中，并不相同。</p>
+<h4 id="BIT："><a href="#BIT：" class="headerlink" title="BIT："></a>BIT：</h4><p>可以使用BIT在一列中存储多个true/false值。BIT(1)定义一个包含单个位的字段，BIT(2)包含两个位，最大长度为64。BIT的行为因存储引擎而异。MyISAM会打包存储所有BIT的列，17个单独的BIT列只需要17个位(假设全都不可为NULL)，这样MyISAM只使用3个字节就足够了。而InnoDB为每个BIT列使用一个足够存储的最小整数类型来存放。</p>
+<p>MySQL把BIT当作字符串类型，而不是数字类型。当检索BIT(1)的值时，结果是一个包含二进制0或1值的字符串，而不是ASCII码的“0”或“1”。但是，在数字上下文的场景中检索时，结果将是位字符串转换成的数字。例如，如果存储一个值b‘00111001’(二进制等于57)到BIT(8)的列并且检索，得到的内容是字符码为57的字符串。也就是得到ASCII码为57的字符“9”。但是在数字上下文场景中，得到的是数字57：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; CREATE TABLE bittest(a bit(8));</span><br><span class="line">mysql &gt; INSERT INTO bittest VALUE(b &apos;00111001&apos;);</span><br><span class="line">mysql &gt; SELECT a, a + 0 FROM bittest;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">结果为：</span><br><span class="line">| a | a + 0|</span><br><span class="line">| 9 |  57  |</span><br></pre></td></tr></table></figure>
+<p>如果想在一个bit的存储空间中存储一个布尔值，一个可选的方法是创建一个可以为空的CHAR(0)列。该列可以保存空值(NULL)或者长度为零的字符串(空字符串)。</p>
+<h4 id="SET："><a href="#SET：" class="headerlink" title="SET："></a>SET：</h4><p>如果需要保存很多true/false值，可以考虑合并这些列到一个SET数据类型，它在MySQL内部以一系列打包的位的集合来表示。缺点是改变列的定义的代价较高，需要ALTER TABLE，并且无法在SET列上通过索引查找。</p>
+<p>可选的替代操作是使用一个整数包装一系列的位。例如，可以把8个位包装到一个TINYINT中，并且按位操作来使用(类似于Linux中文件的权限控制)</p>
+<p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; SET @CAN_READ      := 1 &lt;&lt; 0,</span><br><span class="line">        -&gt;        @CAN_WRITE     := 1 &lt;&lt; 1,</span><br><span class="line">        -&gt;        @CAN_DELETE   := 1 &lt;&lt; 2;</span><br><span class="line">mysql &gt; CREATE TABLE acl (perms TINYINT UNSIGNED NOT NULL DEFAULT 0);</span><br><span class="line">mysql &gt; INSERT INTO acl(perms) VALUE(@CAN_READ + @CAN_DELETE);</span><br><span class="line">mysql &gt; SELECT perms FROM acl WHERE perms &amp; @CAN_READ;</span><br><span class="line"></span><br><span class="line">结果：</span><br><span class="line">| perms |</span><br><span class="line">|   5   |</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="MySQL-schema-设计陷阱"><a href="#MySQL-schema-设计陷阱" class="headerlink" title="MySQL schema 设计陷阱"></a>MySQL schema 设计陷阱</h2><ol>
+<li><p>太多关联：耗费很长时间查询和缓存。</p>
+</li>
+<li><p>太多的列：MySQL存储引擎API工作时，会在服务器层和存储引擎层之间通过行缓冲格式拷贝数据，然后再服务器层将缓冲内容解码成各个列，这个过程代价很高(MyISAM定长行结构与服务器层相匹配，不需要转换)。代价依赖于列的数量</p>
+</li>
+<li><p>过度使用枚举：每次在枚举列中增加一个新选项，都要做一次ALTER TABLE操作</p>
+</li>
+<li><p>变相枚举：枚举ENUM列允许在列中存储一组定义值中的单个值，集合SET允许在列中存储一组定义值中的一个或多个值。所以当列中的值不可能同时出现多种情况时(e.g., 同一门成绩的挂科和通过不可能同时存在)，应该使用枚举代替集合。</p>
+</li>
+</ol>
+
+      
+
+      <div>
+        
+          <div style="text-align:center;color: #ccc;font-size:14px;">----------- 本文结束，感谢阅读 -----------</div>
+        
+      </div>
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/qcode.png" alt="Zihao Liu wechat" style="width: 200px; max-width: 100%;">
+    <div>扫一扫，用手机访问本站</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zihao Liu
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2018/12/02/MySQL-2-数据类型及优化/" title="[MySQL] 2.数据类型及优化">http://yoursite.com/2018/12/02/MySQL-2-数据类型及优化/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
+          
+            <a href="/tags/MySQL数据类型/" rel="tag"><i class="fa fa-tag"></i> MySQL数据类型</a>
+          
+            <a href="/tags/MySQL优化/" rel="tag"><i class="fa fa-tag"></i> MySQL优化</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/01/MySQL-1-MySQL架构与引擎/" rel="next" title="[MySQL] 1.MySQL架构与引擎">
+                <i class="fa fa-chevron-left"></i> [MySQL] 1.MySQL架构与引擎
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -329,6 +697,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -349,8 +724,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -444,6 +828,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型选择原则"><span class="nav-number">1.</span> <span class="nav-text">数据类型选择原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型"><span class="nav-number">2.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数类型："><span class="nav-number">2.1.</span> <span class="nav-text">整数类型：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实数类型："><span class="nav-number">2.2.</span> <span class="nav-text">实数类型：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串类型："><span class="nav-number">2.3.</span> <span class="nav-text">字符串类型：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#VARCHAR："><span class="nav-number">2.3.1.</span> <span class="nav-text">VARCHAR：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CHAR："><span class="nav-number">2.3.2.</span> <span class="nav-text">CHAR：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BLOB类型和TEXT类型："><span class="nav-number">2.3.3.</span> <span class="nav-text">BLOB类型和TEXT类型：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#枚举类型："><span class="nav-number">2.4.</span> <span class="nav-text">枚举类型：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日期和时间类型："><span class="nav-number">2.5.</span> <span class="nav-text">日期和时间类型：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#位数据类型："><span class="nav-number">2.6.</span> <span class="nav-text">位数据类型：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#BIT："><span class="nav-number">2.6.1.</span> <span class="nav-text">BIT：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SET："><span class="nav-number">2.6.2.</span> <span class="nav-text">SET：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL-schema-设计陷阱"><span class="nav-number">3.</span> <span class="nav-text">MySQL schema 设计陷阱</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -619,6 +1019,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
