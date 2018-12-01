@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
 <meta property="og:description" content="数据类型选择原则 更小的通常更好(占用空间少)：但需要注意，不要低估值的范围 简单的更好：如整形比字符型好 尽量避免NULL：如果查询中包含可为NULL的列，对MySQL来说更难优化，因为可为NULL的列使得索引、索引统计和值比较更为复杂，并且会使用更多存储空间。当可为NULL的列被索引时，每个索引记录需要一个额外的字节。尤其是有索引的列，应该避免可以为NULL。InnoDB对于稀疏数据(只有少数">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-01T13:52:08.779Z">
+<meta property="og:updated_time" content="2018-12-01T13:55:21.901Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[MySQL] 2.数据类型及优化">
 <meta name="twitter:description" content="数据类型选择原则 更小的通常更好(占用空间少)：但需要注意，不要低估值的范围 简单的更好：如整形比字符型好 尽量避免NULL：如果查询中包含可为NULL的列，对MySQL来说更难优化，因为可为NULL的列使得索引、索引统计和值比较更为复杂，并且会使用更多存储空间。当可为NULL的列被索引时，每个索引记录需要一个额外的字节。尤其是有索引的列，应该避免可以为NULL。InnoDB对于稀疏数据(只有少数">
@@ -580,7 +580,7 @@ mysql &gt; SELECT e + 0 FROM enum_test;
 <li><p>变相枚举：枚举ENUM列允许在列中存储一组定义值中的单个值，集合SET允许在列中存储一组定义值中的一个或多个值。所以当列中的值不可能同时出现多种情况时(e.g., 同一门成绩的挂科和通过不可能同时存在)，应该使用枚举代替集合。</p>
 </li>
 </ol>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考内容 &gt;&gt; 高性能MySQL第三版</span><br></pre></td></tr></table></figure>
       
 
       <div>
