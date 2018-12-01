@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="基础架构MySQL服务器逻辑架构  最上层服务负责连接处理、授权认证。安全等。  第二层包含了MySQL的大多核心功能，包括查询解析、分析、优化、缓存以及所有内置函数，所有跨存储引擎的功能都在这一层实现：存储过程、触发器、视图等。  第三层为存储引擎，存储引擎负责MySQL中数据的存储和提取。存储引擎不负责解析SQL(InnoDB是例外，它会解析外键定义)，不同存储引擎也不会相互通信。">
+<meta name="description" content="基础架构MySQL服务器逻辑架构:  最上层服务负责连接处理、授权认证。安全等。  第二层包含了MySQL的大多核心功能，包括查询解析、分析、优化、缓存以及所有内置函数，所有跨存储引擎的功能都在这一层实现：存储过程、触发器、视图等。  第三层为存储引擎，存储引擎负责MySQL中数据的存储和提取。存储引擎不负责解析SQL(InnoDB是例外，它会解析外键定义)，不同存储引擎也不会相互通信。">
 <meta name="keywords" content="MySQL,事务,存储引擎,ACID,隔离级别">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[MySQL] 1.MySQL架构与引擎">
 <meta property="og:url" content="http://yoursite.com/2018/12/01/MySQL-1-MySQL架构与引擎/index.html">
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
-<meta property="og:description" content="基础架构MySQL服务器逻辑架构  最上层服务负责连接处理、授权认证。安全等。  第二层包含了MySQL的大多核心功能，包括查询解析、分析、优化、缓存以及所有内置函数，所有跨存储引擎的功能都在这一层实现：存储过程、触发器、视图等。  第三层为存储引擎，存储引擎负责MySQL中数据的存储和提取。存储引擎不负责解析SQL(InnoDB是例外，它会解析外键定义)，不同存储引擎也不会相互通信。">
+<meta property="og:description" content="基础架构MySQL服务器逻辑架构:  最上层服务负责连接处理、授权认证。安全等。  第二层包含了MySQL的大多核心功能，包括查询解析、分析、优化、缓存以及所有内置函数，所有跨存储引擎的功能都在这一层实现：存储过程、触发器、视图等。  第三层为存储引擎，存储引擎负责MySQL中数据的存储和提取。存储引擎不负责解析SQL(InnoDB是例外，它会解析外键定义)，不同存储引擎也不会相互通信。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-01T09:44:43.732Z">
+<meta property="og:image" content="http://yoursite.com/2018/12/01/MySQL-1-MySQL架构与引擎/MySQL架构.png">
+<meta property="og:updated_time" content="2018-12-01T09:47:57.395Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[MySQL] 1.MySQL架构与引擎">
-<meta name="twitter:description" content="基础架构MySQL服务器逻辑架构  最上层服务负责连接处理、授权认证。安全等。  第二层包含了MySQL的大多核心功能，包括查询解析、分析、优化、缓存以及所有内置函数，所有跨存储引擎的功能都在这一层实现：存储过程、触发器、视图等。  第三层为存储引擎，存储引擎负责MySQL中数据的存储和提取。存储引擎不负责解析SQL(InnoDB是例外，它会解析外键定义)，不同存储引擎也不会相互通信。">
+<meta name="twitter:description" content="基础架构MySQL服务器逻辑架构:  最上层服务负责连接处理、授权认证。安全等。  第二层包含了MySQL的大多核心功能，包括查询解析、分析、优化、缓存以及所有内置函数，所有跨存储引擎的功能都在这一层实现：存储过程、触发器、视图等。  第三层为存储引擎，存储引擎负责MySQL中数据的存储和提取。存储引擎不负责解析SQL(InnoDB是例外，它会解析外键定义)，不同存储引擎也不会相互通信。">
+<meta name="twitter:image" content="http://yoursite.com/2018/12/01/MySQL-1-MySQL架构与引擎/MySQL架构.png">
 
 
 
@@ -430,7 +432,7 @@
       
 
       
-        <h2 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h2><h3 id="MySQL服务器逻辑架构"><a href="#MySQL服务器逻辑架构" class="headerlink" title="MySQL服务器逻辑架构"></a>MySQL服务器逻辑架构</h3>
+        <h2 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h2><h3 id="MySQL服务器逻辑架构"><a href="#MySQL服务器逻辑架构" class="headerlink" title="MySQL服务器逻辑架构:"></a>MySQL服务器逻辑架构:</h3><img src="/2018/12/01/MySQL-1-MySQL架构与引擎/MySQL架构.png" title="MySQL架构">
 <ol>
 <li><p>最上层服务负责连接处理、授权认证。安全等。</p>
 </li>
@@ -446,13 +448,13 @@
 <h3 id="行锁："><a href="#行锁：" class="headerlink" title="行锁："></a>行锁：</h3><p>可以最大程度支持并发处理，但同时锁开销最大。行级锁只在存储引擎层实现。</p>
 <hr>
 <h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p> 事务是一组原子性的SQL查询。事务内的语句，要么全部执行成功，要么全部失败。 </p>
-<h3 id="事务具有ACID的特性"><a href="#事务具有ACID的特性" class="headerlink" title="事务具有ACID的特性"></a>事务具有ACID的特性</h3><ul>
+<h3 id="事务具有ACID的特性"><a href="#事务具有ACID的特性" class="headerlink" title="事务具有ACID的特性:"></a>事务具有ACID的特性:</h3><ul>
 <li>Atomicity(原子性)：一个事务必须被视为一个不可分割的最小工作单元，整个事务中的所有操作要么全部提交成功，要么全部失败回滚，对于一个事务来说，不可能执行其中的一部分操作，这就是事务的原子性。</li>
 <li>Consistency(一致性)：数据库总是从一个一致性的状态转换到另外一个一致性的状态。</li>
 <li>Isolation(隔离性)：通常来说，一个事务所做的修改在最终提交之前，对其他事务是不可见的。</li>
 <li>Durability(持久性)：一旦事务提交，则其所做的修改就会永久保存到数据库中。此时即使系统崩溃，修改的数据也不会丢失。</li>
 </ul>
-<h3 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h3><ul>
+<h3 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别:"></a>隔离级别:</h3><ul>
 <li>未提交读(Read Uncommitted)：事务中的修改，即使没有提交，对其他事务也是可见的。事务可以读取未提交的数据，也被称为脏读(Dirty Read)。一般很少使用</li>
 <li>提交读(Read Committed)：一个事务开始时，只能看见已经提交的事务所做的修改。即一个事务从开始到提交之前，所做的任何修改对其他事务都是不可见的。也叫做不可重复读(nonrepeatable read)，因为两次同样的查询，可能得到不一样的结果。</li>
 <li>可重复读(Repeatable Read)：解决了脏读问题，同时保证了在同一个事务中多次读取同样记录的结果是一致的。但无法解决幻读(Phantom Read)问题，即当某个事务在读取某个范围内的记录时，另外一个事务又在该范围内插入了新的记录，当之前的事务再次读取该范围的记录时，会产生幻行。InnoDB和XtraDB通过多版本并发控制(MVCC)解决了幻读问题。</li>
@@ -516,7 +518,7 @@ mysql &gt; SET AUTOCOMMIT = 1;
 <p>   InnoDB也支持显示锁定，但不属于SQL规范，如：</p>
 <pre><code>SELECT ... LOCK IN SHARE MODE
 SELECT ... FOR UPDATE
-</code></pre><h3 id="多版本并发控制-MVCC"><a href="#多版本并发控制-MVCC" class="headerlink" title="多版本并发控制(MVCC)"></a>多版本并发控制(MVCC)</h3><p>MVCC是行级锁的一个变种，但是在很多情况下避免了加锁操作，大都实现了非阻塞的读操作，写操作也只锁定必要的行。MVCC通过保存数据在某个时间点的快照来实现的。不管执行多长时间，每个事务看到的数据都是一致的，根据事务开始的时间不同，每个事务对同一张表，同一时刻看到的数据可能是不一样的。</p>
+</code></pre><h3 id="多版本并发控制-MVCC"><a href="#多版本并发控制-MVCC" class="headerlink" title="多版本并发控制(MVCC):"></a>多版本并发控制(MVCC):</h3><p>MVCC是行级锁的一个变种，但是在很多情况下避免了加锁操作，大都实现了非阻塞的读操作，写操作也只锁定必要的行。MVCC通过保存数据在某个时间点的快照来实现的。不管执行多长时间，每个事务看到的数据都是一致的，根据事务开始的时间不同，每个事务对同一张表，同一时刻看到的数据可能是不一样的。</p>
 <p>InnoDB的MVCC，是通过在每行记录后面保存两个隐藏的列来实现的。这两个列，一个保存了行的创建时间，一个保存行的过期时间(或删除时间)。当然存储的并不是实际的是兼职，而是系统版本号。每开始一个新的事务，系统版本号都会自动递增。事务开始时刻的系统版本号会作为事务的版本号，用来和查询到的每行记录的版本号进行比较。</p>
 <ul>
 <li>SELECT：InnoDB会根据以下两个条件检查每行记录：<ul>
@@ -812,7 +814,7 @@ SELECT ... FOR UPDATE
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础架构"><span class="nav-number">1.</span> <span class="nav-text">基础架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL服务器逻辑架构"><span class="nav-number">1.1.</span> <span class="nav-text">MySQL服务器逻辑架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发控制"><span class="nav-number">2.</span> <span class="nav-text">并发控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#读写锁："><span class="nav-number">2.1.</span> <span class="nav-text">读写锁：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表锁："><span class="nav-number">2.2.</span> <span class="nav-text">表锁：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行锁："><span class="nav-number">2.3.</span> <span class="nav-text">行锁：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务"><span class="nav-number">3.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事务具有ACID的特性"><span class="nav-number">3.1.</span> <span class="nav-text">事务具有ACID的特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隔离级别"><span class="nav-number">3.2.</span> <span class="nav-text">隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁："><span class="nav-number">3.3.</span> <span class="nav-text">死锁：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务日志："><span class="nav-number">3.4.</span> <span class="nav-text">事务日志：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动提交："><span class="nav-number">3.5.</span> <span class="nav-text">自动提交：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐式和显式锁定："><span class="nav-number">3.6.</span> <span class="nav-text">隐式和显式锁定：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多版本并发控制-MVCC"><span class="nav-number">3.7.</span> <span class="nav-text">多版本并发控制(MVCC)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储引擎"><span class="nav-number">4.</span> <span class="nav-text">存储引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB："><span class="nav-number">4.1.</span> <span class="nav-text">InnoDB：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyISAM："><span class="nav-number">4.2.</span> <span class="nav-text">MyISAM：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础架构"><span class="nav-number">1.</span> <span class="nav-text">基础架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL服务器逻辑架构"><span class="nav-number">1.1.</span> <span class="nav-text">MySQL服务器逻辑架构:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发控制"><span class="nav-number">2.</span> <span class="nav-text">并发控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#读写锁："><span class="nav-number">2.1.</span> <span class="nav-text">读写锁：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表锁："><span class="nav-number">2.2.</span> <span class="nav-text">表锁：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行锁："><span class="nav-number">2.3.</span> <span class="nav-text">行锁：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务"><span class="nav-number">3.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事务具有ACID的特性"><span class="nav-number">3.1.</span> <span class="nav-text">事务具有ACID的特性:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隔离级别"><span class="nav-number">3.2.</span> <span class="nav-text">隔离级别:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁："><span class="nav-number">3.3.</span> <span class="nav-text">死锁：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务日志："><span class="nav-number">3.4.</span> <span class="nav-text">事务日志：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动提交："><span class="nav-number">3.5.</span> <span class="nav-text">自动提交：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐式和显式锁定："><span class="nav-number">3.6.</span> <span class="nav-text">隐式和显式锁定：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多版本并发控制-MVCC"><span class="nav-number">3.7.</span> <span class="nav-text">多版本并发控制(MVCC):</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储引擎"><span class="nav-number">4.</span> <span class="nav-text">存储引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB："><span class="nav-number">4.1.</span> <span class="nav-text">InnoDB：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyISAM："><span class="nav-number">4.2.</span> <span class="nav-text">MyISAM：</span></a></li></ol></li></ol></div>
             
 
           </div>
