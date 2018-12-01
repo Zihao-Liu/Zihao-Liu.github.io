@@ -291,6 +291,236 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/01/MyBatis-1-MyBAtis基本构成/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zihao Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LLLZH's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/01/MyBatis-1-MyBAtis基本构成/" itemprop="url">[MyBatis] 1.MyBAtis基本构成</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-01T17:14:15+11:00">
+                2018-12-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/MyBatis/" itemprop="url" rel="index">
+                    <span itemprop="name">MyBatis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/01/MyBatis-1-MyBAtis基本构成/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/01/MyBatis-1-MyBAtis基本构成/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-MyBatis核心组件："><a href="#1-MyBatis核心组件：" class="headerlink" title="1. MyBatis核心组件："></a>1. MyBatis核心组件：</h2><ul>
+<li>SqlSessionFactoryBuilder(构造器)：它会根据配置信息或者代码来生成SqlSessionFactory(工厂接口)。</li>
+<li>SqlSessionFactory：依靠工厂来生成SqlSession(会话)。</li>
+<li>SqlSession：是一个既可以发送SQL去执行并返回结果，也可以获取Mapper的接口。</li>
+<li>SQLMapper：由一个Java接口和XML文件(或注解)构成的，需要给出对应的SQL和映射规则，负责发送SQL去执行，并返回结果。</li>
+</ul>
+<blockquote class="blockquote-center"><img src="/2018/12/01/MyBatis-1-MyBAtis基本构成/MyBatis的构成.jpg" title="MyBatis的构成"></blockquote>
+
+
+<h3 id="1-1-构建SqlSessionFactory："><a href="#1-1-构建SqlSessionFactory：" class="headerlink" title="1.1 构建SqlSessionFactory："></a>1.1 构建SqlSessionFactory：</h3><p>每个MyBatis应用都是以SqlSessionFactory的实例为中心的。SqlSessionFactory的实例可以通过SqlSessionFactoryBuilder获得。SqlSessionFactory是一个工厂接口而不是现实类，它的任务是创建SqlSession。SqlSession类似于JDBC的Connection对象。MyBatis提供了两种模式去创建SqlSessionFactory：</p>
+<ul>
+<li>XML配置(推荐)</li>
+<li>代码</li>
+</ul>
+<p>Mybatis中有一个Configuration类存在于整个MyBatis应用的生命期中，以便重复读取和运用。可以解析一次配置的XML文件保存到Configuration类对象中，方便从这个对象中读取配置信息，性能高。单例占用空间小，基本不占用存储空间，而且可以反复使用。Configuration类对象保存着配置在MyBatis的信息。在MyBatis中提供了两个SqlSessionFactory的实现类，DefaultSqlSessionFactory和SqlSessionManager。不过SqlSessionManager目前没有使用。</p>
+<img src="/2018/12/01/MyBatis-1-MyBAtis基本构成/SqlSessionFactory现实类关系图.jpg" title="SqlSessionFactory现实类关系图">
+<h3 id="1-2-创建SqlSession："><a href="#1-2-创建SqlSession：" class="headerlink" title="1.2 创建SqlSession："></a>1.2 创建SqlSession：</h3><p>SqlSession是一个接口类，真正工作的是Executor接口。构建了SqlSessionFactory，然后生成SqlSession。SqlSession接口类似于一个JDBC中的Connection接口对象，需要保证每次用完正常关闭，所以正确做法是将关闭SqlSession接口的代码写在finally语句中保证每次都会关闭SqlSession。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义SqlSession</span></span><br><span class="line">    Sqlsession sqlSession = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 打开SqlSession会话</span></span><br><span class="line">        sqlSession = sqlSessionFactory.openSession();</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        sqlSession.commit();</span><br><span class="line">    &#125; <span class="keyword">catch</span>(Exception ex) &#123;</span><br><span class="line">        sqlSession.rollback();</span><br><span class="line">    &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="comment">// 确保资源被正确关闭</span></span><br><span class="line">        <span class="keyword">if</span> (sqlSession != <span class="keyword">null</span>) &#123;</span><br><span class="line">            sqlSession.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>主要用途有两种：</p>
+<ul>
+<li>获取映射器，让映射器通过命名空间和方法名称找到对应的SQL，发送给数据库执行后返回结果。</li>
+<li>直接通过命名信息去执行SQL返回结果。在SqlSession层可以通过update、insert、select、delete等方法，带上SQL的id来操作在XML中配置好的SQL。</li>
+</ul>
+<h3 id="1-4-映射器："><a href="#1-4-映射器：" class="headerlink" title="1.4 映射器："></a>1.4 映射器：</h3><p>由Java接口和XML文件(或注解)共同组成的，它的作用如下。</p>
+<ul>
+<li>定义参数类型。</li>
+<li>描述缓存。</li>
+<li>描述SQL语句。</li>
+<li>定义查询结果和POJO的映射关系。<br>同样有XML和代码两种方式生成。</li>
+</ul>
+<h2 id="2-组件的生命周期"><a href="#2-组件的生命周期" class="headerlink" title="2. 组件的生命周期"></a>2. 组件的生命周期</h2><ul>
+<li>SqlSessionFactoryBuilder：一旦构建了SqlSessionFactory，它的作用就已经完结，应该被回收。所以它的生命周期只存在于方法的局部，作用是生成SqlSessionFactory对象。</li>
+</ul>
+<ul>
+<li>SqlSessionFactory：作用是创建SqlSession(相当于JDBC的Connection对象)。每次应用程序需要访问数据库，就要通过SqlSessionFactory创建SqlSession，所以SqlSessionFactory存在于应用的整个生命周期中。应该采用单例模式(一般方法为将构造方法私有化，并给出一个静态方法，让其返回唯一单例，在多线程初始化单例时，一般需要加线程锁避免类对象被多次初始化)，以避免创建更多SqlSessionFactory而消耗资源。所以一个数据库只应该对应一个SqlSessionFactory。</li>
+</ul>
+<ul>
+<li>SqlSession：一个会话，相当于JDBC一个Connection对象，生命周期是在请求数据库处理事务的过程中。该对象线程不安全，应该属于其隔离级别，数据库锁等特性。每次创建的SqlSession都应及时关闭，避免占用数据库连接池。所以，它存活于一个应用的请求和操作中，可以执行多条SQL。</li>
+</ul>
+<ul>
+<li>Mapper：是一个接口，没有任何实现类，作用是发送SQL，并返回需要的结果，或者执行SQL以修改数据库数据。因此应该在一个SqlSession事务方法之内，属于方法级别。类似于JDBC中的一条SQL语句的执行，最大的范围和SqlSession相同。</li>
+</ul>
+<img src="/2018/12/01/MyBatis-1-MyBAtis基本构成/MyBatis组件的生命周期.jpg" title="MyBatis组件的生命周期">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考书目 &gt;&gt; 深入浅出MyBatis技术原理与实战</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+
+      <div>
+        
+      </div>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/01/hello-world/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -497,14 +727,32 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
