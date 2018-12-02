@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
 <meta property="og:description" content="映射器MyBatis是针对映射器构造的SQL轻量级框架，通过配置生成对应的JavaBean返回给调用者。 映射器的主要元素映射器的配置     元素名称 描述 备注     select 查询语句 可以自定义参数，返回结果集   insert 插入语句 执行后返回一个整数，代表插入的条数   update 更新语句 执行后返回一个整数，代表更新的条数   delete 删除语句 执行后返回一个整数">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-02T10:52:40.652Z">
+<meta property="og:updated_time" content="2018-12-02T10:58:54.799Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[MyBatis] 2.映射器(一)——select元素">
 <meta name="twitter:description" content="映射器MyBatis是针对映射器构造的SQL轻量级框架，通过配置生成对应的JavaBean返回给调用者。 映射器的主要元素映射器的配置     元素名称 描述 备注     select 查询语句 可以自定义参数，返回结果集   insert 插入语句 执行后返回一个整数，代表插入的条数   update 更新语句 执行后返回一个整数，代表更新的条数   delete 删除语句 执行后返回一个整数">
@@ -480,11 +480,12 @@
 <tr>
 <td style="text-align:left">cache</td>
 <td style="text-align:left">给定命名空间的缓存配置</td>
-<td style="text-align:left"></td>
+<td style="text-align:left">-</td>
 </tr>
 <tr>
 <td style="text-align:left">cache-ref</td>
 <td style="text-align:left">其他命名空间缓存配置的引用</td>
+<td style="text-align:left">-</td>
 </tr>
 </tbody>
 </table>
@@ -512,12 +513,12 @@
 <tr>
 <td style="text-align:left">parameterMap</td>
 <td style="text-align:left">即将废弃，不建议使用</td>
-<td style="text-align:left"></td>
+<td style="text-align:left">-</td>
 </tr>
 <tr>
 <td style="text-align:left">resultType</td>
-<td style="text-align:left">返回的类型。定义类的全路径，在允许自动匹配的情况下，结果集将通过JavaBean的规范映射；也可以定义为int、float、double等参数；不能喝resultMap同时使用</td>
-<td style="text-align:left"></td>
+<td style="text-align:left">返回的类型。定义类的全路径，在允许自动匹配的情况下，结果集将通过JavaBean的规范映射；也可以定义为int、float、double等参数；不能和resultMap同时使用</td>
+<td style="text-align:left">-</td>
 </tr>
 <tr>
 <td style="text-align:left">resultMap</td>
@@ -552,13 +553,12 @@
 <tr>
 <td style="text-align:left">resultSetType</td>
 <td style="text-align:left">针对JDBCresultSet接口</td>
-<td style="text-align:left"></td>
-<td>默认值是数据库厂商提供的JDBC驱动所设置的</td>
+<td style="text-align:left">默认值是数据库厂商提供的JDBC驱动所设置的</td>
 </tr>
 <tr>
 <td style="text-align:left">databaseId</td>
 <td style="text-align:left">取决于数据库厂商</td>
-<td style="text-align:left"></td>
+<td style="text-align:left">-</td>
 </tr>
 <tr>
 <td style="text-align:left">resultOrdered</td>
@@ -636,7 +636,7 @@
 <p>传递参数<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, String&gt; paramsMap = <span class="keyword">new</span> HashMap&lt;String, String&gt; ();</span><br><span class="line"></span><br><span class="line">paramsMap.put(<span class="string">"roleName"</span>, <span class="string">"me"</span>);</span><br><span class="line">paramsMap.put(<span class="string">"note"</span>, <span class="string">"te"</span>);</span><br><span class="line"></span><br><span class="line">roleMapper.findRoleByMap(paramsMap);</span><br></pre></td></tr></table></figure></p>
 <p>缺点是Map需要键值对应，业务关联性不强，造成可读性下降。</p>
 <h4 id="使用注解方式传递参数"><a href="#使用注解方式传递参数" class="headerlink" title="使用注解方式传递参数"></a>使用注解方式传递参数</h4><p>我们需要使用MyBatis的参数注解@param(org.apache.ibatis.annotations.Param)来实现想要的功能。操作方法是，把RoleDao接口修改为下面的形式。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Role&gt; <span class="title">findRoleByAnnotation</span> <span class="params">(@Param (<span class="string">"roleName"</span>)</span> String rolename, @<span class="title">Param</span><span class="params">(<span class="string">"note"</span>)</span> String note)</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Role&gt; <span class="title">findRoleByAnnotation</span> <span class="params">(@Param (<span class="string">"roleName"</span>)</span> String rolename, </span></span><br><span class="line"><span class="function">                                @<span class="title">Param</span><span class="params">(<span class="string">"note"</span>)</span> String note)</span>;</span><br></pre></td></tr></table></figure>
 <p>注解式参数<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findRoleByAnnotation"</span> <span class="attr">resultMap</span>=<span class="string">"roleMap"</span>&gt;</span></span><br><span class="line">        select id, role_name, note from t_role</span><br><span class="line">        where role_name like #&#123;role_name&#125;</span><br><span class="line">        and note like #&#123;note&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>缺点是如果参数过多会很复杂。</p>
 <h4 id="使用JavaBean传递参数"><a href="#使用JavaBean传递参数" class="headerlink" title="使用JavaBean传递参数"></a>使用JavaBean传递参数</h4><p>首先定义一个参数的JavaBean<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RoleParam</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> String roleName;</span><br><span class="line">        <span class="keyword">private</span> String note;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getRoleName</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> roleName;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRoleName</span> <span class="params">(String roleName)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.roleName = roleName;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getNote</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> note;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNote</span> <span class="params">(String note)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.note = note;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
