@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[[LeetCode] 2.Add Two Numbers]]></title>
+    <url>%2F2018%2F12%2F02%2FLeetCode-2-Add-Two-Numbers%2F</url>
+    <content type="text"><![CDATA[题目翻译给定两个非空单链表代表两个非负整数。每个结点有一位数字，以倒序保存在链表中。将两数相加，并返回一个代表结果的链表。假设两个数字不含无效的0(即数字不以0开头)，0本身除外。 例子： 输入: (2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4) 输出: 7 -&gt; 0 -&gt; 8 解释: 342 + 465 = 807. 解题方法遍历两个链表把每一位上的数字相加，并用变量记录是否需要进位，该变量初始为0。因为两个数字位数可能不同，所以有四种情况 两个链表中都有这一位数字，且两数与进位变量相加小于10，则直接得到新结点，并且将进位变量置位0. 两个链表中都有这一位数字，但两数与进位变量相加大于等于10，新结点的值为得到的和减10，并且将进位变量置位1. 只有一个链表有这一位数字，且这个数字加进位量小于10，直接得到新结点，变位量置位0. 只有一个链表有这一位数字，且这个数字加进位量大于等于10，新结点的值为得到的和减10，并且将进位变量置位1. 需要考虑到，最后可能两个链表相加完成后，进位量为1，要把这一进位量加到数字前面。 代码1234567891011121314151617181920212223242526class Solution &#123;public: ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) &#123; ListNode *p = l1; ListNode *q = l2; ListNode *h = new ListNode(0); ListNode *t = h; int flag = 0; while(p || q || flag&gt;0)&#123; int sump = p?p-&gt;val:0; int sumq = q?q-&gt;val:0; t-&gt;next = new ListNode(sump + sumq + flag); t = t-&gt;next; flag = t-&gt;val&gt;=10?1:0; t-&gt;val = t-&gt;val&gt;=10?t-&gt;val-10:t-&gt;val; p = p?p-&gt;next:NULL; q = q?q-&gt;next:NULL; &#125; t-&gt;next = NULL; return h-&gt;next; &#125;&#125;;]]></content>
+      <categories>
+        <category>LeetCode解题报告</category>
+      </categories>
+      <tags>
+        <tag>LeetCode</tag>
+        <tag>算法</tag>
+        <tag>链表</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[[MySQL] 3.索引(一)]]></title>
     <url>%2F2018%2F12%2F02%2FMySQL-3-%E7%B4%A2%E5%BC%95-%E4%B8%80%2F</url>
     <content type="text"><![CDATA[索引索引的作用：在MySQL中，想要查找某个行时，首先在索引中找到对应值，然后根据匹配的索引找到对应的数据行。在MySQL中，索引是在存储引擎层而不是服务器层实现的。对于索引的创建和如何使用索引进行查询 推荐阅读：如何理解并正确使用MySQL索引 索引的类型B-Tree索引B-Tree通常意味着所有的值都是按顺序存储的，并且每一个叶子页到根的距离相同。推荐阅读：什么是B树 B-Tree索引可以加快访问数据的速度，因为存储引擎可以从索引的根节点开始进行搜索，从而取代全表扫描。B-Tree对索引列是顺序组织存储的，所以比较适合查找范围数据 可以对多个列创建索引，索引对多个值进行排序的依据是CREATE TABLE语句中定义索引时列的顺序。例如，定义索引时顺序为 姓名，生日。那么首先按姓名进行排序，只有当两人姓名一样时，才按生日排序。 B-Tree索引适用于全键值、键值范围或键前缀查找。其中键前缀查找只适用于根据最左前缀的查找。前面所述的索引对如下类型查询有效： 全值匹配：全值匹配指的是和索引中的所有列进行匹配。 匹配最左前缀：只匹配索引的第一列 匹配列前缀：只匹配第一列的值的开头部分，例如只匹配姓以J为开头的人。 匹配范围值：例如匹配成绩为60-100之间的人，只使用索引第一列 精确匹配某一列并范围匹配另一列：例如匹配所有姓名为张三，成绩在60-100分的人。 只访问索引的查询：查询只访问索引，并不访问数据行。 因为索引树中的节点是有序的，所以除了按值查找外，还可以用于查询中的ORDER BY操作。一般来说，如果B-Tree可以按照某种方式查找到值，那么也可以按照这种方式用于排序。 B-Tree索引的限制： 如果不是按照索引最左列开始查找，则无法使用索引。例如，索引列按顺序为：姓名，生日，该索引无法用于查找某个特定生日的人，因为生日不是最左数据。同样也无法查找姓名以某个字结尾的人。 不能跳过索引中的列。例如，索引按顺序为：姓，名，生日。则无法查找所有在姓张的，且在1月1日生的人，因为不能跳过名。在这个查询中，MySQL只能使用‘姓’这列的索引。 如果查询中有某个列的范围查询，则其右边所有列都无法使用索引优化查询(注意：LIKE也属于范围查询条件)。所以对于范围值有限的查询，可以用多个等于条件来代替范围条件。 哈希索引基于哈希表实现，只有精确匹配索引所有列的查询才有效。对于每一行数据，存储引擎会对索引的索引列计算一个哈希码，不同键值行的哈希码不同。哈希索引将所有哈希码存储在索引中，同时在哈希表中保存指向每个数据行的指针。如果哈希值相同，索引会以链表的方式存放多个记录指针到同一个哈希条目中 例如，现在数据库表中有姓，名两列数据，且‘姓’列添加了哈希索引。当要查询一个姓为‘张’的数据时。MySQL先计算‘张’的哈希值，并且用该值在哈希表中找到对应的记录指针。 哈希索引自身只需存储对应哈希值，所以非常快。但是也存在限制： 哈希索引只包含哈希值和行指针，而不存储字段值。所以不能使用索引中的值来避免读取行 哈希索引无法用于排序，因为不是按照索引值顺序存储的(按照哈希后的值存储) 哈希索引不支持部分索引列匹配查找。 哈希索引只支持等值比较(包括=、IN()、&lt;=&gt;)。也不支持任何范围查询。 如果有很多哈希冲突，查询/维护代价会变高。 InnoDB有一个特殊功能叫做“自适应哈希索引(adaptive hash index)”。当InnoDB注意到某些索引值被使用的非常频繁时，它会在内存中基于B-Tree索引之上在创建一个哈希索引。 创建自定义哈希索引：如果存储引擎不支持哈希索引，则可以在B-Tree基础上创建一个伪哈希索引(本质上还是使用B-Tree查找)。 例如，需要存储大量URL，并且需要根据URL进行搜索查找。如果使用B-Tree直接查找，会很慢，存储内容也会很多。所以，可以给表新增一列，并且使用一个哈希函数，这个新增的列记录对应行URL哈希后的值，并在该列加上索引，这样在查找时，先对给定的URL进行哈希，然后再新增列上查找对应哈希后的值，找到后再返回对应的行就可以了。 全文索引它查找的是文本中的关键词，而不是直接比较索引中的值。在相同的列上同时创建全文索引和基于值的B-Tree索引不会有冲突，全文索引适用于MATCH AGAINST操作，而不是普通的WHERE操作。 索引的优点索引除了可以让服务器快速地定位到指定位置，还有其他附加作用 对于B-Tree索引，按照顺序存储数据，所以MySQL可以用来做ORDER BY和GROUP BY操作。因为数据是有序的，所以B-Tree也就会将相关的列值都存储在一起。最后，因为索引中存储了实际的列值，所以某些查询只使用索引就能够完成全部查询。 优点： 索引减少了服务器需要扫描的数据量。 索引可以帮助服务器避免排序和临时表。 索引可将随机I/O变为顺序I/O 推荐阅读什么是B树 如何理解并正确使用MySQL索引 1参考内容 &gt;&gt; 高性能MySQL第三版]]></content>
@@ -50,6 +63,7 @@
       </categories>
       <tags>
         <tag>LeetCode</tag>
+        <tag>算法</tag>
         <tag>哈希</tag>
         <tag>字符串</tag>
       </tags>
@@ -57,14 +71,14 @@
   <entry>
     <title><![CDATA[[LeetCode] 1.Two Sum]]></title>
     <url>%2F2018%2F12%2F01%2FLeetCode-1-Two-Sum%2F</url>
-    <content type="text"><![CDATA[题目翻译给定一个整数数组和一个目标值，返回两个相加等于目标值的数的下标。你可以假设每组输入只有一个正确答案，并且你不能使用同一个元素两次。 例子： 输入： nums = [2, 7, 11, 15], target = 9, 返回： [0,1](因为num[0] + nums[1] = 2 + 7 = 9) 解题方法解法1：使用hash，如果target与当前数的差已经在hash中就返回两个数的下标，否则把当前数加入到hash中。 解法2：将原数组的值和下标放在一个pair中，并组成一个新的数组，将该数组升序排列。从两端向里遍历，若两端的数的和大于target，则将右端向左移动。若两端数的和小于target，则左端向右移动，直到找到和为target的两个数字。 代码123456789101112131415161718192021222324class Solution &#123;public: vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) &#123; vector&lt;int&gt; res(2); if(nums.size()&lt;=1) return res; map&lt;int,int&gt; H; map&lt;int,int&gt;::iterator it; for(int i = 0;i&lt;nums.size();i++)&#123; it = H.find(target - nums[i]); if(it == H.end())&#123; H.insert(pair&lt;int,int&gt;(nums[i],i)); &#125;else&#123; res[0] = it-&gt;second; res[1] = i; break; &#125; &#125; return res; &#125;&#125;; 123456789101112131415161718192021222324252627class Solution &#123;private: static bool cmp(pair&lt;int, int&gt; A, pair&lt;int, int&gt; B) &#123; return A.first &lt; B.first; &#125;public: vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) &#123; vector&lt;int&gt; res(2, 0); vector&lt;pair&lt;int, int&gt;&gt; temp; for (int i = 0; i&lt;nums.size(); i++) temp.push_back(pair&lt;int, int&gt;(nums[i], i)); sort(temp.begin(), temp.end(), cmp); int i = 0, j = temp.size() - 1; while (i&lt;j) &#123; if (temp[i].first + temp[j].first&gt;target) j--; else if (temp[i].first + temp[j].first&lt;target) i++; else &#123; res[0] = temp[i].second &lt; temp[j].second ? temp[i].second : temp[j].second; res[1] = temp[i].second &gt;= temp[j].second ? temp[i].second : temp[j].second; return res; &#125; &#125; &#125;&#125;;]]></content>
+    <content type="text"><![CDATA[题目翻译给定一个整数数组和一个目标值，返回两个相加等于目标值的数的下标。你可以假设每组输入只有一个正确答案，并且你不能使用同一个元素两次。 例子： 输入： nums = [2, 7, 11, 15], target = 9, 输出： [0,1] 解释： 因为num[0] + nums[1] = 2 + 7 = 9 解题方法解法1：使用hash，如果target与当前数的差已经在hash中就返回两个数的下标，否则把当前数加入到hash中。 解法2：将原数组的值和下标放在一个pair中，并组成一个新的数组，将该数组升序排列。从两端向里遍历，若两端的数的和大于target，则将右端向左移动。若两端数的和小于target，则左端向右移动，直到找到和为target的两个数字。 代码123456789101112131415161718192021222324class Solution &#123;public: vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) &#123; vector&lt;int&gt; res(2); if(nums.size()&lt;=1) return res; map&lt;int,int&gt; H; map&lt;int,int&gt;::iterator it; for(int i = 0;i&lt;nums.size();i++)&#123; it = H.find(target - nums[i]); if(it == H.end())&#123; H.insert(pair&lt;int,int&gt;(nums[i],i)); &#125;else&#123; res[0] = it-&gt;second; res[1] = i; break; &#125; &#125; return res; &#125;&#125;; 123456789101112131415161718192021222324252627class Solution &#123;private: static bool cmp(pair&lt;int, int&gt; A, pair&lt;int, int&gt; B) &#123; return A.first &lt; B.first; &#125;public: vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) &#123; vector&lt;int&gt; res(2, 0); vector&lt;pair&lt;int, int&gt;&gt; temp; for (int i = 0; i&lt;nums.size(); i++) temp.push_back(pair&lt;int, int&gt;(nums[i], i)); sort(temp.begin(), temp.end(), cmp); int i = 0, j = temp.size() - 1; while (i&lt;j) &#123; if (temp[i].first + temp[j].first&gt;target) j--; else if (temp[i].first + temp[j].first&lt;target) i++; else &#123; res[0] = temp[i].second &lt; temp[j].second ? temp[i].second : temp[j].second; res[1] = temp[i].second &gt;= temp[j].second ? temp[i].second : temp[j].second; return res; &#125; &#125; &#125;&#125;;]]></content>
       <categories>
         <category>LeetCode解题报告</category>
       </categories>
       <tags>
         <tag>LeetCode</tag>
-        <tag>哈希</tag>
         <tag>算法</tag>
+        <tag>哈希</tag>
         <tag>排序</tag>
       </tags>
   </entry>
