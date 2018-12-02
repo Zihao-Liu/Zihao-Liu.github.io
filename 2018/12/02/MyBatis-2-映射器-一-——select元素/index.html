@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="MyBatis,">
+  <meta name="keywords" content="MyBatis,MyBatis-映射器,">
 
 
 
@@ -79,22 +79,18 @@
 
 
 
-<meta name="description" content="MyBatis核心组件： SqlSessionFactoryBuilder(构造器)：它会根据配置信息或者代码来生成SqlSessionFactory(工厂接口)。 SqlSessionFactory：依靠工厂来生成SqlSession(会话)。 SqlSession：是一个既可以发送SQL去执行并返回结果，也可以获取Mapper的接口。 SQLMapper：由一个Java接口和XML文件(或注解">
-<meta name="keywords" content="MyBatis">
+<meta name="description" content="映射器MyBatis是针对映射器构造的SQL轻量级框架，通过配置生成对应的JavaBean返回给调用者。 映射器的主要元素映射器的配置     元素名称 描述 备注     select 查询语句 可以自定义参数，返回结果集   insert 插入语句 执行后返回一个整数，代表插入的条数   update 更新语句 执行后返回一个整数，代表更新的条数   delete 删除语句 执行后返回一个整数">
+<meta name="keywords" content="MyBatis,MyBatis-映射器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[MyBatis] 1.MyBatis基本构成">
-<meta property="og:url" content="http://yoursite.com/2018/12/01/MyBatis-1-MyBatis基本构成/index.html">
+<meta property="og:title" content="[MyBatis] 2.映射器(一)——select元素">
+<meta property="og:url" content="http://yoursite.com/2018/12/02/MyBatis-2-映射器-一-——select元素/index.html">
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
-<meta property="og:description" content="MyBatis核心组件： SqlSessionFactoryBuilder(构造器)：它会根据配置信息或者代码来生成SqlSessionFactory(工厂接口)。 SqlSessionFactory：依靠工厂来生成SqlSession(会话)。 SqlSession：是一个既可以发送SQL去执行并返回结果，也可以获取Mapper的接口。 SQLMapper：由一个Java接口和XML文件(或注解">
+<meta property="og:description" content="映射器MyBatis是针对映射器构造的SQL轻量级框架，通过配置生成对应的JavaBean返回给调用者。 映射器的主要元素映射器的配置     元素名称 描述 备注     select 查询语句 可以自定义参数，返回结果集   insert 插入语句 执行后返回一个整数，代表插入的条数   update 更新语句 执行后返回一个整数，代表更新的条数   delete 删除语句 执行后返回一个整数">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/12/01/MyBatis-1-MyBatis基本构成/MyBatis的构成.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/12/01/MyBatis-1-MyBatis基本构成/SqlSessionFactory现实类关系图.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/12/01/MyBatis-1-MyBatis基本构成/MyBatis组件的生命周期.jpg">
-<meta property="og:updated_time" content="2018-12-01T13:55:23.418Z">
+<meta property="og:updated_time" content="2018-12-02T10:52:40.652Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[MyBatis] 1.MyBatis基本构成">
-<meta name="twitter:description" content="MyBatis核心组件： SqlSessionFactoryBuilder(构造器)：它会根据配置信息或者代码来生成SqlSessionFactory(工厂接口)。 SqlSessionFactory：依靠工厂来生成SqlSession(会话)。 SqlSession：是一个既可以发送SQL去执行并返回结果，也可以获取Mapper的接口。 SQLMapper：由一个Java接口和XML文件(或注解">
-<meta name="twitter:image" content="http://yoursite.com/2018/12/01/MyBatis-1-MyBatis基本构成/MyBatis的构成.jpg">
+<meta name="twitter:title" content="[MyBatis] 2.映射器(一)——select元素">
+<meta name="twitter:description" content="映射器MyBatis是针对映射器构造的SQL轻量级框架，通过配置生成对应的JavaBean返回给调用者。 映射器的主要元素映射器的配置     元素名称 描述 备注     select 查询语句 可以自定义参数，返回结果集   insert 插入语句 执行后返回一个整数，代表插入的条数   update 更新语句 执行后返回一个整数，代表更新的条数   delete 删除语句 执行后返回一个整数">
 
 
 
@@ -124,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/12/01/MyBatis-1-MyBatis基本构成/">
+  <link rel="canonical" href="http://yoursite.com/2018/12/02/MyBatis-2-映射器-一-——select元素/">
 
 
 
 
 
-  <title>[MyBatis] 1.MyBatis基本构成 | LLLZH's Blog</title>
+  <title>[MyBatis] 2.映射器(一)——select元素 | LLLZH's Blog</title>
   
 
 
@@ -299,7 +295,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/01/MyBatis-1-MyBatis基本构成/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/02/MyBatis-2-映射器-一-——select元素/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zihao Liu">
@@ -316,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[MyBatis] 1.MyBatis基本构成</h1>
+          <h1 class="post-title" itemprop="name headline">[MyBatis] 2.映射器(一)——select元素</h1>
         
 
         <div class="post-meta">
@@ -328,8 +324,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-01T17:14:15+11:00">
-                2018-12-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-02T21:45:54+11:00">
+                2018-12-02
               </time>
             
 
@@ -369,8 +365,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/12/01/MyBatis-1-MyBatis基本构成/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/01/MyBatis-1-MyBatis基本构成/" itemprop="commentCount"></span>
+                <a href="/2018/12/02/MyBatis-2-映射器-一-——select元素/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/02/MyBatis-2-映射器-一-——select元素/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -397,7 +393,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  990 字
+                  1.9k 字
                 </span>
               
 
@@ -413,7 +409,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3 分钟
+                  7 分钟
                 </span>
               
             </div>
@@ -434,50 +430,227 @@
       
 
       
-        <h2 id="MyBatis核心组件："><a href="#MyBatis核心组件：" class="headerlink" title="MyBatis核心组件："></a>MyBatis核心组件：</h2><ul>
-<li>SqlSessionFactoryBuilder(构造器)：它会根据配置信息或者代码来生成SqlSessionFactory(工厂接口)。</li>
-<li>SqlSessionFactory：依靠工厂来生成SqlSession(会话)。</li>
-<li>SqlSession：是一个既可以发送SQL去执行并返回结果，也可以获取Mapper的接口。</li>
-<li>SQLMapper：由一个Java接口和XML文件(或注解)构成的，需要给出对应的SQL和映射规则，负责发送SQL去执行，并返回结果。</li>
-</ul>
-<img src="/2018/12/01/MyBatis-1-MyBatis基本构成/MyBatis的构成.jpg" title="MyBatis的构成">
- <a id="more"></a> 
-<h3 id="构建SqlSessionFactory："><a href="#构建SqlSessionFactory：" class="headerlink" title="构建SqlSessionFactory："></a>构建SqlSessionFactory：</h3><p>每个MyBatis应用都是以SqlSessionFactory的实例为中心的。SqlSessionFactory的实例可以通过SqlSessionFactoryBuilder获得。SqlSessionFactory是一个工厂接口而不是现实类，它的任务是创建SqlSession。SqlSession类似于JDBC的Connection对象。MyBatis提供了两种模式去创建SqlSessionFactory：</p>
-<ul>
-<li>XML配置(推荐)</li>
-<li>代码</li>
-</ul>
-<p>Mybatis中有一个Configuration类存在于整个MyBatis应用的生命期中，以便重复读取和运用。可以解析一次配置的XML文件保存到Configuration类对象中，方便从这个对象中读取配置信息，性能高。单例占用空间小，基本不占用存储空间，而且可以反复使用。Configuration类对象保存着配置在MyBatis的信息。在MyBatis中提供了两个SqlSessionFactory的实现类，DefaultSqlSessionFactory和SqlSessionManager。不过SqlSessionManager目前没有使用。</p>
-<img src="/2018/12/01/MyBatis-1-MyBatis基本构成/SqlSessionFactory现实类关系图.jpg" title="SqlSessionFactory现实类关系图">
-<h3 id="创建SqlSession："><a href="#创建SqlSession：" class="headerlink" title="创建SqlSession："></a>创建SqlSession：</h3><p>SqlSession是一个接口类，真正工作的是Executor接口。构建了SqlSessionFactory，然后生成SqlSession。SqlSession接口类似于一个JDBC中的Connection接口对象，需要保证每次用完正常关闭，所以正确做法是将关闭SqlSession接口的代码写在finally语句中保证每次都会关闭SqlSession。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义SqlSession</span></span><br><span class="line">    Sqlsession sqlSession = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 打开SqlSession会话</span></span><br><span class="line">        sqlSession = sqlSessionFactory.openSession();</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        sqlSession.commit();</span><br><span class="line">    &#125; <span class="keyword">catch</span>(Exception ex) &#123;</span><br><span class="line">        sqlSession.rollback();</span><br><span class="line">    &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="comment">// 确保资源被正确关闭</span></span><br><span class="line">        <span class="keyword">if</span> (sqlSession != <span class="keyword">null</span>) &#123;</span><br><span class="line">            sqlSession.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>主要用途有两种：</p>
-<ul>
-<li>获取映射器，让映射器通过命名空间和方法名称找到对应的SQL，发送给数据库执行后返回结果。</li>
-<li>直接通过命名信息去执行SQL返回结果。在SqlSession层可以通过update、insert、select、delete等方法，带上SQL的id来操作在XML中配置好的SQL。</li>
-</ul>
-<h3 id="映射器："><a href="#映射器：" class="headerlink" title="映射器："></a>映射器：</h3><p>由Java接口和XML文件(或注解)共同组成的，它的作用如下。</p>
-<ul>
-<li>定义参数类型。</li>
-<li>描述缓存。</li>
-<li>描述SQL语句。</li>
-<li>定义查询结果和POJO的映射关系。<br>同样有XML和代码两种方式生成。</li>
-</ul>
-<h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><ul>
-<li>SqlSessionFactoryBuilder：一旦构建了SqlSessionFactory，它的作用就已经完结，应该被回收。所以它的生命周期只存在于方法的局部，作用是生成SqlSessionFactory对象。</li>
-</ul>
-<ul>
-<li>SqlSessionFactory：作用是创建SqlSession(相当于JDBC的Connection对象)。每次应用程序需要访问数据库，就要通过SqlSessionFactory创建SqlSession，所以SqlSessionFactory存在于应用的整个生命周期中。应该采用单例模式(一般方法为将构造方法私有化，并给出一个静态方法，让其返回唯一单例，在多线程初始化单例时，一般需要加线程锁避免类对象被多次初始化)，以避免创建更多SqlSessionFactory而消耗资源。所以一个数据库只应该对应一个SqlSessionFactory。</li>
-</ul>
-<ul>
-<li>SqlSession：一个会话，相当于JDBC一个Connection对象，生命周期是在请求数据库处理事务的过程中。该对象线程不安全，应该属于其隔离级别，数据库锁等特性。每次创建的SqlSession都应及时关闭，避免占用数据库连接池。所以，它存活于一个应用的请求和操作中，可以执行多条SQL。</li>
-</ul>
-<ul>
-<li>Mapper：是一个接口，没有任何实现类，作用是发送SQL，并返回需要的结果，或者执行SQL以修改数据库数据。因此应该在一个SqlSession事务方法之内，属于方法级别。类似于JDBC中的一条SQL语句的执行，最大的范围和SqlSession相同。</li>
-</ul>
-<img src="/2018/12/01/MyBatis-1-MyBatis基本构成/MyBatis组件的生命周期.jpg" title="MyBatis组件的生命周期">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考内容 &gt;&gt; 深入浅出MyBatis技术原理与实战</span><br></pre></td></tr></table></figure>
+        <h2 id="映射器"><a href="#映射器" class="headerlink" title="映射器"></a>映射器</h2><p>MyBatis是针对映射器构造的SQL轻量级框架，通过配置生成对应的JavaBean返回给调用者。</p>
+<h3 id="映射器的主要元素"><a href="#映射器的主要元素" class="headerlink" title="映射器的主要元素"></a>映射器的主要元素</h3><blockquote class="blockquote-center">映射器的配置</blockquote>
 
+<table>
+<thead>
+<tr>
+<th style="text-align:left">元素名称</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">select</td>
+<td style="text-align:left">查询语句</td>
+<td style="text-align:left">可以自定义参数，返回结果集</td>
+</tr>
+<tr>
+<td style="text-align:left">insert</td>
+<td style="text-align:left">插入语句</td>
+<td style="text-align:left">执行后返回一个整数，代表插入的条数</td>
+</tr>
+<tr>
+<td style="text-align:left">update</td>
+<td style="text-align:left">更新语句</td>
+<td style="text-align:left">执行后返回一个整数，代表更新的条数</td>
+</tr>
+<tr>
+<td style="text-align:left">delete</td>
+<td style="text-align:left">删除语句</td>
+<td style="text-align:left">执行后返回一个整数，代表删除的条数</td>
+</tr>
+<tr>
+<td style="text-align:left">parameterMap</td>
+<td style="text-align:left">定义参数映射关系</td>
+<td style="text-align:left">即将被删除的元素，不建议使用</td>
+</tr>
+<tr>
+<td style="text-align:left">sql</td>
+<td style="text-align:left">允许定义一部分的SQL，然后在多个地方引用</td>
+<td style="text-align:left">例如，一张表列名，可以一次定义，在多个SQL语句中使用</td>
+</tr>
+<tr>
+<td style="text-align:left">resultMap</td>
+<td style="text-align:left">用来描述从数据库结果集中加载的对象</td>
+<td style="text-align:left">提供映射规则</td>
+</tr>
+<tr>
+<td style="text-align:left">cache</td>
+<td style="text-align:left">给定命名空间的缓存配置</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">cache-ref</td>
+<td style="text-align:left">其他命名空间缓存配置的引用</td>
+</tr>
+</tbody>
+</table>
+<h2 id="select元素"><a href="#select元素" class="headerlink" title="select元素"></a>select元素</h2><p>select元素负责从数据库中读出数据，并且组装数据。执行前，需要定义参数，例如int，float等简单参数类型，也可以是JavaBean、Map等复杂类型。执行后，MyBatis提供了自动映射可以把结果集绑定到JavaBean上。select配置如下：</p>
+<a id="more"></a>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">元素</th>
+<th style="text-align:left">说明</th>
+<th style="text-align:left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">id</td>
+<td style="text-align:left">它和Mapper的命名空间组合起来是唯一的，提供给MyBatis调用(其实就是Dao中对应的方法名)</td>
+<td style="text-align:left">如果命名空间和id组合起来不唯一，MyBatis将抛出异常</td>
+</tr>
+<tr>
+<td style="text-align:left">parameterType</td>
+<td style="text-align:left">传入参数的类型，例如long，String等(可以给出类的全命名，也可以给出类的别名，但别名必须是MyBatis内部定义或自定义的)</td>
+<td style="text-align:left">可以选择JavaBean、Map等复杂的参数类型</td>
+</tr>
+<tr>
+<td style="text-align:left">parameterMap</td>
+<td style="text-align:left">即将废弃，不建议使用</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">resultType</td>
+<td style="text-align:left">返回的类型。定义类的全路径，在允许自动匹配的情况下，结果集将通过JavaBean的规范映射；也可以定义为int、float、double等参数；不能喝resultMap同时使用</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">resultMap</td>
+<td style="text-align:left">可以执行强大的映射功能，通过该元素，可以自定义映射，不能与resultType同时使用</td>
+<td style="text-align:left">可以配置映射规则，typeHandler等</td>
+</tr>
+<tr>
+<td style="text-align:left">flushCache</td>
+<td style="text-align:left">调用SQL后，是否要求MyBatis清空之前查询的本地缓存和二级缓存</td>
+<td style="text-align:left">true/false，默认为false</td>
+</tr>
+<tr>
+<td style="text-align:left">useCache</td>
+<td style="text-align:left">启动二级缓存的开关，是否要求MyBatis将此次结果缓存</td>
+<td style="text-align:left">true/false，t默认为true</td>
+</tr>
+<tr>
+<td style="text-align:left">timeout</td>
+<td style="text-align:left">设置超时参数，等超时的时候将抛出异常，单位为秒</td>
+<td style="text-align:left">默认值是数据库厂商提供的JDBC驱动所设置的秒数</td>
+</tr>
+<tr>
+<td style="text-align:left">fetchSize</td>
+<td style="text-align:left">获取记录的总条数设定</td>
+<td style="text-align:left">默认值是数据库厂商提供的JDBC驱动所设置的条数</td>
+</tr>
+<tr>
+<td style="text-align:left">statementType</td>
+<td style="text-align:left">告诉MyBatis使用哪个JDBC的Statement工作，取值为STATEMENT(Statement)、CallableStatement</td>
+<td style="text-align:left">默认值为PREPARED</td>
+</tr>
+<tr>
+<td style="text-align:left">resultSetType</td>
+<td style="text-align:left">针对JDBCresultSet接口</td>
+<td style="text-align:left"></td>
+<td>默认值是数据库厂商提供的JDBC驱动所设置的</td>
+</tr>
+<tr>
+<td style="text-align:left">databaseId</td>
+<td style="text-align:left">取决于数据库厂商</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">resultOrdered</td>
+<td style="text-align:left">仅适用于嵌套集select语句。如果为true，就是假设包含了嵌套结果集或者是分组了。当返回一个主结果行的时候，就不能对前面结果集引用。确保了在获取嵌套结果集的时候不会导致内存不够用</td>
+<td style="text-align:left">true/false，默认为false</td>
+</tr>
+<tr>
+<td style="text-align:left">resultSets</td>
+<td style="text-align:left">适用于多个结果集的情况，它将列出执行SQL后每个结果集的名称，每个名称之间用逗号分隔</td>
+<td style="text-align:left">很少使用</td>
+</tr>
+</tbody>
+</table>
+<h3 id="简易数据类型的例子"><a href="#简易数据类型的例子" class="headerlink" title="简易数据类型的例子"></a>简易数据类型的例子</h3><p>例如，想要统计一个姓氏的数量，我们应该把‘姓’作为参数，而将结果(一个整数)作为结果返回<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span> = <span class="string">"countFirstName"</span> <span class="attr">parameterType</span>=<span class="string">"String"</span> <span class="attr">resultType</span>=<span class="string">"int"</span>&gt;</span></span><br><span class="line">        select count(*) as total from t_userwhere name like #&#123;firstName&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>对应Dao中的方法为<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countFirstName</span><span class="params">(String firstName)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>每个部分的含义：</p>
+<ul>
+<li>id：对应的是Dao中的方法名</li>
+<li>parameterType：是参数类型，也就是Dao中方法的参数类型</li>
+<li>resultType：定义返回类型，也就是Dao中方法的返回类型</li>
+<li>#{firstName}：也就是Dao中方法的参数名，#{}符号告诉MyBatis这是一个变量</li>
+</ul>
+<p>在完整应用中的使用可以看下面这个例子<a href="https://github.com/Zihao-Liu/ZBZD/blob/master/src/cn/lzh/zbzd/mapper/UserDao.xml" target="_blank" rel="noopener">mapper</a>，<a href="https://github.com/Zihao-Liu/ZBZD/blob/master/src/cn/lzh/zbzd/dao/UserDao.java" target="_blank" rel="noopener">Dao</a>，<a href="https://github.com/Zihao-Liu/ZBZD/blob/master/src/cn/lzh/zbzd/model/User.java" target="_blank" rel="noopener">JavaBean</a></p>
+<h3 id="自动映射"><a href="#自动映射" class="headerlink" title="自动映射"></a>自动映射</h3><p>MyBatis中可以设置参数<code>autoMappingBehavior</code>，当该值不为NONE时，MyBatis会自动根据SQL列名和JavaBean的属性自动映射(前提是他们一致)。大部分的数据库规范要求每个单词用下划线分割，而Java则是用驼峰命名。下面给出一个例子</p>
+<blockquote class="blockquote-center">JavaBean</blockquote>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Role</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> Long id;</span><br><span class="line">        <span class="keyword">private</span> String roleName;</span><br><span class="line">        <span class="keyword">private</span> String note;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> Long <span class="title">getId</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> id;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span> <span class="params">(Long id)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.id = id;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getRoleName</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">                retrun roleName;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRoleName</span> <span class="params">(String roleName)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.roleName = roleName;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getNote</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> note;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNote</span> <span class="params">(String note)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.note = note;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote class="blockquote-center">数据库表T_ROLE</blockquote>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left">字段</th>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ID</td>
+<td style="text-align:left">INT(20)</td>
+<td style="text-align:left">角色编号，主键，递增</td>
+</tr>
+<tr>
+<td style="text-align:left">ROLE_NAME</td>
+<td style="text-align:left">VARCHAR(60)</td>
+<td style="text-align:left">角色名称</td>
+</tr>
+<tr>
+<td style="text-align:left">NOTE</td>
+<td style="text-align:left">VARCHAR(1024)</td>
+<td style="text-align:left">备注</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote-center">Mapper</blockquote>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span> = <span class="string">"getRole"</span> <span class="attr">parameterType</span> = <span class="string">"long"</span> <span class="attr">resultType</span> = <span class="string">"Role"</span> &gt;</span></span><br><span class="line">        select id, role_name as roleName, note from t_role</span><br><span class="line">        where id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote class="blockquote-center">Dao</blockquote>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Role <span class="title">getRole</span><span class="params">(Long id)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>autoMappingBehavior属性包含三个值，可以再settings元素中配置：</p>
+<ul>
+<li>NONE：取消自动映射</li>
+<li>PARTIAL(默认)：只会自动映射没有定义嵌套结果集映射的结果集</li>
+<li>FULL：自动映射所有结果集</li>
+</ul>
+<p>mapUnderscoreToCamelCase设置为true，可以实现从数据库到POJO的自动映射，前提是命名是规范的。</p>
+<h3 id="传递多个参数"><a href="#传递多个参数" class="headerlink" title="传递多个参数"></a>传递多个参数</h3><h4 id="使用Map传递参数"><a href="#使用Map传递参数" class="headerlink" title="使用Map传递参数"></a>使用Map传递参数</h4><blockquote class="blockquote-center">Mapper</blockquote>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findRoleByMap"</span> <span class="attr">parameterType</span>=<span class="string">"map"</span> <span class="attr">resultMap</span>=<span class="string">"roleMap"</span>&gt;</span></span><br><span class="line">        select id, role_name, note from t_role</span><br><span class="line">        where role_name like #&#123;roleName&#125;</span><br><span class="line">        and note like #&#123;note&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote class="blockquote-center">Dao</blockquote>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Role&gt; <span class="title">findRoleByMap</span> <span class="params">(Map&lt;String, String&gt; params)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>传递参数<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, String&gt; paramsMap = <span class="keyword">new</span> HashMap&lt;String, String&gt; ();</span><br><span class="line"></span><br><span class="line">paramsMap.put(<span class="string">"roleName"</span>, <span class="string">"me"</span>);</span><br><span class="line">paramsMap.put(<span class="string">"note"</span>, <span class="string">"te"</span>);</span><br><span class="line"></span><br><span class="line">roleMapper.findRoleByMap(paramsMap);</span><br></pre></td></tr></table></figure></p>
+<p>缺点是Map需要键值对应，业务关联性不强，造成可读性下降。</p>
+<h4 id="使用注解方式传递参数"><a href="#使用注解方式传递参数" class="headerlink" title="使用注解方式传递参数"></a>使用注解方式传递参数</h4><p>我们需要使用MyBatis的参数注解@param(org.apache.ibatis.annotations.Param)来实现想要的功能。操作方法是，把RoleDao接口修改为下面的形式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Role&gt; <span class="title">findRoleByAnnotation</span> <span class="params">(@Param (<span class="string">"roleName"</span>)</span> String rolename, @<span class="title">Param</span><span class="params">(<span class="string">"note"</span>)</span> String note)</span>;</span><br></pre></td></tr></table></figure>
+<p>注解式参数<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findRoleByAnnotation"</span> <span class="attr">resultMap</span>=<span class="string">"roleMap"</span>&gt;</span></span><br><span class="line">        select id, role_name, note from t_role</span><br><span class="line">        where role_name like #&#123;role_name&#125;</span><br><span class="line">        and note like #&#123;note&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>缺点是如果参数过多会很复杂。</p>
+<h4 id="使用JavaBean传递参数"><a href="#使用JavaBean传递参数" class="headerlink" title="使用JavaBean传递参数"></a>使用JavaBean传递参数</h4><p>首先定义一个参数的JavaBean<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RoleParam</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> String roleName;</span><br><span class="line">        <span class="keyword">private</span> String note;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getRoleName</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> roleName;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRoleName</span> <span class="params">(String roleName)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.roleName = roleName;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getNote</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> note;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNote</span> <span class="params">(String note)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.note = note;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findRoleByParams"</span>  <span class="attr">parameterType</span> = <span class="string">"RoleParam"</span> <span class="attr">resultMap</span>=<span class="string">"roleMap"</span>&gt;</span></span><br><span class="line">        select id, role_name, note from t_role</span><br><span class="line">        where role_name like #&#123;role_name&#125;</span><br><span class="line">        and note like #&#123;note&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Role&gt; <span class="title">findRoleByParams</span> <span class="params">(RoleParam params)</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="使用resultMap映射结果集"><a href="#使用resultMap映射结果集" class="headerlink" title="使用resultMap映射结果集"></a>使用resultMap映射结果集</h3><p>例如<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span> = <span class="string">"roleResultMap"</span> <span class="attr">type</span>=<span class="string">"Role"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"id"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"roleName"</span> <span class="attr">column</span>=<span class="string">"role_name"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"note"</span> <span class="attr">column</span>=<span class="string">"note"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">parameterType</span>=<span class="string">"long"</span> <span class="attr">id</span>=<span class="string">"getRole"</span> <span class="attr">resultMap</span> = <span class="string">"roleResultMap"</span> &gt;</span></span><br><span class="line">        select id, role_name, note from t_role where id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>解释一下配置：</p>
+<ul>
+<li>定义了一个唯一标识(id)为roleResultMap的resultMap，用type属性定义它对应的是哪个JavaBean</li>
+<li>通过id元素定义roleResultMap，这个对象代表着使用哪个属性作为其主键。</li>
+<li>通过result元素定义普通列的映射关系。例如，把SQL结果返回的列role_name和type属性定义JavaBean的属性roleName等做对应。</li>
+</ul>
+<h2 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><p><a href="https://github.com/Zihao-Liu/ZBZD/tree/master/src/cn/lzh/zbzd" target="_blank" rel="noopener">基于MyBatis实现的JavaWeb项目源码-github</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考内容 &gt;&gt; 深入浅出MyBatis技术原理与实战</span><br></pre></td></tr></table></figure>
       
 
       <div>
@@ -511,7 +684,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://yoursite.com/2018/12/01/MyBatis-1-MyBatis基本构成/" title="[MyBatis] 1.MyBatis基本构成">http://yoursite.com/2018/12/01/MyBatis-1-MyBatis基本构成/</a>
+    <a href="http://yoursite.com/2018/12/02/MyBatis-2-映射器-一-——select元素/" title="[MyBatis] 2.映射器(一)——select元素">http://yoursite.com/2018/12/02/MyBatis-2-映射器-一-——select元素/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -527,6 +700,8 @@
         <div class="post-tags">
           
             <a href="/tags/MyBatis/" rel="tag"><i class="fa fa-tag"></i> MyBatis</a>
+          
+            <a href="/tags/MyBatis-映射器/" rel="tag"><i class="fa fa-tag"></i> MyBatis-映射器</a>
           
         </div>
       
@@ -554,15 +729,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/12/02/LeetCode-2-Add-Two-Numbers/" rel="next" title="[LeetCode] 2.Add Two Numbers">
+                <i class="fa fa-chevron-left"></i> [LeetCode] 2.Add Two Numbers
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/01/LeetCode-1-Two-Sum/" rel="prev" title="[LeetCode] 1.Two Sum">
-                [LeetCode] 1.Two Sum <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -731,7 +906,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis核心组件："><span class="nav-number">1.</span> <span class="nav-text">MyBatis核心组件：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构建SqlSessionFactory："><span class="nav-number">1.1.</span> <span class="nav-text">构建SqlSessionFactory：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建SqlSession："><span class="nav-number">1.2.</span> <span class="nav-text">创建SqlSession：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#映射器："><span class="nav-number">1.3.</span> <span class="nav-text">映射器：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件的生命周期"><span class="nav-number">2.</span> <span class="nav-text">组件的生命周期</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#映射器"><span class="nav-number">1.</span> <span class="nav-text">映射器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#映射器的主要元素"><span class="nav-number">1.1.</span> <span class="nav-text">映射器的主要元素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#select元素"><span class="nav-number">2.</span> <span class="nav-text">select元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简易数据类型的例子"><span class="nav-number">2.1.</span> <span class="nav-text">简易数据类型的例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动映射"><span class="nav-number">2.2.</span> <span class="nav-text">自动映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传递多个参数"><span class="nav-number">2.3.</span> <span class="nav-text">传递多个参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用Map传递参数"><span class="nav-number">2.3.1.</span> <span class="nav-text">使用Map传递参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用注解方式传递参数"><span class="nav-number">2.3.2.</span> <span class="nav-text">使用注解方式传递参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用JavaBean传递参数"><span class="nav-number">2.3.3.</span> <span class="nav-text">使用JavaBean传递参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用resultMap映射结果集"><span class="nav-number">2.4.</span> <span class="nav-text">使用resultMap映射结果集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐阅读"><span class="nav-number">3.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
             
 
           </div>
