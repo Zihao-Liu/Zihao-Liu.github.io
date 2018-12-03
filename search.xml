@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[[MyBatis] 3.映射器(二)——insert/update/delete元素]]></title>
+    <url>%2F2018%2F12%2F03%2FMyBatis-3-%E6%98%A0%E5%B0%84%E5%99%A8-%E4%BA%8C-%E2%80%94%E2%80%94insert-update-delete%E5%85%83%E7%B4%A0%2F</url>
+    <content type="text"><![CDATA[insert元素MyBatis会在执行插入之后返回一个整数，以表示进行操作后插入的记录数。 属性名称 说明 备注 id 它和Mapper的命名空间组合起来是唯一的，提供给MyBatis调用(其实就是Dao中对应的方法名) 如果命名空间和id组合起来不唯一，MyBatis将抛出异常 parameterType 传入参数的类型，例如long，String等(可以给出类的全命名，也可以给出类的别名，但别名必须是MyBatis内部定义或自定义的) 可以选择JavaBean、Map等复杂的参数类型 parameterMap 即将废弃，不建议使用 - flushCache 调用SQL后，是否要求MyBatis清空之前查询的本地缓存和二级缓存 true/false，默认为false timeout 设置超时参数，等超时的时候将抛出异常，单位为秒 默认值是数据库厂商提供的JDBC驱动所设置的秒数 statementType 告诉MyBatis使用哪个JDBC的Statement工作，取值为STATEMENT(Statement)、CallableStatement 默认值为PREPARED keyProperty 表示以哪个列作为属性的主键，不能和keyColumn同时使用 设置哪个列为主键，联合主键可以用逗号隔开 useGenerateKeys 这会令MyBatis使用JDBC的getGeneratedKeys方法来取出由数据库内部生成的主键，例如，MySQL和SQLSever自动递增字段，Oracle的序列等，但是使用它就必须要给KeyProperty或者keyColumn赋值 true/false。默认为false keyColumn 指明第几列是主键，不能和keyProperty同时使用，只接受整形参数 和keyProperty一样，联合主键可以用逗号隔开 databaseId 取决于数据库厂商 - lang 自定义语言，可以使用第三方语言 - 插入实例：123&lt;insert parameterType = "role" id = "insertRole"&gt; insert into t_role(role_name, note) values(#&#123;roleName&#125;, #&#123;note&#125;)&lt;/insert&gt; 主键回填和自定义：MySQL中的主键可能需要根据一些特殊规则声称，例如自增字段，再插入后我们需要获得该主键。可以使用keyProperty属性指定哪个是主键字段，同时使用useGeneratedKeys属性告诉MyBatis这个主键是否使用数据库内置策略生成。例如，下面的例子中，id为表t_role的自增字段 123&lt;insert id = "insertRole" parameterType = "role" useGeneratedKeys = "true" keyProperty = "id"&gt; insert into t_role (role_name, note) values(#&#123;roleName&#125;, #&#123;note&#125;)&lt;/insert&gt; 我们传入的role对象，无需设置id的值，MyBatis会根据数据库的设置自动处理，在处理完毕后，MyBatis会自动回填MySQL数据库生成的id值到传入的JavaBean中。 实际工作中，还可能有一些更复杂的要求。例如，如果表t_role中没有记录，则设置id=1，否则取当前最大id加2，成为新的主键。这时需要使用selectKey元素处理 123456&lt;insert id = "insertRole" parameterType = "role" useGeneratedKeys = "true" keyProperty = "id"&gt; &lt;selectKey keyProperty = "id" resultType = "int" order = "BEFORE"&gt; select if ( max(id) is null, 1, max(id) + 2 ) as newId from t_role &lt;/selectKey&gt; insert into t_role(id, role_name, note) values (#&#123;id&#125;, #&#123;roleName&#125;, #&#123;note&#125;)&lt;/insert&gt; update元素和insert一样，MyBatis执行完update元素后会返回一个整数，代表进行更新的记录数。 更新实例：123456&lt;update parameterType = "role" id = "updateRole"&gt; update t_role set role_name = #&#123;roleName&#125;, note = #&#123;note&#125; where id = #&#123;id&#125;&lt;/update&gt; delete元素和insert一样，MyBatis执行完delete元素后会返回一个整数，代表进行删除的记录数。 删除实例：123&lt;delete id = "delete" parameterType = "long"&gt; delete from t_role where id = #&#123;id&#125;&lt;/delete&gt; 特殊字符串替换和处理优势我们想要传递SQL语句本身，而不是SQL所需的参数。例如，我们可能想要传递SQL列名，可以使用$符号实现。 1select $&#123;columns&#125; from t_tablename 但是这样对于SQL而言是不安全的。 推荐阅读基于MyBatis实现的JavaWeb项目源码-github 1参考内容 &gt;&gt; 深入浅出MyBatis技术原理与实战]]></content>
+      <categories>
+        <category>MyBatis</category>
+      </categories>
+      <tags>
+        <tag>MyBatis</tag>
+        <tag>MyBatis-映射器</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[[LeetCode] 9.Palindrome Number]]></title>
     <url>%2F2018%2F12%2F02%2FLeetCode-9-Palindrome-Number%2F</url>
     <content type="text"><![CDATA[题目翻译求给定的数是否为回文数。 解题方法使用一个新数将原数反转，要是相等就是回文数，注意负数没有回文数。 代码1234567891011121314class Solution &#123;public: bool isPalindrome(int x) &#123; if(x&lt;0) return 0; int newnum=0; int temp=x; while(temp)&#123; newnum=newnum*10+temp%10; temp/=10; &#125; return newnum==x; &#125;&#125;;]]></content>
@@ -21,8 +33,8 @@
       </categories>
       <tags>
         <tag>LeetCode</tag>
-        <tag>算法</tag>
         <tag>字符串</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -46,8 +58,8 @@
       </categories>
       <tags>
         <tag>LeetCode</tag>
-        <tag>算法</tag>
         <tag>字符串</tag>
+        <tag>算法</tag>
         <tag>数学规律</tag>
       </tags>
   </entry>
@@ -126,9 +138,9 @@
       </categories>
       <tags>
         <tag>LeetCode</tag>
-        <tag>算法</tag>
         <tag>哈希</tag>
         <tag>字符串</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -140,8 +152,8 @@
       </categories>
       <tags>
         <tag>LeetCode</tag>
-        <tag>算法</tag>
         <tag>哈希</tag>
+        <tag>算法</tag>
         <tag>排序</tag>
       </tags>
   </entry>
