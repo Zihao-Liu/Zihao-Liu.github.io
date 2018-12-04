@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="LeetCode,算法,">
+  <meta name="keywords" content="LeetCode,算法,链表,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="题目翻译求给定的数是否为回文数。">
-<meta name="keywords" content="LeetCode,算法">
+<meta name="description" content="题目翻译给定一个链表和一个整数n，返回链表倒数第n个结点。 例子： 输入: 1-&amp;gt;2-&amp;gt;3-&amp;gt;4-&amp;gt;5, and n = 2. 输出: 1-&amp;gt;2-&amp;gt;3-&amp;gt;5. 备注:  n永远是有效的。 要求一次遍历。">
+<meta name="keywords" content="LeetCode,算法,链表">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[LeetCode] 9.Palindrome Number">
-<meta property="og:url" content="http://yoursite.com/2018/12/02/LeetCode-9-Palindrome-Number/index.html">
+<meta property="og:title" content="[LeetCode] 19.Remove Nth Node From End of List">
+<meta property="og:url" content="http://yoursite.com/2018/12/04/LeetCode-19-Remove-Nth-Node-From-End-of-List/index.html">
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
-<meta property="og:description" content="题目翻译求给定的数是否为回文数。">
+<meta property="og:description" content="题目翻译给定一个链表和一个整数n，返回链表倒数第n个结点。 例子： 输入: 1-&amp;gt;2-&amp;gt;3-&amp;gt;4-&amp;gt;5, and n = 2. 输出: 1-&amp;gt;2-&amp;gt;3-&amp;gt;5. 备注:  n永远是有效的。 要求一次遍历。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-02T12:06:02.120Z">
+<meta property="og:updated_time" content="2018-12-04T04:52:59.867Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[LeetCode] 9.Palindrome Number">
-<meta name="twitter:description" content="题目翻译求给定的数是否为回文数。">
+<meta name="twitter:title" content="[LeetCode] 19.Remove Nth Node From End of List">
+<meta name="twitter:description" content="题目翻译给定一个链表和一个整数n，返回链表倒数第n个结点。 例子： 输入: 1-&amp;gt;2-&amp;gt;3-&amp;gt;4-&amp;gt;5, and n = 2. 输出: 1-&amp;gt;2-&amp;gt;3-&amp;gt;5. 备注:  n永远是有效的。 要求一次遍历。">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/12/02/LeetCode-9-Palindrome-Number/">
+  <link rel="canonical" href="http://yoursite.com/2018/12/04/LeetCode-19-Remove-Nth-Node-From-End-of-List/">
 
 
 
 
 
-  <title>[LeetCode] 9.Palindrome Number | LLLZH's Blog</title>
+  <title>[LeetCode] 19.Remove Nth Node From End of List | LLLZH's Blog</title>
   
 
 
@@ -295,7 +295,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/02/LeetCode-9-Palindrome-Number/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/04/LeetCode-19-Remove-Nth-Node-From-End-of-List/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zihao Liu">
@@ -312,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[LeetCode] 9.Palindrome Number</h1>
+          <h1 class="post-title" itemprop="name headline">[LeetCode] 19.Remove Nth Node From End of List</h1>
         
 
         <div class="post-meta">
@@ -324,8 +324,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-02T23:05:09+11:00">
-                2018-12-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-04T15:51:05+11:00">
+                2018-12-04
               </time>
             
 
@@ -365,8 +365,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/12/02/LeetCode-9-Palindrome-Number/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/02/LeetCode-9-Palindrome-Number/" itemprop="commentCount"></span>
+                <a href="/2018/12/04/LeetCode-19-Remove-Nth-Node-From-End-of-List/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/04/LeetCode-19-Remove-Nth-Node-From-End-of-List/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -393,7 +393,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  87 字
+                  263 字
                 </span>
               
 
@@ -430,11 +430,19 @@
       
 
       
-        <h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><p>求给定的数是否为回文数。</p>
-<a id="more"></a>
+        <h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><p>给定一个链表和一个整数n，返回链表倒数第n个结点。</p>
+<p>例子：</p>
+<pre><code>输入: 1-&gt;2-&gt;3-&gt;4-&gt;5, and n = 2.
+输出: 1-&gt;2-&gt;3-&gt;5.
+</code></pre><p>备注:</p>
+<ol>
+<li>n永远是有效的。</li>
+<li>要求一次遍历。<a id="more"></a>
+</li>
+</ol>
 <hr>
-<h2 id="解题方法"><a href="#解题方法" class="headerlink" title="解题方法"></a>解题方法</h2><p>使用一个新数将原数反转，要是相等就是回文数，注意负数没有回文数。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isPalindrome</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(x&lt;<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> newnum=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> temp=x;</span><br><span class="line">        <span class="keyword">while</span>(temp)&#123;</span><br><span class="line">            newnum=newnum*<span class="number">10</span>+temp%<span class="number">10</span>;</span><br><span class="line">            temp/=<span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> newnum==x;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="解题方法"><a href="#解题方法" class="headerlink" title="解题方法"></a>解题方法</h2><p>使用两个指针p，q分别指向链表头。p先走n次，如果p走到头就说明n大于等于链表长度，就删除头结点(所以新建了一个h指向头结点，便于删除头结点)。如果p没有走到头，就让p和q一起走，直到p走到头，q指向的就是要删除的结点。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">removeNthFromEnd</span><span class="params">(ListNode* head, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        ListNode *h = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">        h-&gt;next = head;</span><br><span class="line">        ListNode *p =h ,*q=h;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(n--&amp;&amp;p!=<span class="literal">NULL</span>)</span><br><span class="line">            p = p-&gt;next;</span><br><span class="line">        <span class="keyword">if</span>(n&gt;<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(p&amp;&amp;p-&gt;next)&#123;</span><br><span class="line">            p = p-&gt;next;</span><br><span class="line">            q = q-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        q-&gt;next= q-&gt;next-&gt;next;</span><br><span class="line">        <span class="keyword">return</span> h-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
       
 
       <div>
@@ -468,7 +476,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://yoursite.com/2018/12/02/LeetCode-9-Palindrome-Number/" title="[LeetCode] 9.Palindrome Number">http://yoursite.com/2018/12/02/LeetCode-9-Palindrome-Number/</a>
+    <a href="http://yoursite.com/2018/12/04/LeetCode-19-Remove-Nth-Node-From-End-of-List/" title="[LeetCode] 19.Remove Nth Node From End of List">http://yoursite.com/2018/12/04/LeetCode-19-Remove-Nth-Node-From-End-of-List/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -486,6 +494,8 @@
             <a href="/tags/LeetCode/" rel="tag"><i class="fa fa-tag"></i> LeetCode</a>
           
             <a href="/tags/算法/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
+          
+            <a href="/tags/链表/" rel="tag"><i class="fa fa-tag"></i> 链表</a>
           
         </div>
       
@@ -513,8 +523,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/02/LeetCode-8-String-to-Integer/" rel="next" title="[LeetCode] 8.String to Integer">
-                <i class="fa fa-chevron-left"></i> [LeetCode] 8.String to Integer
+              <a href="/2018/12/04/MySQL-4-索引-二-——高性能索引/" rel="next" title="[MySQL] 4.索引(二)——高性能索引">
+                <i class="fa fa-chevron-left"></i> [MySQL] 4.索引(二)——高性能索引
               </a>
             
           </div>
@@ -523,8 +533,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/12/03/MyBatis-3-映射器-二-——insert-update-delete元素/" rel="prev" title="[MyBatis] 3.映射器(二)——insert/update/delete元素">
-                [MyBatis] 3.映射器(二)——insert/update/delete元素 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/12/04/MySQL-5-索引-三-——聚簇索引/" rel="prev" title="[MySQL] 5.索引(三)——聚簇索引">
+                [MySQL] 5.索引(三)——聚簇索引 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
