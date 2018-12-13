@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="MySQL,索引,MySQL性能,覆盖索引,索引排序,冗余索引,">
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="LLLZH&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/tags/InnoDB/index.html">
+<meta name="description" content="覆盖索引如果一个索引包含(或者说覆盖)所有需要查询的字段的值，就称之为“覆盖索引”。 覆盖索引可以极大地提高性能。因为只需要扫描索引，而无须返回表，有以下好处：  索引条目远小于数据行大小，所以只读取索引可以减少数据访问量。这对缓存的负载很重要，对于I/O密集型应用很有帮助，因为索引比数据小，更容易全部放入内存中。 因为索引是按照列值顺序存储的，所以对于I/O密集型的范围查询会比随即从磁盘读取每一">
+<meta name="keywords" content="MySQL,索引,MySQL性能,覆盖索引,索引排序,冗余索引">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[MySQL] 6.索引(四)——覆盖索引、索引排序、冗余索引">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/MySQL-6-索引-四-——覆盖索引、索引排序、冗余索引/index.html">
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
+<meta property="og:description" content="覆盖索引如果一个索引包含(或者说覆盖)所有需要查询的字段的值，就称之为“覆盖索引”。 覆盖索引可以极大地提高性能。因为只需要扫描索引，而无须返回表，有以下好处：  索引条目远小于数据行大小，所以只读取索引可以减少数据访问量。这对缓存的负载很重要，对于I/O密集型应用很有帮助，因为索引比数据小，更容易全部放入内存中。 因为索引是按照列值顺序存储的，所以对于I/O密集型的范围查询会比随即从磁盘读取每一">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-13T07:17:26.884Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LLLZH&#39;s Blog">
+<meta name="twitter:title" content="[MySQL] 6.索引(四)——覆盖索引、索引排序、冗余索引">
+<meta name="twitter:description" content="覆盖索引如果一个索引包含(或者说覆盖)所有需要查询的字段的值，就称之为“覆盖索引”。 覆盖索引可以极大地提高性能。因为只需要扫描索引，而无须返回表，有以下好处：  索引条目远小于数据行大小，所以只读取索引可以减少数据访问量。这对缓存的负载很重要，对于I/O密集型应用很有帮助，因为索引比数据小，更容易全部放入内存中。 因为索引是按照列值顺序存储的，所以对于I/O密集型的范围查询会比随即从磁盘读取每一">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/InnoDB/">
+  <link rel="canonical" href="http://yoursite.com/2018/12/13/MySQL-6-索引-四-——覆盖索引、索引排序、冗余索引/">
 
 
 
 
 
-  <title>标签: InnoDB | LLLZH's Blog</title>
+  <title>[MySQL] 6.索引(四)——覆盖索引、索引排序、冗余索引 | LLLZH's Blog</title>
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -276,52 +281,287 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>InnoDB<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/13/MySQL-6-索引-四-——覆盖索引、索引排序、冗余索引/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zihao Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LLLZH's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/12/04/MySQL-5-索引-三-——聚簇索引/" itemprop="url">
-              
-                <span itemprop="name">[MySQL] 5.索引(三)——聚簇索引</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">[MySQL] 6.索引(四)——覆盖索引、索引排序、冗余索引</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-04T15:52:18+11:00" content="2018-12-04">
-          12-04
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-13T18:15:21+11:00">
+                2018-12-13
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/13/MySQL-6-索引-四-——覆盖索引、索引排序、冗余索引/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/13/MySQL-6-索引-四-——覆盖索引、索引排序、冗余索引/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    </div>
+      
 
+      
+        <h2 id="覆盖索引"><a href="#覆盖索引" class="headerlink" title="覆盖索引"></a>覆盖索引</h2><p>如果一个索引包含(或者说覆盖)所有需要查询的字段的值，就称之为“覆盖索引”。</p>
+<p>覆盖索引可以极大地提高性能。因为只需要扫描索引，而无须返回表，有以下好处：</p>
+<ul>
+<li>索引条目远小于数据行大小，所以只读取索引可以减少数据访问量。这对缓存的负载很重要，对于I/O密集型应用很有帮助，因为索引比数据小，更容易全部放入内存中。</li>
+<li>因为索引是按照列值顺序存储的，所以对于I/O密集型的范围查询会比随即从磁盘读取每一行数据的I/O要少的多。</li>
+<li>由于InnoDB的聚簇索引，覆盖索引对于InnoDB很有用。InnoDB的二级索引在叶子节点中保存了行的主键值，如果二级主键能够覆盖查询，则可以避免对主键索引的二次查询。</li>
+</ul>
+<p>覆盖索引必须要存储索引类的值，所以MySQL只能使用B-Tree索引做覆盖索引。</p>
+<h2 id="使用索引扫描来做排序"><a href="#使用索引扫描来做排序" class="headerlink" title="使用索引扫描来做排序"></a>使用索引扫描来做排序</h2><p>只有当索引的列顺序和ORDER BY子句的顺序完全一致，并且所有列的排序方向(倒序或正序)都一样时，MySQL才能使用索引来对结果做排序。如果查询需要关联多张表，则只有当ORDER BY子句引用的字段全部为第一个表时，才能使用索引做排序。ORDER BY子句和查找型查询的限制是一样的：需要满足索引的最左前缀的要求。</p>
+<p>当前导列为常量时，ORDER BY子句可以不满足索引的最左前缀的要求。</p>
+<p>下面是一个例子：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> rental (</span><br><span class="line">    ...</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span> (rental_id),</span><br><span class="line">    <span class="keyword">UNIQUE</span> <span class="keyword">KEY</span> rental_date (rental_date, inventory_id, customer_id),</span><br><span class="line">    ...</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">mysql &gt; SELECT ... FROM rental WHERE rental_date = '2005-05-25' ORDER BY inventory_id DESC;</span><br><span class="line"><span class="comment">-- 可以使用索引排序，因为查询为索引第一列提供了常量条件，而使用第二列进行排序。合在一起便形成了索引最左前缀。</span></span><br><span class="line"></span><br><span class="line">mysql &gt; ... WHERE rental_date &gt; '2005-05-25' ORDER BY rental_date, inventory_id;</span><br><span class="line"><span class="comment">-- 可以使用索引排序，因为ORDER BY使用的两列就是索引的最左前缀。</span></span><br><span class="line"></span><br><span class="line">mysql &gt; ... WHERE rental_date = '2005-05-25' ORDER BY inventory_id DESC, customer_id ASC;</span><br><span class="line"><span class="comment">-- 不可以使用索引排序，因为查询使用了两种不同的排序方向。</span></span><br><span class="line"></span><br><span class="line">mysql &gt; WHERE rental_date = '2005-05-25' ORDER BY inventory_id, staff_id;</span><br><span class="line"><span class="comment">-- 不可以使用索引排序，因为ORDER BY中有不在索引中的列。</span></span><br><span class="line"></span><br><span class="line">mysql &gt; WHERE rental_date = '2005-05-25' ORDER BY customer_id;</span><br><span class="line"><span class="comment">-- 不可以使用索引排序，因为WHERE子句和ORDER BY子句中的列无法组合成索引的最左前缀。</span></span><br><span class="line"></span><br><span class="line">mysql &gt; ... WHERE rental_date &gt; '2005-05-25' ORDER BY inventory_id, customer_id;</span><br><span class="line"><span class="comment">-- 不可以使用索引排序，因为在索引列第一列上是范围条件。</span></span><br><span class="line"></span><br><span class="line">mysql &gt; ... WHERE rantal_date = '2005-05-25' AND inventory_id IN (1, 2) ORDER BY customer_id;</span><br><span class="line"><span class="comment">-- 不可以使用索引排序，因为查询在inventory_id列上有多个等于条件，相当于范围查询。</span></span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h3 id="冗余和重复索引"><a href="#冗余和重复索引" class="headerlink" title="冗余和重复索引"></a>冗余和重复索引</h3><p>MySQL允许在相同列上创建多个索引，MySQL需要单独维护重复的索引，会影响性能。</p>
+<p>重复索引是指相同的列上按照相同的顺序创建的相同类型的索引，应该避免这种索引(如果索引类型不同，不算重复索引)。</p>
+<p>冗余索引和重复索引有些不同，如果创建了索引(A，B)，再创建索引(A)就是冗余索引，因为这只是前一个索引的前缀索引。但是如果创建了(A，B)，再创建索引(B，A)或者(B)就不是冗余索引。因为这两个不是(A，B)的最左前缀索引。不同类型的索引也不会是冗余索引。</p>
+<p>大多数情况下不需要冗余索引，但有的时候，如果要扩展索引，可能需要在当前索引上加上一个很长的列(如很长的VARCHAR)，会影响性能，冗余索引可能是较好的选择。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考内容 &gt;&gt; 高性能MySQL第三版</span><br></pre></td></tr></table></figure>
+      
+
+      <div>
+        
+          <div style="text-align:center;color: #ccc;font-size:14px;">----------- 本文结束，感谢阅读 -----------</div>
+        
+      </div>
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/qcode.png" alt="Zihao Liu wechat" style="width: 200px; max-width: 100%;">
+    <div>扫一扫，用手机访问本站</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zihao Liu
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2018/12/13/MySQL-6-索引-四-——覆盖索引、索引排序、冗余索引/" title="[MySQL] 6.索引(四)——覆盖索引、索引排序、冗余索引">http://yoursite.com/2018/12/13/MySQL-6-索引-四-——覆盖索引、索引排序、冗余索引/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
+          
+            <a href="/tags/索引/" rel="tag"><i class="fa fa-tag"></i> 索引</a>
+          
+            <a href="/tags/MySQL性能/" rel="tag"><i class="fa fa-tag"></i> MySQL性能</a>
+          
+            <a href="/tags/覆盖索引/" rel="tag"><i class="fa fa-tag"></i> 覆盖索引</a>
+          
+            <a href="/tags/索引排序/" rel="tag"><i class="fa fa-tag"></i> 索引排序</a>
+          
+            <a href="/tags/冗余索引/" rel="tag"><i class="fa fa-tag"></i> 冗余索引</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/13/MyBatis-6-动态SQL/" rel="next" title="[MyBatis] 6.动态SQL">
+                <i class="fa fa-chevron-left"></i> [MyBatis] 6.动态SQL
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -329,6 +569,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -349,8 +596,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -444,6 +700,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#覆盖索引"><span class="nav-number">1.</span> <span class="nav-text">覆盖索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用索引扫描来做排序"><span class="nav-number">2.</span> <span class="nav-text">使用索引扫描来做排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#冗余和重复索引"><span class="nav-number">2.1.</span> <span class="nav-text">冗余和重复索引</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       <hr>
@@ -627,6 +899,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
