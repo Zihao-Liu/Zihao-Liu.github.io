@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="MySQL,索引,MySQL性能,">
+  <meta name="keywords" content="MyBatis,动态SQL,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="如果使用高性能索引独立的列：如果查询中的列不是独立的，则MySQL不会使用索引。“独立的列” 指的是索引列不能是表达式的一部分，也不能是函数的参数。 例如， 1mysql &amp;gt; SELECT actor_id FROM actor where actor_id +1 =5; 这个查询就无法使用actor_id列的索引，因为它是表达式的一部分。但是如果我们把where的表达式写成actor_id">
-<meta name="keywords" content="MySQL,索引,MySQL性能">
+<meta name="description" content="动态SQLMyBatis的动态SQL包括以下几种元素    元素 作用 备注     if 判断语句 单条件分支判断   choose(when、otherwise) 相当于Java中的case 多条件分支判断   trim(where、set) 辅助元素 用于处理一些SQL拼装问题   foreach 循环语句 在in语句等列举条件常用    if元素例如，根据角色名称(roleName)去查找">
+<meta name="keywords" content="MyBatis,动态SQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[MySQL] 4.索引(二)——高性能索引">
-<meta property="og:url" content="http://yoursite.com/2018/12/04/MySQL-4-索引-二-——高性能索引/index.html">
+<meta property="og:title" content="[MyBatis] 6.动态SQL">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/MyBatis-6-动态SQL/index.html">
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
-<meta property="og:description" content="如果使用高性能索引独立的列：如果查询中的列不是独立的，则MySQL不会使用索引。“独立的列” 指的是索引列不能是表达式的一部分，也不能是函数的参数。 例如， 1mysql &amp;gt; SELECT actor_id FROM actor where actor_id +1 =5; 这个查询就无法使用actor_id列的索引，因为它是表达式的一部分。但是如果我们把where的表达式写成actor_id">
+<meta property="og:description" content="动态SQLMyBatis的动态SQL包括以下几种元素    元素 作用 备注     if 判断语句 单条件分支判断   choose(when、otherwise) 相当于Java中的case 多条件分支判断   trim(where、set) 辅助元素 用于处理一些SQL拼装问题   foreach 循环语句 在in语句等列举条件常用    if元素例如，根据角色名称(roleName)去查找">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-04T04:49:20.997Z">
+<meta property="og:updated_time" content="2018-12-13T04:19:01.646Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[MySQL] 4.索引(二)——高性能索引">
-<meta name="twitter:description" content="如果使用高性能索引独立的列：如果查询中的列不是独立的，则MySQL不会使用索引。“独立的列” 指的是索引列不能是表达式的一部分，也不能是函数的参数。 例如， 1mysql &amp;gt; SELECT actor_id FROM actor where actor_id +1 =5; 这个查询就无法使用actor_id列的索引，因为它是表达式的一部分。但是如果我们把where的表达式写成actor_id">
+<meta name="twitter:title" content="[MyBatis] 6.动态SQL">
+<meta name="twitter:description" content="动态SQLMyBatis的动态SQL包括以下几种元素    元素 作用 备注     if 判断语句 单条件分支判断   choose(when、otherwise) 相当于Java中的case 多条件分支判断   trim(where、set) 辅助元素 用于处理一些SQL拼装问题   foreach 循环语句 在in语句等列举条件常用    if元素例如，根据角色名称(roleName)去查找">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/12/04/MySQL-4-索引-二-——高性能索引/">
+  <link rel="canonical" href="http://yoursite.com/2018/12/13/MyBatis-6-动态SQL/">
 
 
 
 
 
-  <title>[MySQL] 4.索引(二)——高性能索引 | LLLZH's Blog</title>
+  <title>[MyBatis] 6.动态SQL | LLLZH's Blog</title>
   
 
 
@@ -295,7 +295,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/04/MySQL-4-索引-二-——高性能索引/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/13/MyBatis-6-动态SQL/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zihao Liu">
@@ -312,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[MySQL] 4.索引(二)——高性能索引</h1>
+          <h1 class="post-title" itemprop="name headline">[MyBatis] 6.动态SQL</h1>
         
 
         <div class="post-meta">
@@ -324,8 +324,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-04T00:38:39+11:00">
-                2018-12-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-13T15:16:40+11:00">
+                2018-12-13
               </time>
             
 
@@ -347,8 +347,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
+                  <a href="/categories/MyBatis/" itemprop="url" rel="index">
+                    <span itemprop="name">MyBatis</span>
                   </a>
                 </span>
 
@@ -365,8 +365,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/12/04/MySQL-4-索引-二-——高性能索引/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/04/MySQL-4-索引-二-——高性能索引/" itemprop="commentCount"></span>
+                <a href="/2018/12/13/MyBatis-6-动态SQL/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/13/MyBatis-6-动态SQL/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -393,7 +393,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  826 字
+                  1k 字
                 </span>
               
 
@@ -409,7 +409,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3 分钟
+                  4 分钟
                 </span>
               
             </div>
@@ -430,23 +430,67 @@
       
 
       
-        <h2 id="如果使用高性能索引"><a href="#如果使用高性能索引" class="headerlink" title="如果使用高性能索引"></a>如果使用高性能索引</h2><h3 id="独立的列："><a href="#独立的列：" class="headerlink" title="独立的列："></a>独立的列：</h3><p>如果查询中的列不是独立的，则MySQL不会使用索引。“独立的列” 指的是索引列不能是表达式的一部分，也不能是函数的参数。</p>
-<p>例如，</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; SELECT actor_id FROM actor where actor_id +1 =5;</span><br></pre></td></tr></table></figure>
-<p>这个查询就无法使用actor_id列的索引，因为它是表达式的一部分。但是如果我们把where的表达式写成<code>actor_id = 4</code> 就可以使用这列的索引了。所以，在写where语句时，尽量将索引列单独放在比较符号的一侧。</p>
-<hr>
-<h3 id="前缀索引和索引选择性："><a href="#前缀索引和索引选择性：" class="headerlink" title="前缀索引和索引选择性："></a>前缀索引和索引选择性：</h3><p>索引的选择性是指：<code>不重复的索引值</code>(基数，cardinality)和<code>数据表的记录总数</code>(#T)的比值，范围从 1/#T 到 1 之间。索引的选择性越高，则查询效率越高，因为选择性高的索引可以让MySQL在查找时过滤掉更多的行。唯一索引的选择性是1，这是最好的索引选择性，性能也是最好的。</p>
-<p>前缀索引：对于一些很长的字符列，通常只索引开始的部分字符。例如BLOB、TEXT或很长VARCHAR，必须使用前缀索引，因为MySQL索引长度有限制。选择前缀索引时，应该让前缀索引的“基数”接近于完整列的“基数”。前缀索引的<code>缺点</code>是无法使用前缀索引做ORDER BY和GROUP BY，也无法使用前缀索引做覆盖扫描。</p>
-<h4 id="如何计算索引选择性："><a href="#如何计算索引选择性：" class="headerlink" title="如何计算索引选择性："></a>如何计算索引选择性：</h4><p>下面给出一个例子，演示如何计算完整列和不同长度前缀的的选择性：</p>
+        <h2 id="动态SQL"><a href="#动态SQL" class="headerlink" title="动态SQL"></a>动态SQL</h2><p>MyBatis的动态SQL包括以下几种元素</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">元素</th>
+<th style="text-align:left">作用</th>
+<th style="text-align:left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">if</td>
+<td style="text-align:left">判断语句</td>
+<td style="text-align:left">单条件分支判断</td>
+</tr>
+<tr>
+<td style="text-align:left">choose(when、otherwise)</td>
+<td style="text-align:left">相当于Java中的case</td>
+<td style="text-align:left">多条件分支判断</td>
+</tr>
+<tr>
+<td style="text-align:left">trim(where、set)</td>
+<td style="text-align:left">辅助元素</td>
+<td style="text-align:left">用于处理一些SQL拼装问题</td>
+</tr>
+<tr>
+<td style="text-align:left">foreach</td>
+<td style="text-align:left">循环语句</td>
+<td style="text-align:left">在in语句等列举条件常用</td>
+</tr>
+</tbody>
+</table>
+<h3 id="if元素"><a href="#if元素" class="headerlink" title="if元素"></a>if元素</h3><p>例如，根据角色名称(roleName)去查找角色，但角色名称是一个可填可不填的条件，不填写的时候则它不作为查询条件。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span> = <span class="string">"findRoles"</span> <span class="attr">parameterType</span> = <span class="string">"string"</span> <span class="attr">resultMap</span> = <span class="string">"roleResultMap"</span>&gt;</span></span><br><span class="line">    select role_no, role_name, note from t_role where 1=1</span><br><span class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span> = <span class="string">"roleName != null and roleName != ''"</span>&gt;</span></span><br><span class="line">        and role_name like #&#123;roleName&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; CREATE TABLE city_demo (city VARCHAR(50) NOT NULL);</span><br><span class="line"><span class="comment">-- 随机向city_demo中插入许多城市(可重复)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--计算完整列的选择性</span></span><br><span class="line">mysql &gt; SELECT COUNT(DISTINCT city) / COUNT(*) FROM city_demo;</span><br><span class="line"></span><br><span class="line"><span class="comment">--计算不同长度前缀的选择性(下面例子为长度为3，4，5的前缀)</span></span><br><span class="line">mysql &gt; SELECT COUNT(DISTINCT LEFT(city, 3))/COUNT(*) AS sel3, </span><br><span class="line">                         COUNT(DISTINCT LEFT(city, 4))/COUNT(*) AS sel4,</span><br><span class="line">                         COUNT(DISTINCT LEFT(city, 5))/COUNT(*) AS sel5</span><br><span class="line">             FROM city_demo</span><br></pre></td></tr></table></figure>
-<h4 id="如何创建前缀索引："><a href="#如何创建前缀索引：" class="headerlink" title="如何创建前缀索引："></a>如何创建前缀索引：</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--创建前缀长度为5的索引</span></span><br><span class="line">mysql &gt; ALTER TABLE city_demo ADD KEY (city(5));</span><br></pre></td></tr></table></figure>
-<h4 id="特殊用处："><a href="#特殊用处：" class="headerlink" title="特殊用处："></a>特殊用处：</h4><p>可以用来做后缀索引，其基本原理是把想要存储的信息(如电子邮件地址)反转后存储，然后建立前缀索引。这样可以用来查找电子邮件域名等。</p>
-<hr>
-<h3 id="多列索引："><a href="#多列索引：" class="headerlink" title="多列索引："></a>多列索引：</h3><p>一个常见的错误是，为每个列创建独立的索引，或者按照错误的顺序创建多列索引。为每个列创建独立的索引，在WHERE语句中需要多个列的条件时，并不是最优的结果。</p>
-<p>多列索引中列正确的顺序依赖于使用该索引的查询，并且应该更好地满足排序和分组的需要。索引首先按照最左列进行排序，其次是第二列，等等(对于B-Tree索引来说)。</p>
-<p>将<a href="#如何计算索引选择性">选择性</a>最高的列放在前面通常是很好的。这对于优化WHERE 条件很有帮助，但是并不会提升排序和分组的效率。性能不止依赖于列的选择性，也和查询条件的值的分布有关。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考内容 &gt;&gt; 高性能MySQL第三版</span><br></pre></td></tr></table></figure>
+<h3 id="choose、when、otherwise元素"><a href="#choose、when、otherwise元素" class="headerlink" title="choose、when、otherwise元素"></a>choose、when、otherwise元素</h3><p>例如，</p>
+<ul>
+<li>当角色编号不为空，则只用角色编号作为条件查询。</li>
+<li>当角色编号为空，而角色名称不为空，则角色名称作为条件进行模糊查询。</li>
+<li>当角色编号和角色名称都为空，则要求角色备注不为空。</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span> = <span class="string">"findRoles"</span> <span class="attr">parameterType</span> = <span class="string">"role"</span> <span class="attr">resultMap</span> = <span class="string">"roleResultMap"</span>&gt;</span></span><br><span class="line">    select role_no, role_name, note from t_role</span><br><span class="line">    where 1=1</span><br><span class="line">    <span class="tag">&lt;<span class="name">choose</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span> = <span class="string">"roleNo != null and roleNo != ''"</span>&gt;</span></span><br><span class="line">            AND role_no = #&#123;roleNo&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span> = <span class="string">"roleName != null and roleName != ''"</span>&gt;</span></span><br><span class="line">            AND role_name like #&#123;roleName&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">otherwise</span>&gt;</span></span><br><span class="line">            AND note is not null</span><br><span class="line">        <span class="tag">&lt;/<span class="name">otherwise</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">choose</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="trim、where、set元素"><a href="#trim、where、set元素" class="headerlink" title="trim、where、set元素"></a>trim、where、set元素</h3><p>前面的例子中，都存在一个条件“1=1”，因为若是没有这个条件，语句就会产生错误(where and)。如果觉得“1=1”显得很奇怪，可以使用where元素。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span> = <span class="string">"findRoles"</span> <span class="attr">parameterType</span> = <span class="string">"string"</span> <span class="attr">resultMap</span> = <span class="string">"roleResultMap"</span>&gt;</span></span><br><span class="line">    select role_no, role_name, note from t_role</span><br><span class="line">    <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span> = <span class="string">"roleName != null and roleName != ''"</span>&gt;</span></span><br><span class="line">        and role_name like #&#123;roleName&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这样当where元素里面的条件成立时，才会加入where关键字到SQL语句中。</p>
+<p>有时需要去掉一些SQL特殊语法，例如，and、or。可以使用trim来达到目的。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span> = <span class="string">"findRoles"</span> <span class="attr">parameterType</span> = <span class="string">"string"</span> <span class="attr">resultMap</span> = <span class="string">"roleResultMap"</span>&gt;</span></span><br><span class="line">    select role_no, role_name, note from t_role</span><br><span class="line">    <span class="tag">&lt;<span class="name">trim</span> <span class="attr">prefix</span> = <span class="string">"where"</span> <span class="attr">prefixOverrides</span> = <span class="string">"and"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span> = <span class="string">"roleName != null and roleName != ''"</span>&gt;</span></span><br><span class="line">            and role_name like #&#123;roleName&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">trim</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>trim元素意味着要去掉一些特殊字符，prefix代表语句前缀，prefixOverrides则是要去掉的那串字符串。</p>
+<p>现实场景中，经常存在更新一行数据其中一个字段的可能。可以使用set元素实现<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span> = <span class="string">"updateRole"</span> <span class="attr">parameterType</span> = <span class="string">"role"</span>&gt;</span></span><br><span class="line">    update t_role</span><br><span class="line">    <span class="tag">&lt;<span class="name">set</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span> = <span class="string">"roleName != null and roleName != ''"</span>&gt;</span></span><br><span class="line">            role_name = #&#123;roleName&#125;,</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span> = <span class="string">"note != null and note != ''"</span>&gt;</span></span><br><span class="line">            note = #&#123;note&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line">    where role_no = #&#123;roleNo&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="foreach元素"><a href="#foreach元素" class="headerlink" title="foreach元素"></a>foreach元素</h3><p>作用是遍历集合，例如</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span> = <span class="string">"findUserBySex"</span> <span class="attr">resultType</span> = <span class="string">"user"</span>&gt;</span></span><br><span class="line">    select * from t_user where sex in</span><br><span class="line">    <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">item</span> = <span class="string">"sex"</span> <span class="attr">index</span> = <span class="string">"index"</span> <span class="attr">collection</span> = <span class="string">"sexList"</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">open</span> = <span class="string">"("</span> <span class="attr">separator</span> =<span class="string">","</span> <span class="attr">close</span> = <span class="string">")"</span>&gt;</span></span><br><span class="line">         #&#123;sex&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>collection：配置的sexList是传递进来的参数名称，可以是一个数组或者List、Set等集合。</li>
+<li>item：配置的是循环中当前的元素。</li>
+<li>index：配置的是当前元素在集合的位置下标。</li>
+<li>open和close：以什么符号将这些集合元素包装起来。</li>
+<li>separator：各个元素的间隔符。</li>
+</ul>
+<h3 id="bind元素"><a href="#bind元素" class="headerlink" title="bind元素"></a>bind元素</h3><p>方便进行模糊查询，与数据库无关。例如，想要按角色名进行模糊查询<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span> = <span class="string">"findRole"</span> <span class="attr">resultType</span> = <span class="string">"RoleBean"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bind</span> <span class="attr">name</span> = <span class="string">"pattern"</span> <span class="attr">value</span> = <span class="string">"'%' + _parameter + '%'"</span>/&gt;</span></span><br><span class="line">    SELECT id, role_name as roleName, create_date as createDate, </span><br><span class="line">    end_date as endDate, end_flag as endFlag, note FROM t_role</span><br><span class="line">    where role_name like #&#123;pattern&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这里的“_parameter”代表的就是传递进来的参数，它和通配符连接后，赋给了pattern，然后就可以在select语句中使用这个变量进行模糊查询</p>
+<p>还可以传递多个参数<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 查询角色</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> roleName 角色名称</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> note 备注</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@return</span> 符合条件的角色</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;RoleBean&gt; <span class="title">findRole</span><span class="params">(@Param(<span class="string">"roleName"</span>)</span> String roleName, </span></span><br><span class="line"><span class="function">        @<span class="title">Param</span><span class="params">(<span class="string">"note"</span>)</span> String note)</span>;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span> = <span class="string">"findRole"</span> <span class="attr">resultType</span> = <span class="string">"RoleBean"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bind</span> <span class="attr">name</span> = <span class="string">"pattern_roleName"</span> <span class="attr">value</span> = <span class="string">"'%' + roleName + '%'"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bind</span> <span class="attr">name</span> =<span class="string">"pattern_note"</span> <span class="attr">value</span> = <span class="string">"'%' + note + '%"</span>/&gt;</span></span><br><span class="line">    SELECT id, role_name as roleName, create_date as createDate, end_date as endDate, end_flag as endFlag, note FROM t_role </span><br><span class="line">    where role_name like #&#123;pattern_roleName&#125;</span><br><span class="line">    and note like #&#123;pattern_note&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考内容 &gt;&gt; 深入浅出MyBatis技术原理与实战</span><br></pre></td></tr></table></figure>
       
 
       <div>
@@ -480,7 +524,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://yoursite.com/2018/12/04/MySQL-4-索引-二-——高性能索引/" title="[MySQL] 4.索引(二)——高性能索引">http://yoursite.com/2018/12/04/MySQL-4-索引-二-——高性能索引/</a>
+    <a href="http://yoursite.com/2018/12/13/MyBatis-6-动态SQL/" title="[MyBatis] 6.动态SQL">http://yoursite.com/2018/12/13/MyBatis-6-动态SQL/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -495,11 +539,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
+            <a href="/tags/MyBatis/" rel="tag"><i class="fa fa-tag"></i> MyBatis</a>
           
-            <a href="/tags/索引/" rel="tag"><i class="fa fa-tag"></i> 索引</a>
-          
-            <a href="/tags/MySQL性能/" rel="tag"><i class="fa fa-tag"></i> MySQL性能</a>
+            <a href="/tags/动态SQL/" rel="tag"><i class="fa fa-tag"></i> 动态SQL</a>
           
         </div>
       
@@ -527,8 +569,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/03/LeetCode-14-Longest-Common-Prefix/" rel="next" title="[LeetCode] 14.Longest Common Prefix">
-                <i class="fa fa-chevron-left"></i> [LeetCode] 14.Longest Common Prefix
+              <a href="/2018/12/08/MyBatis-5-映射器-四-——级联/" rel="next" title="[MyBatis] 5.映射器(四)——级联">
+                <i class="fa fa-chevron-left"></i> [MyBatis] 5.映射器(四)——级联
               </a>
             
           </div>
@@ -536,10 +578,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/04/LeetCode-19-Remove-Nth-Node-From-End-of-List/" rel="prev" title="[LeetCode] 19.Remove Nth Node From End of List">
-                [LeetCode] 19.Remove Nth Node From End of List <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -708,7 +746,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如果使用高性能索引"><span class="nav-number">1.</span> <span class="nav-text">如果使用高性能索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#独立的列："><span class="nav-number">1.1.</span> <span class="nav-text">独立的列：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前缀索引和索引选择性："><span class="nav-number">1.2.</span> <span class="nav-text">前缀索引和索引选择性：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如何计算索引选择性："><span class="nav-number">1.2.1.</span> <span class="nav-text">如何计算索引选择性：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何创建前缀索引："><span class="nav-number">1.2.2.</span> <span class="nav-text">如何创建前缀索引：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特殊用处："><span class="nav-number">1.2.3.</span> <span class="nav-text">特殊用处：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多列索引："><span class="nav-number">1.3.</span> <span class="nav-text">多列索引：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#动态SQL"><span class="nav-number">1.</span> <span class="nav-text">动态SQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#if元素"><span class="nav-number">1.1.</span> <span class="nav-text">if元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#choose、when、otherwise元素"><span class="nav-number">1.2.</span> <span class="nav-text">choose、when、otherwise元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#trim、where、set元素"><span class="nav-number">1.3.</span> <span class="nav-text">trim、where、set元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#foreach元素"><span class="nav-number">1.4.</span> <span class="nav-text">foreach元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bind元素"><span class="nav-number">1.5.</span> <span class="nav-text">bind元素</span></a></li></ol></li></ol></div>
             
 
           </div>
