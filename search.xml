@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[[LeetCode] 13.Roman to Integer]]></title>
+    <url>%2F2018%2F12%2F14%2FLeetCode-13-Roman-to-Integer%2F</url>
+    <content type="text"><![CDATA[题目翻译罗马数字是用以下7种字符表示的：I, V, X, L, C, D 和 M. 字符 值 I 1 V 5 X 10 L 50 C 100 D 500 M 1000 举例来说，2在罗马数字中用II表示，12用XII表示，27写作XXVII 罗马数字通常将最大数写在最左，较小数写在右面。但是数字4的写法并不是IIII而是IV。因为1在5之前，我们就用5减去它，变成4。同样，这个规则对9也适用，9被写作IX 有六个使用减法的实例： I 可以被放在 V (5) 和 X (10) 之前就变成了 4 和 9. X 可以被放在 L (50) 和 C (100) 之前就变成了 40 和 90. C 可以被放在 D (500) 和 M (1000) 之前就变成了 400 and 900. 给定一个罗马数字，将其转换为整数。输入保证在1到3999的范围内。 例子： 输入: “III” 输出: 3 输入: &quot;IV&quot; 输出: 4 输入: &quot;IX&quot; 输出: 9 输入: &quot;LVIII&quot; 输出: 58 解释: L = 50, V = 5, III = 3. 输入: &quot;MCMXCIV&quot; 输出: 1994 解释: M = 1000, CM = 900, XC = 90 and IV = 4. 解题方法从头遍历输入字符串，对于’I’，’X’，’C’，判断后面的字符，是否是4或者9这种特殊情况。 代码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384int romanToInt(char *s)&#123; int i, count = 0; for (i = 0; i &lt; strlen(s) - 1; i++) &#123; switch (s[i]) &#123; case 'I': if (s[i + 1] == 'V') &#123; count += 4; i++; &#125; else if (s[i + 1] == 'X') &#123; count += 9; i++; &#125; else count++; break; case 'V': count += 5; break; case 'X': if (s[i + 1] == 'L') &#123; count += 40; i++; &#125; else if (s[i + 1] == 'C') &#123; count += 90; i++; &#125; else count += 10; break; case 'L': count += 50; break; case 'C': if (s[i + 1] == 'D') &#123; count += 400; i++; &#125; else if (s[i + 1] == 'M') &#123; count += 900; i++; &#125; else count += 100; break; case 'D': count += 500; break; case 'M': count += 1000; break; default: break; &#125; &#125; if (i == strlen(s) - 1) &#123; if (s[i] == 'I') count += 1; else if (s[i] == 'X') count += 10; else if (s[i] == 'C') count += 100; else if (s[i] == 'V') count += 5; else if (s[i] == 'L') count += 50; else if (s[i] == 'D') count += 500; else count += 1000; &#125; return count;&#125;]]></content>
+      <categories>
+        <category>LeetCode解题报告</category>
+      </categories>
+      <tags>
+        <tag>LeetCode</tag>
+        <tag>算法</tag>
+        <tag>字符串</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[[LeetCode] 12.Integer to Roman]]></title>
+    <url>%2F2018%2F12%2F14%2FLeetCode-12-Integer-to-Roman%2F</url>
+    <content type="text"><![CDATA[题目翻译罗马数字是用以下7种字符表示的：I, V, X, L, C, D 和 M. 字符 值 I 1 V 5 X 10 L 50 C 100 D 500 M 1000 举例来说，2在罗马数字中用II表示，12用XII表示，27写作XXVII 罗马数字通常将最大数写在最左，较小数写在右面。但是数字4的写法并不是IIII而是IV。因为1在5之前，我们就用5减去它，变成4。同样，这个规则对9也适用，9被写作IX 有六个使用减法的实例： I 可以被放在 V (5) 和 X (10) 之前就变成了 4 和 9. X 可以被放在 L (50) 和 C (100) 之前就变成了 40 和 90. C 可以被放在 D (500) 和 M (1000) 之前就变成了 400 and 900. 给定一个整数，将其转换为罗马数字。输入保证在1到3999的范围内。 例子： 输入: 3 输出: &quot;III&quot; 输入: 4 输出: &quot;IV&quot; 输入: 9 输出: &quot;IX&quot; 输入: 58 输出: &quot;LVIII&quot; 解释: L = 50, V = 5, III = 3. 输入: 1994 输出: &quot;MCMXCIV&quot; 解释: M = 1000, CM = 900, XC = 90 and IV = 4. 解题方法先分别求出给定数字的个、十、百、千位。因为千位不能大于4，所以只用判断个、十、百位的数字。对于这三位的数字有以下几种可能 值等于4或9：直接算出相应的字符，然后加到字符串尾就可以。 值小于4：字符串加上n个相应的字符(例如，个位为3，就加3个’I’；十位为2，就加2个’X’)。 值大于等于5：字符串加上相应位为5的字符(例如，个位加’V’，十位加’L’)，然后重复上一步骤。 代码1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253class Solution&#123; public: string intToRoman(int num) &#123; int tho = num / 1000; int hun = (num / 100) % 10; int ten = (num / 10) % 10; int one = num % 10; string s = ""; for (int i = 0; i &lt; tho; i++) s += "M"; if (hun == 9) s += "CM"; else if (hun == 4) s += "CD"; else &#123; if (hun &gt;= 5) s += "D"; for (int i = 0; i &lt; hun % 5; i++) s += "C"; &#125; if (ten == 9) s += "XC"; else if (ten == 4) s += "XL"; else &#123; if (ten &gt;= 5) s += "L"; for (int i = 0; i &lt; ten % 5; i++) s += "X"; &#125; if (one == 9) s += "IX"; else if (one == 4) s += "IV"; else &#123; if (one &gt;= 5) s += "V"; for (int i = 0; i &lt; one % 5; i++) s += "I"; &#125; return s; &#125;&#125;;]]></content>
+      <categories>
+        <category>LeetCode解题报告</category>
+      </categories>
+      <tags>
+        <tag>LeetCode</tag>
+        <tag>算法</tag>
+        <tag>字符串</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[[MySQL] 6.索引(四)——覆盖索引、索引排序、冗余索引]]></title>
     <url>%2F2018%2F12%2F13%2FMySQL-6-%E7%B4%A2%E5%BC%95-%E5%9B%9B-%E2%80%94%E2%80%94%E8%A6%86%E7%9B%96%E7%B4%A2%E5%BC%95%E3%80%81%E7%B4%A2%E5%BC%95%E6%8E%92%E5%BA%8F%E3%80%81%E5%86%97%E4%BD%99%E7%B4%A2%E5%BC%95%2F</url>
     <content type="text"><![CDATA[覆盖索引如果一个索引包含(或者说覆盖)所有需要查询的字段的值，就称之为“覆盖索引”。 覆盖索引可以极大地提高性能。因为只需要扫描索引，而无须返回表，有以下好处： 索引条目远小于数据行大小，所以只读取索引可以减少数据访问量。这对缓存的负载很重要，对于I/O密集型应用很有帮助，因为索引比数据小，更容易全部放入内存中。 因为索引是按照列值顺序存储的，所以对于I/O密集型的范围查询会比随即从磁盘读取每一行数据的I/O要少的多。 由于InnoDB的聚簇索引，覆盖索引对于InnoDB很有用。InnoDB的二级索引在叶子节点中保存了行的主键值，如果二级主键能够覆盖查询，则可以避免对主键索引的二次查询。 覆盖索引必须要存储索引类的值，所以MySQL只能使用B-Tree索引做覆盖索引。 使用索引扫描来做排序只有当索引的列顺序和ORDER BY子句的顺序完全一致，并且所有列的排序方向(倒序或正序)都一样时，MySQL才能使用索引来对结果做排序。如果查询需要关联多张表，则只有当ORDER BY子句引用的字段全部为第一个表时，才能使用索引做排序。ORDER BY子句和查找型查询的限制是一样的：需要满足索引的最左前缀的要求。 当前导列为常量时，ORDER BY子句可以不满足索引的最左前缀的要求。 下面是一个例子：123456789101112131415161718192021222324252627CREATE TABLE rental ( ... PRIMARY KEY (rental_id), UNIQUE KEY rental_date (rental_date, inventory_id, customer_id), ...);mysql &gt; SELECT ... FROM rental WHERE rental_date = '2005-05-25' ORDER BY inventory_id DESC;-- 可以使用索引排序，因为查询为索引第一列提供了常量条件，而使用第二列进行排序。合在一起便形成了索引最左前缀。mysql &gt; ... WHERE rental_date &gt; '2005-05-25' ORDER BY rental_date, inventory_id;-- 可以使用索引排序，因为ORDER BY使用的两列就是索引的最左前缀。mysql &gt; ... WHERE rental_date = '2005-05-25' ORDER BY inventory_id DESC, customer_id ASC;-- 不可以使用索引排序，因为查询使用了两种不同的排序方向。mysql &gt; WHERE rental_date = '2005-05-25' ORDER BY inventory_id, staff_id;-- 不可以使用索引排序，因为ORDER BY中有不在索引中的列。mysql &gt; WHERE rental_date = '2005-05-25' ORDER BY customer_id;-- 不可以使用索引排序，因为WHERE子句和ORDER BY子句中的列无法组合成索引的最左前缀。mysql &gt; ... WHERE rental_date &gt; '2005-05-25' ORDER BY inventory_id, customer_id;-- 不可以使用索引排序，因为在索引列第一列上是范围条件。mysql &gt; ... WHERE rantal_date = '2005-05-25' AND inventory_id IN (1, 2) ORDER BY customer_id;-- 不可以使用索引排序，因为查询在inventory_id列上有多个等于条件，相当于范围查询。 冗余和重复索引MySQL允许在相同列上创建多个索引，MySQL需要单独维护重复的索引，会影响性能。 重复索引是指相同的列上按照相同的顺序创建的相同类型的索引，应该避免这种索引(如果索引类型不同，不算重复索引)。 冗余索引和重复索引有些不同，如果创建了索引(A，B)，再创建索引(A)就是冗余索引，因为这只是前一个索引的前缀索引。但是如果创建了(A，B)，再创建索引(B，A)或者(B)就不是冗余索引。因为这两个不是(A，B)的最左前缀索引。不同类型的索引也不会是冗余索引。 大多数情况下不需要冗余索引，但有的时候，如果要扩展索引，可能需要在当前索引上加上一个很长的列(如很长的VARCHAR)，会影响性能，冗余索引可能是较好的选择。 1参考内容 &gt;&gt; 高性能MySQL第三版]]></content>
@@ -259,8 +285,8 @@
       <tags>
         <tag>LeetCode</tag>
         <tag>算法</tag>
-        <tag>哈希</tag>
         <tag>字符串</tag>
+        <tag>哈希</tag>
       </tags>
   </entry>
   <entry>
