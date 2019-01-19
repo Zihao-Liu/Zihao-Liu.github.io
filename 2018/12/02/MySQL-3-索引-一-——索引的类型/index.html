@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="MySQL,索引,B-Tree,InnoDB,">
+  <meta name="keywords" content="MySQL,索引,InnoDB,B-Tree,">
 
 
 
@@ -80,7 +80,7 @@
 
 
 <meta name="description" content="索引索引的作用：在MySQL中，想要查找某个行时，首先在索引中找到对应值，然后根据匹配的索引找到对应的数据行。在MySQL中，索引是在存储引擎层而不是服务器层实现的。对于索引的创建和如何使用索引进行查询 推荐阅读：如何理解并正确使用MySQL索引 索引的类型B-Tree索引B-Tree通常意味着所有的值都是按顺序存储的，并且每一个叶子页到根的距离相同。推荐阅读：什么是B树">
-<meta name="keywords" content="MySQL,索引,B-Tree,InnoDB">
+<meta name="keywords" content="MySQL,索引,InnoDB,B-Tree">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[MySQL] 3.索引(一)——索引的类型">
 <meta property="og:url" content="http://yoursite.com/2018/12/02/MySQL-3-索引-一-——索引的类型/index.html">
@@ -88,7 +88,7 @@
 <meta property="og:description" content="索引索引的作用：在MySQL中，想要查找某个行时，首先在索引中找到对应值，然后根据匹配的索引找到对应的数据行。在MySQL中，索引是在存储引擎层而不是服务器层实现的。对于索引的创建和如何使用索引进行查询 推荐阅读：如何理解并正确使用MySQL索引 索引的类型B-Tree索引B-Tree通常意味着所有的值都是按顺序存储的，并且每一个叶子页到根的距离相同。推荐阅读：什么是B树">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/12/02/MySQL-3-索引-一-——索引的类型/B-Tree索引.jpg">
-<meta property="og:updated_time" content="2018-12-15T05:10:20.218Z">
+<meta property="og:updated_time" content="2019-01-19T11:23:39.550Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[MySQL] 3.索引(一)——索引的类型">
 <meta name="twitter:description" content="索引索引的作用：在MySQL中，想要查找某个行时，首先在索引中找到对应值，然后根据匹配的索引找到对应的数据行。在MySQL中，索引是在存储引擎层而不是服务器层实现的。对于索引的创建和如何使用索引进行查询 推荐阅读：如何理解并正确使用MySQL索引 索引的类型B-Tree索引B-Tree通常意味着所有的值都是按顺序存储的，并且每一个叶子页到根的距离相同。推荐阅读：什么是B树">
@@ -395,7 +395,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.1k 字
+                  2.7k 字
                 </span>
               
 
@@ -411,7 +411,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  7 分钟
+                  9 分钟
                 </span>
               
             </div>
@@ -469,6 +469,15 @@
 <p>例如，需要存储大量URL，并且需要根据URL进行搜索查找。如果使用B-Tree直接查找，会很慢，存储内容也会很多。所以，可以给表新增一列，并且使用一个哈希函数，这个新增的列记录对应行URL哈希后的值，并在该列加上索引，这样在查找时，先对给定的URL进行哈希，然后再新增列上查找对应哈希后的值，找到后再返回对应的行就可以了。</p>
 <h4 id="有序数组"><a href="#有序数组" class="headerlink" title="有序数组"></a>有序数组</h4><p>即按一定顺序，将数据存在一个数组里，这种索引支持等值查询(二分法)，也支持范围查询(二分然后遍历)。但有序数组在更新时花费很高，所以只适合静态存储引擎。</p>
 <h4 id="全文索引"><a href="#全文索引" class="headerlink" title="全文索引"></a>全文索引</h4><p>它查找的是文本中的关键词，而不是直接比较索引中的值。在相同的列上同时创建全文索引和基于值的B-Tree索引不会有冲突，全文索引适用于MATCH AGAINST操作，而不是普通的WHERE操作。</p>
+<h4 id="普通索引和唯一索引"><a href="#普通索引和唯一索引" class="headerlink" title="普通索引和唯一索引"></a>普通索引和唯一索引</h4><ol>
+<li>普通索引：数据库中的基本索引类型，允许在定义索引的列中插入重复值和空值</li>
+<li>唯一索引：索引列的值必须唯一，但允许有空值，主键索引是一种特殊的唯一索引，不允许有空值（比如自增ID）</li>
+</ol>
+<h4 id="单列索引和组合索引"><a href="#单列索引和组合索引" class="headerlink" title="单列索引和组合索引"></a>单列索引和组合索引</h4><ol>
+<li>单列索引： 即一个索引只包含单个列，一个表可以有多个单列索引</li>
+<li>组合索引： 指在表的多个字段组合上创建的索引，只有在查询条件中使用了这些字段的左边字段时，索引才会被使用。在组合索引中不能有列的值为NULL，如果有，那么这一列对组合索引就是无效的。</li>
+<li>全文索引： 类型为FULLTEXT，在定义索引的列上支持值的全文查找，允许在这些索引列中插入重复值和空值。全文索引可以在CHAR、VARCHAR或者TEXT类型的列上创建，MySQL中只有MyISAM存储引擎支持全文索引</li>
+</ol>
 <hr>
 <h3 id="索引的优点"><a href="#索引的优点" class="headerlink" title="索引的优点"></a>索引的优点</h3><p>索引除了可以让服务器快速地定位到指定位置，还有其他附加作用</p>
 <p>对于B-Tree索引，按照顺序存储数据，所以MySQL可以用来做ORDER BY和GROUP BY操作。因为数据是有序的，所以B-Tree也就会将相关的列值都存储在一起。最后，因为索引中存储了实际的列值，所以某些查询只使用索引就能够完成全部查询。</p>
@@ -500,6 +509,28 @@
 <li>只有一个索引</li>
 <li>该索引必须是唯一索引</li>
 </ul>
+<hr>
+<h3 id="什么时候要使用索引"><a href="#什么时候要使用索引" class="headerlink" title="什么时候要使用索引"></a>什么时候要使用索引</h3><ol>
+<li>主键自动建立唯一索引。</li>
+<li>经常作为查询条件在WHERE或者ORDER BY语句中出现的列要建立索引</li>
+<li>作为排序的列要建立索引。</li>
+<li>查询中与其他表关联的字段，外键关系建立索引。</li>
+<li>高并发条件下倾向组合索引。</li>
+</ol>
+<hr>
+<h3 id="什么时候不要使用索引"><a href="#什么时候不要使用索引" class="headerlink" title="什么时候不要使用索引"></a>什么时候不要使用索引</h3><ol>
+<li>经常增删改的的列不要建立索引。</li>
+<li>有大量重复的列不要建立索引。</li>
+<li>表记录太少不要建立索引。</li>
+<li>在一个SELECT语句中，索引只能使用一次，如果在WHERE中使用了，那么在ORDER BY中就不要用了。</li>
+<li>在索引的列上使用表达式或者函数会使索引失效。</li>
+<li>在查询条件中使用正则表达式，只有在搜索模板的第一个字符不是通配符的情况下才能使用索引。</li>
+<li>在查询条件中使用&lt;&gt;会导致索引失效。</li>
+<li>在查询条件中使用IS NULL会导致索引失效。</li>
+<li>在查询条件中使用OR连接多个条件会导致索引失效，这时应该改为两次查询，然后用UNION ALL连接起来。</li>
+<li>尽量不要多列排序，如果一定要，最好为这队列构建组合索引。</li>
+</ol>
+<hr>
 <h2 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><p><a href="http://blog.jobbole.com/111757/" target="_blank" rel="noopener">什么是B树</a></p>
 <p><a href="https://my.oschina.net/feinik/blog/1305784?p=2" target="_blank" rel="noopener">如何理解并正确使用MySQL索引</a></p>
 <p><a href="https://time.geekbang.org/column/article/69236" target="_blank" rel="noopener">极客时间：MySQL实战45讲 —— 04深入浅出索引(上)</a></p>
@@ -557,9 +588,9 @@
           
             <a href="/tags/索引/" rel="tag"><i class="fa fa-tag"></i> 索引</a>
           
-            <a href="/tags/B-Tree/" rel="tag"><i class="fa fa-tag"></i> B-Tree</a>
-          
             <a href="/tags/InnoDB/" rel="tag"><i class="fa fa-tag"></i> InnoDB</a>
+          
+            <a href="/tags/B-Tree/" rel="tag"><i class="fa fa-tag"></i> B-Tree</a>
           
         </div>
       
@@ -768,7 +799,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#索引"><span class="nav-number">1.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#索引的类型"><span class="nav-number">1.1.</span> <span class="nav-text">索引的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#B-Tree索引"><span class="nav-number">1.1.1.</span> <span class="nav-text">B-Tree索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#哈希索引"><span class="nav-number">1.1.2.</span> <span class="nav-text">哈希索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#有序数组"><span class="nav-number">1.1.3.</span> <span class="nav-text">有序数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#全文索引"><span class="nav-number">1.1.4.</span> <span class="nav-text">全文索引</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引的优点"><span class="nav-number">1.2.</span> <span class="nav-text">索引的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB索引模型"><span class="nav-number">1.3.</span> <span class="nav-text">InnoDB索引模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如何选择主键"><span class="nav-number">1.3.1.</span> <span class="nav-text">如何选择主键</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐阅读"><span class="nav-number">2.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#索引"><span class="nav-number">1.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#索引的类型"><span class="nav-number">1.1.</span> <span class="nav-text">索引的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#B-Tree索引"><span class="nav-number">1.1.1.</span> <span class="nav-text">B-Tree索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#哈希索引"><span class="nav-number">1.1.2.</span> <span class="nav-text">哈希索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#有序数组"><span class="nav-number">1.1.3.</span> <span class="nav-text">有序数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#全文索引"><span class="nav-number">1.1.4.</span> <span class="nav-text">全文索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#普通索引和唯一索引"><span class="nav-number">1.1.5.</span> <span class="nav-text">普通索引和唯一索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单列索引和组合索引"><span class="nav-number">1.1.6.</span> <span class="nav-text">单列索引和组合索引</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引的优点"><span class="nav-number">1.2.</span> <span class="nav-text">索引的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB索引模型"><span class="nav-number">1.3.</span> <span class="nav-text">InnoDB索引模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如何选择主键"><span class="nav-number">1.3.1.</span> <span class="nav-text">如何选择主键</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么时候要使用索引"><span class="nav-number">1.4.</span> <span class="nav-text">什么时候要使用索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么时候不要使用索引"><span class="nav-number">1.5.</span> <span class="nav-text">什么时候不要使用索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐阅读"><span class="nav-number">2.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
             
 
           </div>
