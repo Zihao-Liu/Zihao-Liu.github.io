@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[[MySQL] 7.锁]]></title>
-    <url>%2F2019%2F01%2F19%2FMySQL-7-%E9%94%81%2F</url>
-    <content type="text"></content>
-  </entry>
-  <entry>
     <title><![CDATA[[LeetCode] 16.3Sum Closest]]></title>
     <url>%2F2018%2F12%2F15%2FLeetCode-16-3Sum-Closest%2F</url>
     <content type="text"><![CDATA[题目翻译给定一个包含n个整数的数组和一个target数，找出数组中3个和与target数最接近的数，并返回它们的和。你可以假设只有一种特定的答案。 例子： 输入: [-1, 2, 1, -4], target = 1. 输出：2 解释: -1 + 2 + 1 = 2 最接近 解题方法首先将nums数组排序，然后使用一个指针i从头遍历数组，对于元素i有以下两种可能： 如果i = 0或者nums[i] != nums[i-1]：使用两个指针left，right分别指向i+1和数组最后一个元素，然后用nums[left] + nums[right]和-nums[i]相比。 使用一个temp记录最接近的和是多少 i元素与i-1元素相等，则i向后移，避免选取重复三元组。最后返回和为temp对应的三个数 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546class Solution&#123; public: int threeSumClosest(vector&lt;int&gt; &amp;nums, int target) &#123; int close = 2147483647; int output = 0; if (nums.size() &lt;= 2) return 0; sort(nums.begin(), nums.end()); for (int i = 0; i &lt; nums.size() - 2; i++) &#123; if (i == 0 || (i &gt; 0 &amp;&amp; nums[i] != nums[i - 1])) &#123; int sum = target - nums[i]; int left = i + 1, right = nums.size() - 1; while (left &lt; right) &#123; int temp = abs(sum - nums[left] - nums[right]); if (temp == 0) return target; else if (temp &lt; close) &#123; close = temp; output = nums[i] + nums[left] + nums[right]; &#125; if (nums[left] + nums[right] == sum) &#123; while (left &lt; right &amp;&amp; nums[left] == nums[left + 1]) left++; while (left &lt; right &amp;&amp; nums[right] == nums[right - 1]) right--; left++; right--; &#125; else if (nums[left] + nums[right] &gt; sum) right--; else left++; &#125; &#125; &#125; return output; &#125;&#125;;]]></content>
