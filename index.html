@@ -291,6 +291,233 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/设计模式-2-工厂方法模式/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zihao Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LLLZH's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/14/设计模式-2-工厂方法模式/" itemprop="url">[设计模式] 2.工厂方法模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T22:27:50+08:00">
+                2019-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/14/设计模式-2-工厂方法模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/14/设计模式-2-工厂方法模式/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.2k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h1><p>Define an interface for creating an object, but let subclassed decide with class to instantiate. Factory Method lets a class defer instantiation to subclasses.定义一个用于创建对象的接口，让子类决定实例化哪一个类。工厂方法使一个类的实例化延迟到其子类。</p>
+<p>抽象产品类Product负责定义产品的共性，实现对事务最抽象的定义; 抽象创建类Creator也就是抽象工厂，具体如何创建产品类是由具体的实现工厂ConcreteCreator完成的。</p>
+<img src="/2019/04/14/设计模式-2-工厂方法模式/工厂方法模式通用类图.png" title="工厂方法模式通用类图">
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 抽象产品类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 产品类的公共方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 抽象方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">method2</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 具体产品类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteProduct1</span> <span class="keyword">extends</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 业务逻辑处理</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteProduct2</span> <span class="keyword">extends</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 业务逻辑处理</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 抽象工厂类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Creator</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个产品对象，其输入参数类型可以自行设置</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> &lt;T extends Product&gt; <span class="function">T <span class="title">createProduct</span> <span class="params">(Class&lt;T&gt; c)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 具体工厂类，具体如何产生一个产品对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteCreator</span> <span class="keyword">extends</span> <span class="title">Creator</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> &lt;T extends Product&gt; <span class="function">T <span class="title">createProduct</span><span class="params">(Class&lt;T&gt; c)</span></span>&#123;</span><br><span class="line">        Product product = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            product = (Product) Class.forName (c.getName()).newInstance();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            <span class="comment">// 异常处理</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (T) product;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 场景类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Creator creator = <span class="keyword">new</span> ConcreteCreator();</span><br><span class="line">        Product product = creator.createProduct(ConcreteProduct1.class);</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 继续业务处理</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="工厂方法模式的优点："><a href="#工厂方法模式的优点：" class="headerlink" title="工厂方法模式的优点："></a>工厂方法模式的优点：</h2><ol>
+<li>工厂类不用任何修改就可以完成系统扩展。</li>
+<li>屏蔽产品类，产品类实现如何变化，调用者都不需要关心。</li>
+</ol>
+<h2 id="工厂模式使用场景："><a href="#工厂模式使用场景：" class="headerlink" title="工厂模式使用场景："></a>工厂模式使用场景：</h2><ol>
+<li>在所有需要生成对象的地方都可以使用，但是需要慎重地考虑是否要增加一个工厂类进行管理，增加代码复杂度。</li>
+<li>需要灵活的、可扩展的框架时，可以考虑采用工厂方法模式。例如，设计一个邮件服务器，有3中网络协议：POP3、IMAP、HTTP，我们可以把这三种方法作为产品类</li>
+</ol>
+<h2 id="工厂模式的扩展："><a href="#工厂模式的扩展：" class="headerlink" title="工厂模式的扩展："></a>工厂模式的扩展：</h2><ol>
+<li><p>简单工厂模式：一个模块仅需要一个工厂类，没必要把它生产出来，可以使用静态方法。缺点是扩展困难。</p>
+ <img src="/2019/04/14/设计模式-2-工厂方法模式/简单工厂模式类图.png" title="简单工厂模式类图">
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 工厂类</span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HumanFactory</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends Human&gt; <span class="function">T <span class="title">createHuman</span><span class="params">(Class&lt;T&gt; c)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 定义一个生产出的人种</span></span><br><span class="line">        Human human = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 产生一个人种</span></span><br><span class="line">            human = (Human) Class.forname(c.getName()).newInstance();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            System.out.println(<span class="string">"人种生成错误"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (T)human;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 场景类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NvWa</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Human whiteHuman = HumanFactory.createHuman(WhiteHuman.class);</span><br><span class="line">        Human blackHuman = HumanFactory.createHuman(BlackHuman.class);</span><br><span class="line">        Human yellowHuman = HumanFactory.createHuman(YellowHuman.class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多个工厂类：为每个产品定义一个创造者，然后由调用者去选择与哪个工厂方法关联</p>
+ <img src="/2019/04/14/设计模式-2-工厂方法模式/多个工厂类的类图.png" title="多个工厂类的类图">
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 多工厂模式的抽象工厂类, 抽象方法中已经不再需要传递相关参数了，因为每一个具体的</span></span><br><span class="line"><span class="comment"> * 的工厂都已经非常明确自己的职责，创建自己负责的产品类对象。</span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractHumanFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Human <span class="title">createHuman</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 黑色人种创建工厂实现</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BlackHumanFactory</span> <span class="title">extentds</span> <span class="title">AbstractHumanFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Human <span class="title">createHuman</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> BlackHuman();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 黄色人种创建工厂实现</span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">YellowHumanFactory</span> <span class="keyword">extends</span> <span class="title">AbstractHumanFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Human <span class="title">createHuman</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> YellowHuman();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 白色人种创建工厂实现</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WhiteHumanFactroy</span> <span class="keyword">extends</span> <span class="title">AbstractHumanFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Human <span class="title">createHuman</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> WhiteHuman();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 场景类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NvWa</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        Human whiteHuman = (<span class="keyword">new</span> WhiteHumanFactory()).createHuman();</span><br><span class="line">        Human blackHuman = (<span class="keyword">new</span> BlackHumanFactory()).createHuman();</span><br><span class="line">        Human yellowHuman = (<span class="keyword">new</span> YellowHumanFactory()).createHuman();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>替代单例模式</p>
+ 
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 单例类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 不允许通过new产生一个对象</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        业务处理</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 负责生成单例的工厂类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonFactory</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton singleton;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class clazz = Class.forName(Singleton.class.getName());</span><br><span class="line">            <span class="comment">// 获得无参构造</span></span><br><span class="line">            Constructor constructor = clazz.getDeclaredConstructor();</span><br><span class="line">            <span class="comment">// 设置无参构造是可访问的</span></span><br><span class="line">            constructor.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            <span class="comment">// 产生一个实例对象</span></span><br><span class="line">            singletion = (Singleton) constructor.newInstance();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exection e)&#123;</span><br><span class="line">            <span class="comment">// 异常</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getSingleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> singleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>延迟初始化<br>一个对象被消费完毕后，并不立刻释放，工厂类保持其初始状态，等待再次被使用。ProductFactory负责产品类对象的创建工作，并且通过prMap变量产生一个缓存，对需要再次被重用的对象保留，Product和ConcreteProduct是一个示例代码。</p>
+</li>
+</ol>
+<pre><code>{% asset_img 延迟初始化类图.png 延迟初始化类图 %}
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductFactory</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;String, String&gt; prMap = <span class="keyword">new</span> HashMap();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Product <span class="title">createProduct</span><span class="params">(String type)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Product product = <span class="keyword">null</span>;</span><br><span class="line">        <span class="comment">// 如果Map中已经有这个对象</span></span><br><span class="line">        <span class="keyword">if</span> (prMap.containsKey(type))&#123;</span><br><span class="line">            product = prMap.get(type);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (type.equals(<span class="string">"Product1"</span>)) &#123;</span><br><span class="line">                product = <span class="keyword">new</span> ConcreteProduct1();</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                product = <span class="keyword">new</span> ConcreteProduct2();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> product;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考内容 &gt;&gt; 设计模式之禅</span><br></pre></td></tr></table></figure>
+          
+        
+      
+
+      <div>
+        
+      </div>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/设计模式-1-单例模式/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2143,200 +2370,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/04/MySQL-5-索引-三-——聚簇索引/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zihao Liu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LLLZH's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/04/MySQL-5-索引-三-——聚簇索引/" itemprop="url">[MySQL] 5.索引(三)——聚簇索引</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-04T15:52:18+08:00">
-                2018-12-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/12/04/MySQL-5-索引-三-——聚簇索引/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/04/MySQL-5-索引-三-——聚簇索引/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.4k 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="聚簇索引"><a href="#聚簇索引" class="headerlink" title="聚簇索引"></a>聚簇索引</h2><p>聚簇索引是一种数据存储方式，InnoDB的聚簇索引实际上在同一个结构中保存了B-Tree索引和数据行。当表有聚簇索引时，它的数据行实际上存放在索引的叶子页中(叶子页包含了行的全部数据，节点页只包含了索引列)。“聚簇”表示数据行和相邻的键值紧凑的存储在一起。一个表只能有一个聚簇索引。</p>
-<p>InnoDB会选择主键列进行聚簇索引，如果没有定义主键，InnoDB会选择唯一的非空索引代替。如果还是没有，InnoDB会隐式定义一个主键来作为聚簇索引。InnoDB只聚集在同一个页面中的记录。</p>
-<p>InnoDb的普通索引(二级索引)的叶子结点中存放的是主键的值，所以需要先查询普通索引(二级索引)的叶子节点找到对应的主键值，然后再根据主键值去聚集索引中查询到对应的数据。</p>
-<p>非聚集索引的索引与数据是存在不同文件的。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/12/04/MySQL-5-索引-三-——聚簇索引/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-
-      <div>
-        
-      </div>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2387,7 +2420,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2478,7 +2511,7 @@
       <div class="category-all-page motion-element">
         <div class="category-all">
           <b><i class="fa fa-folder-o"></i> 全部分类</b>
-          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">1</span></li></ul>
+          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">2</span></li></ul>
         </div>
       </div>
 
