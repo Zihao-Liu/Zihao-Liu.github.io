@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[[设计模式] 1.单例模式]]></title>
+    <url>%2F2019%2F04%2F14%2F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-1-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%2F</url>
+    <content type="text"><![CDATA[单例模式一个类只能生成一个对象，所有对象对它的依赖都是相同的。通过定义一个私有访问权限的构造函数，避免被其他类new出一个对象，而该类自己可以new出一个对象，其他类可以通过getInstance获得同一个对象 Ensure a class has only one instance, and provide a global point of access to it.确保某一个类只有一个实例，并且自行实例化并向整个系统提供这个实例。 12345678910111213141516/** * 也叫饿汉式单例 */public class Singleton &#123; private static final Singleton singleton = new Singleton(); // 限制产生多个对象 private Singletion () &#123;&#125; // 通过该方法获得实例对象 public static Singleton getSingleton() &#123; return singleton; &#125; // 类中其他方法，尽量使static public static void doSomething() &#123; &#125;&#125; 单例模式的优点 由于单例模式在内存中只有一个实例，减少了内存开支，特别是一个对象需要频繁地创建，销毁时，而且创建或销毁时性能又无法优化，单例模式就很好。 由于单例模式只生成一个实例，所以减少了系统的性能开销，当一个对象的产生需要比较多的资源时，如读取配置、产生其他依赖对象时，则可以通过在应用启动时直接产生一个单例对象，然后用驻留内存的方式来解决(在JAava EE中采用单例模式时需要注意JVM垃圾回收机制)。 单例模式可以避免对资源的多重占用，例如一个写文件动作，由于只有一个实例存在内存中，避免对同一个资源文件的同时写操作。 单例模式可以在系统设置全局的访问点，优化和共享资源访问。 Bean为单例模式，可以方便的管理生命周期。 单例模式的缺点 单例模式一般没有接口，扩展很困难，若要扩展，除了修改代码基本上没有第二种途径可以实现。 单例与单一职责原则有冲突。 使用场景在一个系统中，要求一个类有且仅有一个对象，如果出现多个对象就会出现”不良反应”。可以采用单例模式，例如： 生成唯一系列号。 在整个项目需要一个共享访问点或共享数据，例如一个web页面上的计数器。 创建一个对象需要消耗的资源过多，例如IO和访问数据库。 需要定义大量的静态常量和静态方法的环境。 注意事项 高并发情况下，需要注意单例模式的线程同步问题，避免产生多个实例。 123456789101112131415/** * 懒汉式单例。 */ public class Singleton &#123; private static Singleton singleton = null; // 限制产生多个对象 private Sigleton()&#123;&#125; // 通过该方法获得实例对象 public static synchronized Singleton getSingleton() &#123; if (singleton == null)&#123; singleton = new Singleton(); &#125; return singleton; &#125; &#125; 要考虑对象复制，在Java中，对象默认是不可以被复制的，若实现Cloneable接口，并实现了clone方法，则可以直接通过对象复制方式创建一个新对象，对象复制是不可调用类的构造函数，因此即使是私有的构造函数，对象仍然可以被复制。最好解决方法是单例类不要实现Cloneable接口。 1参考内容 &gt;&gt; 设计模式之禅]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[[LeetCode] 16.3Sum Closest]]></title>
     <url>%2F2018%2F12%2F15%2FLeetCode-16-3Sum-Closest%2F</url>
     <content type="text"><![CDATA[题目翻译给定一个包含n个整数的数组和一个target数，找出数组中3个和与target数最接近的数，并返回它们的和。你可以假设只有一种特定的答案。 例子： 输入: [-1, 2, 1, -4], target = 1. 输出：2 解释: -1 + 2 + 1 = 2 最接近 解题方法首先将nums数组排序，然后使用一个指针i从头遍历数组，对于元素i有以下两种可能： 如果i = 0或者nums[i] != nums[i-1]：使用两个指针left，right分别指向i+1和数组最后一个元素，然后用nums[left] + nums[right]和-nums[i]相比。 使用一个temp记录最接近的和是多少 i元素与i-1元素相等，则i向后移，避免选取重复三元组。最后返回和为temp对应的三个数 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546class Solution&#123; public: int threeSumClosest(vector&lt;int&gt; &amp;nums, int target) &#123; int close = 2147483647; int output = 0; if (nums.size() &lt;= 2) return 0; sort(nums.begin(), nums.end()); for (int i = 0; i &lt; nums.size() - 2; i++) &#123; if (i == 0 || (i &gt; 0 &amp;&amp; nums[i] != nums[i - 1])) &#123; int sum = target - nums[i]; int left = i + 1, right = nums.size() - 1; while (left &lt; right) &#123; int temp = abs(sum - nums[left] - nums[right]); if (temp == 0) return target; else if (temp &lt; close) &#123; close = temp; output = nums[i] + nums[left] + nums[right]; &#125; if (nums[left] + nums[right] == sum) &#123; while (left &lt; right &amp;&amp; nums[left] == nums[left + 1]) left++; while (left &lt; right &amp;&amp; nums[right] == nums[right - 1]) right--; left++; right--; &#125; else if (nums[left] + nums[right] &gt; sum) right--; else left++; &#125; &#125; &#125; return output; &#125;&#125;;]]></content>
