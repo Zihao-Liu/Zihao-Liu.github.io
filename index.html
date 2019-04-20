@@ -291,6 +291,199 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/20/踩坑指南-1-Lists-transform/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zihao Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LLLZH's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/20/踩坑指南-1-Lists-transform/" itemprop="url">[踩坑指南] 1.Lists.transform</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-20T17:08:29+08:00">
+                2019-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/踩坑指南/" itemprop="url" rel="index">
+                    <span itemprop="name">踩坑指南</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/20/踩坑指南-1-Lists-transform/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/20/踩坑指南-1-Lists-transform/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.8k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>前段时间在工作中，发现了关于<code>Lists.transform()</code>方法的一些坑点。在一些情况下，会造成对Lists.transform返回的值更改无效的情况。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>首先先创建一个Bean用来测试<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这两个注解是lombok插件提供的，相当于手写Getter和Setter方法</span></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestBean</span> </span>&#123;</span><br><span class="line">    Integer testA;</span><br><span class="line">    String testB;</span><br><span class="line">    <span class="keyword">int</span> testC;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TestBean</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TestBean</span><span class="params">(Integer testA, String testB, <span class="keyword">int</span> testC)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.testA = testA;</span><br><span class="line">        <span class="keyword">this</span>.testB = testB;</span><br><span class="line">        <span class="keyword">this</span>.testC = testC;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>首先，先看一下最简单的情况。创建一个ArrayList，然后将其中的Element加入到Lists.transform返回的集合中。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/04/20/踩坑指南-1-Lists-transform/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+
+      <div>
+        
+      </div>
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/20/设计模式-7-模板方法模式/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2047,229 +2240,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/14/LeetCode-13-Roman-to-Integer/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zihao Liu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LLLZH's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/14/LeetCode-13-Roman-to-Integer/" itemprop="url">[LeetCode] 13.Roman to Integer</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-14T15:47:57+08:00">
-                2018-12-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode解题报告/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode解题报告</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/12/14/LeetCode-13-Roman-to-Integer/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/14/LeetCode-13-Roman-to-Integer/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  506 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><p>罗马数字是用以下7种字符表示的：I, V, X, L, C, D 和 M.</p>
-<pre><code>字符           值
- I             1
- V             5
- X             10
- L             50
- C             100
- D             500
- M             1000
-</code></pre><p>举例来说，<code>2</code>在罗马数字中用<code>II</code>表示，<code>12</code>用<code>XII</code>表示，<code>27</code>写作<code>XXVII</code></p>
-<p>罗马数字通常将最大数写在最左，较小数写在右面。但是数字<code>4</code>的写法并不是<code>IIII</code>而是<code>IV</code>。因为1在5之前，我们就用5减去它，变成4。同样，这个规则对9也适用，<code>9</code>被写作<code>IX</code> </p>
-<p>有六个使用减法的实例：</p>
-<ul>
-<li>I 可以被放在 V (5) 和 X (10) 之前就变成了 4 和 9. </li>
-<li>X 可以被放在 L (50) 和 C (100) 之前就变成了 40 和 90. </li>
-<li>C 可以被放在 D (500) 和 M (1000) 之前就变成了 400 and 900.</li>
-</ul>
-<p>给定一个罗马数字，将其转换为整数。输入保证在1到3999的范围内。</p>
-<p>例子：<br>    输入: “III”<br>    输出: 3</p>
-<pre><code>输入: &quot;IV&quot;
-输出: 4
-
-输入: &quot;IX&quot;
-输出: 9
-
-输入: &quot;LVIII&quot;
-输出: 58
-解释: L = 50, V = 5, III = 3.
-
-输入: &quot;MCMXCIV&quot;
-输出: 1994
-解释: M = 1000, CM = 900, XC = 90 and IV = 4.
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/12/14/LeetCode-13-Roman-to-Integer/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-
-      <div>
-        
-      </div>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2320,7 +2290,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2331,7 +2301,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2342,7 +2312,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2411,7 +2381,7 @@
       <div class="category-all-page motion-element">
         <div class="category-all">
           <b><i class="fa fa-folder-o"></i> 全部分类</b>
-          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">7</span></li></ul>
+          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑指南/">踩坑指南</a><span class="category-list-count">1</span></li></ul>
         </div>
       </div>
 
