@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="一个类只能生成一个对象，所有对象对它的依赖都是相同的。通过定义一个私有访问权限的构造函数，避免被其他类new出一个对象，而该类自己可以new出一个对象，其他类可以通过getInstance获得同一个对象 Ensure a class has only one instance, and provide a global point of access to it.确保某一个类只有一个实例，并且自行">
+<meta name="description" content="一个类只能生成一个对象，所有对象对它的依赖都是相同的。通过定义一个私有访问权限的构造函数，避免被其他类new出一个对象，而该类自己可以new出一个对象，其他类可以通过getInstance获得同一个对象 Ensure a class has only one instance, and provide a global point of access to it.(确保某一个类只有一个实例，并且自">
 <meta name="keywords" content="设计模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[设计模式] 1.单例模式">
 <meta property="og:url" content="http://yoursite.com/2019/04/14/设计模式-1-单例模式/index.html">
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
-<meta property="og:description" content="一个类只能生成一个对象，所有对象对它的依赖都是相同的。通过定义一个私有访问权限的构造函数，避免被其他类new出一个对象，而该类自己可以new出一个对象，其他类可以通过getInstance获得同一个对象 Ensure a class has only one instance, and provide a global point of access to it.确保某一个类只有一个实例，并且自行">
+<meta property="og:description" content="一个类只能生成一个对象，所有对象对它的依赖都是相同的。通过定义一个私有访问权限的构造函数，避免被其他类new出一个对象，而该类自己可以new出一个对象，其他类可以通过getInstance获得同一个对象 Ensure a class has only one instance, and provide a global point of access to it.(确保某一个类只有一个实例，并且自">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/04/14/设计模式-1-单例模式/单例模式通用类图.png">
-<meta property="og:updated_time" content="2019-04-20T02:02:58.707Z">
+<meta property="og:updated_time" content="2019-04-20T02:10:42.820Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[设计模式] 1.单例模式">
-<meta name="twitter:description" content="一个类只能生成一个对象，所有对象对它的依赖都是相同的。通过定义一个私有访问权限的构造函数，避免被其他类new出一个对象，而该类自己可以new出一个对象，其他类可以通过getInstance获得同一个对象 Ensure a class has only one instance, and provide a global point of access to it.确保某一个类只有一个实例，并且自行">
+<meta name="twitter:description" content="一个类只能生成一个对象，所有对象对它的依赖都是相同的。通过定义一个私有访问权限的构造函数，避免被其他类new出一个对象，而该类自己可以new出一个对象，其他类可以通过getInstance获得同一个对象 Ensure a class has only one instance, and provide a global point of access to it.(确保某一个类只有一个实例，并且自">
 <meta name="twitter:image" content="http://yoursite.com/2019/04/14/设计模式-1-单例模式/单例模式通用类图.png">
 
 
@@ -433,7 +433,7 @@
 
       
         <p>一个类只能生成一个对象，所有对象对它的依赖都是相同的。通过定义一个私有访问权限的构造函数，避免被其他类new出一个对象，而该类自己可以new出一个对象，其他类可以通过getInstance获得同一个对象</p>
-<p>Ensure a class has only one instance, and provide a global point of access to it.确保某一个类只有一个实例，并且自行实例化并向整个系统提供这个实例。</p>
+<p>Ensure a class has only one instance, and provide a global point of access to it.(确保某一个类只有一个实例，并且自行实例化并向整个系统提供这个实例)。</p>
 <img src="/2019/04/14/设计模式-1-单例模式/单例模式通用类图.png" title="单例模式通用类图">
 <ol>
 <li>饿汉式单例：第一次引用该类的时候就创建对象实例，无法延迟加载。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton singleton = <span class="keyword">new</span> Singleton();</span><br><span class="line">    <span class="comment">// 限制产生多个对象</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singletion</span> <span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="comment">// 通过该方法获得实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getSingleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> singleton;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 类中其他方法，尽量使static</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -647,7 +647,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -754,7 +754,7 @@
       <div class="category-all-page motion-element">
         <div class="category-all">
           <b><i class="fa fa-folder-o"></i> 全部分类</b>
-          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">6</span></li></ul>
+          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">7</span></li></ul>
         </div>
       </div>
 
