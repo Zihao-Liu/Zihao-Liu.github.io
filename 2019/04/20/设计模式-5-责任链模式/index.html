@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="责任链模式Avoid coupling the sender of a request to its receiver by giving more than one object by giving more than one object a chance to handle the request. Chain the receiving objects and pass the reque">
+<meta name="description" content="Avoid coupling the sender of a request to its receiver by giving more than one object by giving more than one object a chance to handle the request. Chain the receiving objects and pass the request al">
 <meta name="keywords" content="设计模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[设计模式] 5.责任链模式">
 <meta property="og:url" content="http://yoursite.com/2019/04/20/设计模式-5-责任链模式/index.html">
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
-<meta property="og:description" content="责任链模式Avoid coupling the sender of a request to its receiver by giving more than one object by giving more than one object a chance to handle the request. Chain the receiving objects and pass the reque">
+<meta property="og:description" content="Avoid coupling the sender of a request to its receiver by giving more than one object by giving more than one object a chance to handle the request. Chain the receiving objects and pass the request al">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/04/20/设计模式-5-责任链模式/责任链模式通用类图.png">
-<meta property="og:updated_time" content="2019-04-20T01:57:32.388Z">
+<meta property="og:updated_time" content="2019-04-20T02:02:58.715Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[设计模式] 5.责任链模式">
-<meta name="twitter:description" content="责任链模式Avoid coupling the sender of a request to its receiver by giving more than one object by giving more than one object a chance to handle the request. Chain the receiving objects and pass the reque">
+<meta name="twitter:description" content="Avoid coupling the sender of a request to its receiver by giving more than one object by giving more than one object a chance to handle the request. Chain the receiving objects and pass the request al">
 <meta name="twitter:image" content="http://yoursite.com/2019/04/20/设计模式-5-责任链模式/责任链模式通用类图.png">
 
 
@@ -395,7 +395,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  717 字
+                  712 字
                 </span>
               
 
@@ -432,7 +432,7 @@
       
 
       
-        <h1 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a>责任链模式</h1><p>Avoid coupling the sender of a request to its receiver by giving more than one object by giving more than one object a chance to handle the request. Chain the receiving objects and pass the request along the chain until an object handle it.(使多个对象都有机会处理请求，从而避免了请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，直到有对象处理它为止)。</p>
+        <p>Avoid coupling the sender of a request to its receiver by giving more than one object by giving more than one object a chance to handle the request. Chain the receiving objects and pass the request along the chain until an object handle it.(使多个对象都有机会处理请求，从而避免了请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，直到有对象处理它为止)。</p>
 <img src="/2019/04/20/设计模式-5-责任链模式/责任链模式通用类图.png" title="责任链模式通用类图">
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 抽象处理者</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Handler</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Handler nextHandler;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 每个处理者都必须对请求做出处理</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Response <span class="title">handleMessage</span><span class="params">(Request request)</span> </span>&#123;</span><br><span class="line">        Response response = <span class="keyword">null</span>;</span><br><span class="line">        <span class="comment">// 判断是否是自己的处理级别</span></span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.getHandlerLevel().equals(request.getRequestLevel()) &#123;</span><br><span class="line">                response = <span class="keyword">this</span>.echo(request);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// 不属于自己的处理级别</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 判断是否有下一个处理者</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.nextHandler != <span class="keyword">null</span>) &#123;</span><br><span class="line">                response = <span class="keyword">this</span>.nextHandler.handleMessage(request);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 没有适当的处理者， 业务自行处理</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置下一个处理者是谁</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNext</span><span class="params">(Handler _handler)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.nextHandler = _handler;        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 每个处理者都有一个处理级别</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> Level <span class="title">getHandlerLevel</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 每个处理者都必须实现处理任务</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> Response <span class="title">echo</span><span class="params">(Request request)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
@@ -718,7 +718,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#责任链模式"><span class="nav-number">1.</span> <span class="nav-text">责任链模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#责任链的优点"><span class="nav-number">1.1.</span> <span class="nav-text">责任链的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#责任链的缺点"><span class="nav-number">1.2.</span> <span class="nav-text">责任链的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#责任链的注意事项"><span class="nav-number">1.3.</span> <span class="nav-text">责任链的注意事项</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#责任链的优点"><span class="nav-number">1.</span> <span class="nav-text">责任链的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#责任链的缺点"><span class="nav-number">2.</span> <span class="nav-text">责任链的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#责任链的注意事项"><span class="nav-number">3.</span> <span class="nav-text">责任链的注意事项</span></a></li></ol></div>
             
 
           </div>
