@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="设计模式,">
 
 
 
@@ -79,13 +79,20 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="LLLZH&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/categories/设计模式/index.html">
+<meta name="description" content="Define a family of algorithms, encapsulate each one, and make them interchangeable.(定义一组算法，将每个算法都封装起来，并且使他们之间可以互换)。  策略模式的三个角色：  Context封装角色：也叫做上下文角色，起承上启下封装作用，屏蔽高层模块对策略、算法的直接访问，封装可能存在的变化。 Strategy抽象策">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[设计模式] 13.策略模式">
+<meta property="og:url" content="http://yoursite.com/2019/04/22/设计模式-13-策略模式/index.html">
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
+<meta property="og:description" content="Define a family of algorithms, encapsulate each one, and make them interchangeable.(定义一组算法，将每个算法都封装起来，并且使他们之间可以互换)。  策略模式的三个角色：  Context封装角色：也叫做上下文角色，起承上启下封装作用，屏蔽高层模块对策略、算法的直接访问，封装可能存在的变化。 Strategy抽象策">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/04/22/设计模式-13-策略模式/策略模式通用类图.png">
+<meta property="og:updated_time" content="2019-04-22T14:48:27.296Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LLLZH&#39;s Blog">
+<meta name="twitter:title" content="[设计模式] 13.策略模式">
+<meta name="twitter:description" content="Define a family of algorithms, encapsulate each one, and make them interchangeable.(定义一组算法，将每个算法都封装起来，并且使他们之间可以互换)。  策略模式的三个角色：  Context封装角色：也叫做上下文角色，起承上启下封装作用，屏蔽高层模块对策略、算法的直接访问，封装可能存在的变化。 Strategy抽象策">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/22/设计模式-13-策略模式/策略模式通用类图.png">
 
 
 
@@ -115,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/设计模式/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/22/设计模式-13-策略模式/">
 
 
 
 
 
-  <title>分类: 设计模式 | LLLZH's Blog</title>
+  <title>[设计模式] 13.策略模式 | LLLZH's Blog</title>
   
 
 
@@ -140,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -276,291 +283,284 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block category">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>设计模式<small>分类</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/设计模式-13-策略模式/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zihao Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LLLZH's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/04/22/设计模式-13-策略模式/" itemprop="url">
-              
-                <span itemprop="name">[设计模式] 13.策略模式</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">[设计模式] 13.策略模式</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-22T22:46:05+08:00" content="2019-04-22">
-          04-22
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T22:46:05+08:00">
+                2019-04-22
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/22/设计模式-13-策略模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/22/设计模式-13-策略模式/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  479 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/21/设计模式-12-命令模式/" itemprop="url">
-              
-                <span itemprop="name">[设计模式] 12.命令模式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-21T22:38:06+08:00" content="2019-04-21">
-          04-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/21/设计模式-11-中介者模式/" itemprop="url">
-              
-                <span itemprop="name">[设计模式] 11.中介者模式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-21T21:20:16+08:00" content="2019-04-21">
-          04-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+        <p>Define a family of algorithms, encapsulate each one, and make them interchangeable.(定义一组算法，将每个算法都封装起来，并且使他们之间可以互换)。</p>
+<img src="/2019/04/22/设计模式-13-策略模式/策略模式通用类图.png" title="策略模式通用类图">
+<p>策略模式的三个角色：</p>
+<ul>
+<li>Context封装角色：也叫做上下文角色，起承上启下封装作用，屏蔽高层模块对策略、算法的直接访问，封装可能存在的变化。</li>
+<li>Strategy抽象策略角色：通常为接口，定义每个策略或算法必须具有的方法和属性。</li>
+<li>ConcreteStrategy具体策略角色：实现抽象策略中的操作。</li>
+</ul>
+<p>策略模式的重点是封装角色，借用了代理模式的思路。它与代理模式不同的是，策略模式的封装角色和被封装的策略无需是同一个接口。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 抽象的策略角色</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 策略模式的运算法则</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 具体策略角色</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteStrategy1</span> <span class="keyword">implements</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"具体策略1的运算法则"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteStrategy2</span> <span class="keyword">implements</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"具体策略2的运算法则"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 封装角色</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Context</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 抽象策略</span></span><br><span class="line">    <span class="keyword">private</span> Strategy strategy = <span class="keyword">null</span>;</span><br><span class="line">    <span class="comment">// 构造函数设置具体策略</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Context</span><span class="params">(Strategy strategy)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.strategy = strategy;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 封装后的策略方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAnything</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.strategy.doSomething();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="策略模式的优点"><a href="#策略模式的优点" class="headerlink" title="策略模式的优点"></a>策略模式的优点</h2><ul>
+<li>算法可以自由切换</li>
+<li>避免使用多重条件判断</li>
+<li>扩展性良好</li>
+</ul>
+<h2 id="策略模式的缺点"><a href="#策略模式的缺点" class="headerlink" title="策略模式的缺点"></a>策略模式的缺点</h2><ul>
+<li>策略类数量增多：每一个策略都是一个类，可复用性比较小</li>
+<li>所有策略类都需要对外暴露</li>
+</ul>
+<h2 id="策略模式使用场景"><a href="#策略模式使用场景" class="headerlink" title="策略模式使用场景"></a>策略模式使用场景</h2><ul>
+<li>多各类只有在算法或行为上有所不同</li>
+<li>算法需要自由切换</li>
+<li>需要屏蔽算法规则，只需要传递一个名字或数字就可以选择相应算法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考内容 &gt;&gt; 设计模式之禅</span><br></pre></td></tr></table></figure>
       
-        
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
+      <div>
         
-            <a class="post-title-link" href="/2019/04/21/设计模式-10-代理模式/" itemprop="url">
-              
-                <span itemprop="name">[设计模式] 10.代理模式</span>
-              
-            </a>
+          <div style="text-align:center;color: #ccc;font-size:14px;">----------- 本文结束，感谢阅读 -----------</div>
         
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-21T18:03:36+08:00" content="2019-04-21">
-          04-21
-        </time>
       </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/21/设计模式-9-迭代器模式/" itemprop="url">
-              
-                <span itemprop="name">[设计模式] 9.迭代器模式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-21T15:38:35+08:00" content="2019-04-21">
-          04-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/20/设计模式-8-原型模式/" itemprop="url">
-              
-                <span itemprop="name">[设计模式] 8.原型模式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-20T22:43:48+08:00" content="2019-04-20">
-          04-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/20/设计模式-7-模板方法模式/" itemprop="url">
-              
-                <span itemprop="name">[设计模式] 7.模板方法模式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-20T10:09:50+08:00" content="2019-04-20">
-          04-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/20/设计模式-6-装饰模式/" itemprop="url">
-              
-                <span itemprop="name">[设计模式] 6.装饰模式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-20T09:58:16+08:00" content="2019-04-20">
-          04-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/20/设计模式-5-责任链模式/" itemprop="url">
-              
-                <span itemprop="name">[设计模式] 5.责任链模式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-20T09:55:27+08:00" content="2019-04-20">
-          04-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/20/设计模式-4-建造者模式/" itemprop="url">
-              
-                <span itemprop="name">[设计模式] 4.建造者模式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-20T09:52:22+08:00" content="2019-04-20">
-          04-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
     </div>
+    
+    
+    
 
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/qcode.png" alt="Zihao Liu wechat" style="width: 200px; max-width: 100%;">
+    <div>扫一扫，用手机访问本站</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zihao Liu
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://zihao-liu.github.io/2019/04/22/设计模式-13-策略模式/" title="[设计模式] 13.策略模式">https://zihao-liu.github.io/2019/04/22/设计模式-13-策略模式/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/设计模式/" rel="tag"><i class="fa fa-tag"></i> 设计模式</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/21/设计模式-12-命令模式/" rel="next" title="[设计模式] 12.命令模式">
+                <i class="fa fa-chevron-left"></i> [设计模式] 12.命令模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/categories/设计模式/page/2/">2</a><a class="extend next" rel="next" href="/categories/设计模式/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -568,6 +568,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -588,8 +595,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -689,6 +705,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#策略模式的优点"><span class="nav-number">1.</span> <span class="nav-text">策略模式的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#策略模式的缺点"><span class="nav-number">2.</span> <span class="nav-text">策略模式的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#策略模式使用场景"><span class="nav-number">3.</span> <span class="nav-text">策略模式使用场景</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       <hr>
@@ -872,6 +904,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
