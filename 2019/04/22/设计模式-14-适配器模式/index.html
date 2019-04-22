@@ -79,20 +79,21 @@
 
 
 
-<meta name="description" content="Define a family of algorithms, encapsulate each one, and make them interchangeable.(定义一组算法，将每个算法都封装起来，并且使他们之间可以互换)。  策略模式的三个角色：  Context封装角色：也叫做上下文角色，起承上启下封装作用，屏蔽高层模块对策略、算法的直接访问，封装可能存在的变化。 Strategy抽象策">
+<meta name="description" content="Convert the interface of a class into another interfaces clients expect. Adapter lets classes work together that couldn’t otherwise because of incompatible interfaces.(将一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不">
 <meta name="keywords" content="设计模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[设计模式] 13.策略模式">
-<meta property="og:url" content="http://yoursite.com/2019/04/22/设计模式-13-策略模式/index.html">
+<meta property="og:title" content="[设计模式] 14.适配器模式">
+<meta property="og:url" content="http://yoursite.com/2019/04/22/设计模式-14-适配器模式/index.html">
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
-<meta property="og:description" content="Define a family of algorithms, encapsulate each one, and make them interchangeable.(定义一组算法，将每个算法都封装起来，并且使他们之间可以互换)。  策略模式的三个角色：  Context封装角色：也叫做上下文角色，起承上启下封装作用，屏蔽高层模块对策略、算法的直接访问，封装可能存在的变化。 Strategy抽象策">
+<meta property="og:description" content="Convert the interface of a class into another interfaces clients expect. Adapter lets classes work together that couldn’t otherwise because of incompatible interfaces.(将一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/设计模式-13-策略模式/策略模式通用类图.png">
-<meta property="og:updated_time" content="2019-04-22T14:55:57.418Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/22/设计模式-14-适配器模式/类适配器通用类图.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/22/设计模式-14-适配器模式/对象适配器通用类图.png">
+<meta property="og:updated_time" content="2019-04-22T15:51:23.893Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[设计模式] 13.策略模式">
-<meta name="twitter:description" content="Define a family of algorithms, encapsulate each one, and make them interchangeable.(定义一组算法，将每个算法都封装起来，并且使他们之间可以互换)。  策略模式的三个角色：  Context封装角色：也叫做上下文角色，起承上启下封装作用，屏蔽高层模块对策略、算法的直接访问，封装可能存在的变化。 Strategy抽象策">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/22/设计模式-13-策略模式/策略模式通用类图.png">
+<meta name="twitter:title" content="[设计模式] 14.适配器模式">
+<meta name="twitter:description" content="Convert the interface of a class into another interfaces clients expect. Adapter lets classes work together that couldn’t otherwise because of incompatible interfaces.(将一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/22/设计模式-14-适配器模式/类适配器通用类图.png">
 
 
 
@@ -122,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/22/设计模式-13-策略模式/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/22/设计模式-14-适配器模式/">
 
 
 
 
 
-  <title>[设计模式] 13.策略模式 | LLLZH's Blog</title>
+  <title>[设计模式] 14.适配器模式 | LLLZH's Blog</title>
   
 
 
@@ -297,7 +298,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/设计模式-13-策略模式/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/设计模式-14-适配器模式/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zihao Liu">
@@ -314,7 +315,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[设计模式] 13.策略模式</h1>
+          <h1 class="post-title" itemprop="name headline">[设计模式] 14.适配器模式</h1>
         
 
         <div class="post-meta">
@@ -326,7 +327,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T22:46:05+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T23:48:19+08:00">
                 2019-04-22
               </time>
             
@@ -367,8 +368,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/04/22/设计模式-13-策略模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/22/设计模式-13-策略模式/" itemprop="commentCount"></span>
+                <a href="/2019/04/22/设计模式-14-适配器模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/22/设计模式-14-适配器模式/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -395,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  479 字
+                  395 字
                 </span>
               
 
@@ -432,31 +433,25 @@
       
 
       
-        <p>Define a family of algorithms, encapsulate each one, and make them interchangeable.(定义一组算法，将每个算法都封装起来，并且使他们之间可以互换)。</p>
-<img src="/2019/04/22/设计模式-13-策略模式/策略模式通用类图.png" title="策略模式通用类图">
-<p>策略模式的三个角色：</p>
+        <p>Convert the interface of a class into another interfaces clients expect. Adapter lets classes work together that couldn’t otherwise because of incompatible interfaces.(将一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不匹配而无法再一起工作的两个类能够在一起工作)。</p>
+<img src="/2019/04/22/设计模式-14-适配器模式/类适配器通用类图.png" title="类适配器通用类图">
+<img src="/2019/04/22/设计模式-14-适配器模式/对象适配器通用类图.png" title="对象适配器通用类图">
+<p>适配器模式的三个角色：</p>
 <ul>
-<li>Context封装角色：也叫做上下文角色，起承上启下封装作用，屏蔽高层模块对策略、算法的直接访问，封装可能存在的变化。</li>
-<li>Strategy抽象策略角色：通常为接口，定义每个策略或算法必须具有的方法和属性。</li>
-<li>ConcreteStrategy具体策略角色：实现抽象策略中的操作。</li>
+<li>Target目标角色：期望接口</li>
+<li>Adaptee源角色：想把谁转换成目标角色</li>
+<li>Adapter适配器角色：把源角色转换成为目标角色</li>
 </ul>
-<p>策略模式的重点是封装角色，借用了代理模式的思路。它与代理模式不同的是，策略模式的封装角色和被封装的策略无需是同一个接口。</p>
 <a id="more"></a>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 抽象的策略角色</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 策略模式的运算法则</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 具体策略角色</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteStrategy1</span> <span class="keyword">implements</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"具体策略1的运算法则"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteStrategy2</span> <span class="keyword">implements</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"具体策略2的运算法则"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 封装角色</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Context</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 抽象策略</span></span><br><span class="line">    <span class="keyword">private</span> Strategy strategy = <span class="keyword">null</span>;</span><br><span class="line">    <span class="comment">// 构造函数设置具体策略</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Context</span><span class="params">(Strategy strategy)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.strategy = strategy;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 封装后的策略方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAnything</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.strategy.doSomething();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="策略模式的优点"><a href="#策略模式的优点" class="headerlink" title="策略模式的优点"></a>策略模式的优点</h2><ul>
-<li>算法可以自由切换</li>
-<li>避免使用多重条件判断</li>
-<li>扩展性良好</li>
-</ul>
-<h2 id="策略模式的缺点"><a href="#策略模式的缺点" class="headerlink" title="策略模式的缺点"></a>策略模式的缺点</h2><ul>
-<li>策略类数量增多：每一个策略都是一个类，可复用性比较小</li>
-<li>所有策略类都需要对外暴露</li>
-</ul>
-<h2 id="策略模式使用场景"><a href="#策略模式使用场景" class="headerlink" title="策略模式使用场景"></a>策略模式使用场景</h2><ul>
-<li>多各类只有在算法或行为上有所不同</li>
-<li>算法需要自由切换</li>
-<li>需要屏蔽算法规则，只需要传递一个名字或数字就可以选择相应算法</li>
-</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 目标角色</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Target</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 目标角色有自己的方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">request</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 目标角色的实现类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteTarget</span> <span class="keyword">implements</span> <span class="title">Target</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">request</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 业务逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 源角色</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Adaptee</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 原有的业务逻辑</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 业务逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 适配器角色</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Adapter</span> <span class="keyword">extends</span> <span class="title">Adaptee</span> <span class="keyword">implements</span> <span class="title">Target</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">request</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.doSomething();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 场景类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 原有业务逻辑</span></span><br><span class="line">        Target target = <span class="keyword">new</span> ConcreteTarget();</span><br><span class="line">        target.request();</span><br><span class="line">        <span class="comment">// 增加了适配器角色后的业务逻辑</span></span><br><span class="line">        Target target2 = <span class="keyword">new</span> Adapter();</span><br><span class="line">        target2.request();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="适配器的优点"><a href="#适配器的优点" class="headerlink" title="适配器的优点"></a>适配器的优点</h2><ol>
+<li>可以让两个没有任何关系的类在一起运行。</li>
+<li>增加了类的透明性。</li>
+<li>提高了源角色的复用度。</li>
+<li>灵活性比较好。</li>
+</ol>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>系统扩展，需要使用一个已有或者新建立的类，但这个类不符合系统的接口。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>不要再设计阶段考虑这种设计模式，它是为了扩展应用而存在的。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考内容 &gt;&gt; 设计模式之禅</span><br></pre></td></tr></table></figure>
       
 
@@ -491,7 +486,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://zihao-liu.github.io/2019/04/22/设计模式-13-策略模式/" title="[设计模式] 13.策略模式">https://zihao-liu.github.io/2019/04/22/设计模式-13-策略模式/</a>
+    <a href="https://zihao-liu.github.io/2019/04/22/设计模式-14-适配器模式/" title="[设计模式] 14.适配器模式">https://zihao-liu.github.io/2019/04/22/设计模式-14-适配器模式/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -534,8 +529,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/21/设计模式-12-命令模式/" rel="next" title="[设计模式] 12.命令模式">
-                <i class="fa fa-chevron-left"></i> [设计模式] 12.命令模式
+              <a href="/2019/04/22/设计模式-13-策略模式/" rel="next" title="[设计模式] 13.策略模式">
+                <i class="fa fa-chevron-left"></i> [设计模式] 13.策略模式
               </a>
             
           </div>
@@ -543,10 +538,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/22/设计模式-14-适配器模式/" rel="prev" title="[设计模式] 14.适配器模式">
-                [设计模式] 14.适配器模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -721,7 +712,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#策略模式的优点"><span class="nav-number">1.</span> <span class="nav-text">策略模式的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#策略模式的缺点"><span class="nav-number">2.</span> <span class="nav-text">策略模式的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#策略模式使用场景"><span class="nav-number">3.</span> <span class="nav-text">策略模式使用场景</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#适配器的优点"><span class="nav-number">1.</span> <span class="nav-text">适配器的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">2.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">3.</span> <span class="nav-text">注意事项</span></a></li></ol></div>
             
 
           </div>
