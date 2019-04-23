@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="MyBatis,MyBatis映射器,">
+  <meta name="keywords" content="设计模式,">
 
 
 
@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="sql元素可以定义一串SQL语句，在其他语句(e.g., select)中可以引用。 例如， 1234567891011&amp;lt;sql id = &quot;role_columns&quot;&amp;gt;   id, role_name, note&amp;lt;/sql&amp;gt;&amp;lt;select parameterType = &quot;long&quot; id = &quot;getRole&quot; resultMap = &quot;roleMap&quot;&amp;gt;">
-<meta name="keywords" content="MyBatis,MyBatis映射器">
+<meta name="description" content="Provide a unified interface to a set of interfaces in a subsystem.Facade defines a higher-level interface that makes the subsystem easier to use.(要求一个子系统的外部与其内部的通信必须通过一个统一的对象进行。 门面模式提供一个高层次的接口， 使得子系统更">
+<meta name="keywords" content="设计模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[MyBatis] 4.映射器(三)——sql&#x2F;resultMap元素">
-<meta property="og:url" content="http://yoursite.com/2018/12/08/MyBatis-4-映射器-三-——sql-resultMap元素/index.html">
+<meta property="og:title" content="[设计模式] 16.门面模式">
+<meta property="og:url" content="http://yoursite.com/2019/04/23/设计模式-16-门面模式/index.html">
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
-<meta property="og:description" content="sql元素可以定义一串SQL语句，在其他语句(e.g., select)中可以引用。 例如， 1234567891011&amp;lt;sql id = &quot;role_columns&quot;&amp;gt;   id, role_name, note&amp;lt;/sql&amp;gt;&amp;lt;select parameterType = &quot;long&quot; id = &quot;getRole&quot; resultMap = &quot;roleMap&quot;&amp;gt;">
+<meta property="og:description" content="Provide a unified interface to a set of interfaces in a subsystem.Facade defines a higher-level interface that makes the subsystem easier to use.(要求一个子系统的外部与其内部的通信必须通过一个统一的对象进行。 门面模式提供一个高层次的接口， 使得子系统更">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-08T06:20:30.693Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/设计模式-16-门面模式/门面模式示意图.png">
+<meta property="og:updated_time" content="2019-04-23T14:55:58.874Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[MyBatis] 4.映射器(三)——sql&#x2F;resultMap元素">
-<meta name="twitter:description" content="sql元素可以定义一串SQL语句，在其他语句(e.g., select)中可以引用。 例如， 1234567891011&amp;lt;sql id = &quot;role_columns&quot;&amp;gt;   id, role_name, note&amp;lt;/sql&amp;gt;&amp;lt;select parameterType = &quot;long&quot; id = &quot;getRole&quot; resultMap = &quot;roleMap&quot;&amp;gt;">
+<meta name="twitter:title" content="[设计模式] 16.门面模式">
+<meta name="twitter:description" content="Provide a unified interface to a set of interfaces in a subsystem.Facade defines a higher-level interface that makes the subsystem easier to use.(要求一个子系统的外部与其内部的通信必须通过一个统一的对象进行。 门面模式提供一个高层次的接口， 使得子系统更">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/23/设计模式-16-门面模式/门面模式示意图.png">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/12/08/MyBatis-4-映射器-三-——sql-resultMap元素/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/23/设计模式-16-门面模式/">
 
 
 
 
 
-  <title>[MyBatis] 4.映射器(三)——sql/resultMap元素 | LLLZH's Blog</title>
+  <title>[设计模式] 16.门面模式 | LLLZH's Blog</title>
   
 
 
@@ -295,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/08/MyBatis-4-映射器-三-——sql-resultMap元素/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/23/设计模式-16-门面模式/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zihao Liu">
@@ -312,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[MyBatis] 4.映射器(三)——sql/resultMap元素</h1>
+          <h1 class="post-title" itemprop="name headline">[设计模式] 16.门面模式</h1>
         
 
         <div class="post-meta">
@@ -324,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-08T17:18:42+08:00">
-                2018-12-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-23T22:50:10+08:00">
+                2019-04-23
               </time>
             
 
@@ -347,8 +349,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/MyBatis/" itemprop="url" rel="index">
-                    <span itemprop="name">MyBatis</span>
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
                   </a>
                 </span>
 
@@ -365,8 +367,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/12/08/MyBatis-4-映射器-三-——sql-resultMap元素/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/08/MyBatis-4-映射器-三-——sql-resultMap元素/" itemprop="commentCount"></span>
+                <a href="/2019/04/23/设计模式-16-门面模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/23/设计模式-16-门面模式/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -393,7 +395,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  768 字
+                  731 字
                 </span>
               
 
@@ -409,7 +411,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -430,76 +432,31 @@
       
 
       
-        <h2 id="sql元素"><a href="#sql元素" class="headerlink" title="sql元素"></a>sql元素</h2><p>可以定义一串SQL语句，在其他语句(e.g., select)中可以引用。</p>
-<p>例如，</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span> = <span class="string">"role_columns"</span>&gt;</span></span><br><span class="line">   id, role_name, note</span><br><span class="line"><span class="tag">&lt;/<span class="name">sql</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">parameterType</span> = <span class="string">"long"</span> <span class="attr">id</span> = <span class="string">"getRole"</span> <span class="attr">resultMap</span> = <span class="string">"roleMap"</span>&gt;</span></span><br><span class="line">   select <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span> = <span class="string">"role_columns"</span>/&gt;</span> from t_role where id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">parameterType</span> = <span class="string">"map"</span> <span class="attr">id</span> = <span class="string">"findRoles"</span>&gt;</span></span><br><span class="line">   select id, role_name, note from t_role</span><br><span class="line">   where rold_name like #&#123;roleName&#125;</span><br><span class="line">   and note like #&#123;note&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>这个例子中，用sql元素定义了role_columns，并使用refid元素进行引用。</p>
-<a id="more"></a>
-<p>也可以制定参数来使用<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span> = <span class="string">"role_columns"</span>&gt;</span></span><br><span class="line">   #&#123;prefix&#125;.role_no, #&#123;prefix&#125;.role_name, #&#123;prefix&#125;.note</span><br><span class="line"><span class="tag">&lt;/<span class="name">sql</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">parameterType</span> = <span class="string">"string"</span> <span class="attr">id</span> = <span class="string">"getRole"</span> <span class="attr">resultMap</span> = <span class="string">"roleResultMap"</span>&gt;</span></span><br><span class="line">   select </span><br><span class="line">      <span class="tag">&lt;<span class="name">include</span> <span class="attr">refix</span> = <span class="string">"role_columns"</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span> = <span class="string">"prefix"</span> <span class="attr">value</span> = <span class="string">"r"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">   from t_role r where role_no = #&#123;roleNo&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>还可以给refid一个参数值，由程序制定引入SQL<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span> = <span class="string">"someinclude"</span>&gt;</span></span><br><span class="line">   select * from <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span> = <span class="string">"$&#123;tableName&#125;"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">sql</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="resultMap结果映射集"><a href="#resultMap结果映射集" class="headerlink" title="resultMap结果映射集"></a>resultMap结果映射集</h2><h3 id="resultMap-元素的构成"><a href="#resultMap-元素的构成" class="headerlink" title="resultMap 元素的构成"></a>resultMap 元素的构成</h3><blockquote class="blockquote-center">resultMap元素里的元素</blockquote>
-
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">constructor</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">idArg</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">arg</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">constructor</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">id</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">result</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">association</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">collection</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">discriminator</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">case</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">discriminator</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>constructor：用来配置构造方法，一个POJO可能可能不存在没有参数的构造方法，这个时候可以用constructor进行配置。例如，</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">constructor</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">idArg</span> <span class="attr">column</span> = <span class="string">"id"</span> <span class="attr">javaType</span> = <span class="string">"int"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">arg</span> <span class="attr">column</span> = <span class="string">"role_name"</span> <span class="attr">javaType</span> = <span class="string">"string"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">constructor</span>&gt;</span></span><br></pre></td></tr></table></figure>
+        <p>Provide a unified interface to a set of interfaces in a subsystem.Facade defines a higher-level interface that makes the subsystem easier to use.(要求一个子系统的外部与其内部的通信必须通过一个统一的对象进行。 门面模式提供一个高层次的接口， 使得子系统更易于使用)。</p>
+<img src="/2019/04/23/设计模式-16-门面模式/门面模式示意图.png" title="门面模式示意图">
+<p>再简单地说， 门面对象是外界访问子系统内部的唯一通道。</p>
+<p>门面模式角色：</p>
+<ol>
+<li><p>Facade门面角色：<br> 客户端可以调用这个角色的方法。 此角色知晓子系统的所有功能和责任。</p>
 </li>
-<li><p>id：表示哪个列是主键，允许多个主键，多个主键称为联合主键。</p>
+<li><p>subsystem子系统角色：<br> 可以同时有一个或者多个子系统。 每一个子系统都不是一个单独的类， 而是一个类的集合。 子系统并不知道门面的存在。 对于子系统而言， 门面仅仅是另外一个客户端而已。</p>
 </li>
-<li>result：配置POJO到SQL列名的映射关系。</li>
-</ul>
-<blockquote class="blockquote-center">result元素和id元素的属性</blockquote>
-
-<table>
-<thead>
-<tr>
-<th style="text-align:left">元素名称</th>
-<th style="text-align:left">说明</th>
-<th style="text-align:left">备注</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">property</td>
-<td style="text-align:left">映射到列结果的字段或属性。如果POJO的属性匹配是存在的，和给定SQL列名(column元素)相同的，那么MyBatis就会映射到POJO上</td>
-<td style="text-align:left">可以使用导航式字段，比如访问一个学生对象(Student)需访问学生证(selfcard)的发证日期(issueDate),那么我们可以写成selfcard.issueDate</td>
-</tr>
-<tr>
-<td style="text-align:left">column</td>
-<td style="text-align:left">这里对应的是SQL的列</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">javaType</td>
-<td style="text-align:left">配置Java的类型</td>
-<td style="text-align:left">可以是特定的类完全限定名或者MyBatis上下文的别名</td>
-</tr>
-<tr>
-<td style="text-align:left">jdbcType</td>
-<td style="text-align:left">配置数据库类型</td>
-<td style="text-align:left">JDBC的类型</td>
-</tr>
-<tr>
-<td style="text-align:left">typeHandler</td>
-<td style="text-align:left">类型处理器</td>
-<td style="text-align:left">允许使用特定的处理器来覆盖MyBatis默认处理器，需要制定jdbcType和javaType的相互转化规则</td>
-</tr>
-</tbody>
-</table>
-<h3 id="使用map存储结果集"><a href="#使用map存储结果集" class="headerlink" title="使用map存储结果集"></a>使用map存储结果集</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span> = <span class="string">"findColorByNote"</span> <span class="attr">parameterType</span> = <span class="string">"string"</span> <span class="attr">resultType</span> = <span class="string">"map"</span>&gt;</span></span><br><span class="line">   select id, color, note from t_color where note like #&#123;note&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>可读性比较差，并不推荐</p>
-<h3 id="使用POJO存储结果集"><a href="#使用POJO存储结果集" class="headerlink" title="使用POJO存储结果集"></a>使用POJO存储结果集</h3><p>配置代码如图</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span> = <span class="string">"roleResultMap"</span> <span class="attr">type</span> = <span class="string">"Role"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span> = <span class="string">"id"</span> <span class="attr">column</span> = <span class="string">"id"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span> = <span class="string">"roleName"</span> <span class="attr">column</span> = <span class="string">"role_name"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span> = <span class="string">"note"</span> <span class="attr">column</span> = <span class="string">"note"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>resultMap中的id属性：代表这个resultMap的标识</li>
-<li>resultMap中的type属性：代表需要映射的POJO</li>
-<li>id元素：表示主键</li>
-<li>property：表示POJO属性名称</li>
-<li>column：表示数据库SQL列名</li>
-</ul>
-<p>使用resultMap的代码<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">parameterType</span> = <span class="string">"long"</span> <span class="attr">id</span> = <span class="string">"getRole"</span> <span class="attr">resultMap</span> = <span class="string">"roleResultMap"</span>&gt;</span></span><br><span class="line">   select id, note_name, note from t_role where id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><p><a href="https://github.com/Zihao-Liu/ZBZD/tree/master/src/cn/lzh/zbzd" target="_blank" rel="noopener">基于MyBatis实现的JavaWeb项目源码-github</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考内容 &gt;&gt; 深入浅出MyBatis技术原理与实战</span><br></pre></td></tr></table></figure>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 子系统，这3个类属于近邻， 处理相关的业务， </span></span><br><span class="line"><span class="comment"> * 因此应该被认为是一个子系统的不同逻辑处理模块， </span></span><br><span class="line"><span class="comment"> * 对于此子系统的访问需要通过门面进行</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassA</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomethingA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 业务逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassB</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomethingB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//业务逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassC</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomethingC</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//业务逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 门面对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Facade</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 被委托的对象</span></span><br><span class="line">    <span class="keyword">private</span> ClassA a = <span class="keyword">new</span> ClassA();</span><br><span class="line">    <span class="keyword">private</span> ClassB b = <span class="keyword">new</span> ClassB();</span><br><span class="line">    <span class="keyword">private</span> ClassC c = <span class="keyword">new</span> ClassC();</span><br><span class="line">    <span class="comment">// 提供给外部访问的方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.a.doSomethingA();</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.b.doSomethingB();</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodC</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.c.doSomethingC();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="门面模式的优点"><a href="#门面模式的优点" class="headerlink" title="门面模式的优点"></a>门面模式的优点</h2><ol>
+<li>减少系统的相互依赖：所有的以来都是对门面对象的依赖，而与子系统无关。</li>
+<li>提高安全性</li>
+</ol>
+<h2 id="门面模式的缺点"><a href="#门面模式的缺点" class="headerlink" title="门面模式的缺点"></a>门面模式的缺点</h2><p>违反开闭原则</p>
+<h2 id="门面模式的使用场景"><a href="#门面模式的使用场景" class="headerlink" title="门面模式的使用场景"></a>门面模式的使用场景</h2><ol>
+<li>为一个复杂的模块或子系统提供一个供外界访问的接口</li>
+<li>子系统相对独立——外界对子系统的访问只要黑箱操作即可。比如利息的计算问题， 没有深厚的业务知识和扎实的技术水平是不可能开发出该子系统<br>的， 但是对于使用该系统的开发人员来说， 他需要做的就是输入金额以及存期， 其他的都不用关心， 返回的结果就是利息， 这时候， 门面模式是非使用不可了。</li>
+<li>预防低水平人员带来的风险扩散<br>比如一个低水平的技术人员参与项目开发， 为降低个人代码质量对整体项目的影响风险， 一般的做法是“画地为牢”， 只能在指定的子系统中开发， 然后再提供门面接口进行访问操作。</li>
+</ol>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li>门面不参与子系统内部的业务逻辑，子系统的设计不应该依赖于门面。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考内容 &gt;&gt; 设计模式之禅</span><br></pre></td></tr></table></figure>
       
 
       <div>
@@ -533,7 +490,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://zihao-liu.github.io/2018/12/08/MyBatis-4-映射器-三-——sql-resultMap元素/" title="[MyBatis] 4.映射器(三)——sql/resultMap元素">https://zihao-liu.github.io/2018/12/08/MyBatis-4-映射器-三-——sql-resultMap元素/</a>
+    <a href="https://zihao-liu.github.io/2019/04/23/设计模式-16-门面模式/" title="[设计模式] 16.门面模式">https://zihao-liu.github.io/2019/04/23/设计模式-16-门面模式/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -548,9 +505,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/MyBatis/" rel="tag"><i class="fa fa-tag"></i> MyBatis</a>
-          
-            <a href="/tags/MyBatis映射器/" rel="tag"><i class="fa fa-tag"></i> MyBatis映射器</a>
+            <a href="/tags/设计模式/" rel="tag"><i class="fa fa-tag"></i> 设计模式</a>
           
         </div>
       
@@ -578,8 +533,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/04/MySQL-5-索引-三-——聚簇索引/" rel="next" title="[MySQL] 5.索引(三)——聚簇索引">
-                <i class="fa fa-chevron-left"></i> [MySQL] 5.索引(三)——聚簇索引
+              <a href="/2019/04/23/设计模式-15-观察者模式/" rel="next" title="[设计模式] 15.观察者模式">
+                <i class="fa fa-chevron-left"></i> [设计模式] 15.观察者模式
               </a>
             
           </div>
@@ -587,10 +542,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/08/MyBatis-5-映射器-四-——级联/" rel="prev" title="[MyBatis] 5.映射器(四)——级联">
-                [MyBatis] 5.映射器(四)——级联 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -765,7 +716,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#sql元素"><span class="nav-number">1.</span> <span class="nav-text">sql元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#resultMap结果映射集"><span class="nav-number">2.</span> <span class="nav-text">resultMap结果映射集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#resultMap-元素的构成"><span class="nav-number">2.1.</span> <span class="nav-text">resultMap 元素的构成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用map存储结果集"><span class="nav-number">2.2.</span> <span class="nav-text">使用map存储结果集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用POJO存储结果集"><span class="nav-number">2.3.</span> <span class="nav-text">使用POJO存储结果集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐阅读"><span class="nav-number">3.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#门面模式的优点"><span class="nav-number">1.</span> <span class="nav-text">门面模式的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#门面模式的缺点"><span class="nav-number">2.</span> <span class="nav-text">门面模式的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#门面模式的使用场景"><span class="nav-number">3.</span> <span class="nav-text">门面模式的使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">4.</span> <span class="nav-text">注意事项</span></a></li></ol></div>
             
 
           </div>
