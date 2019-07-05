@@ -88,7 +88,7 @@
 <meta property="og:description" content="这是JDK源码系列的第一篇文章，想先从并发包开始讲起。这一系列的文章只是用来记录学习的过程，可能有很多错误的理解。 在Java源码中，并发包的路径为java-&amp;gt;util-&amp;gt;concurrent，我认为主要可以分为5个部分：  线程池部分。 使用CAS实现的各种原子类型。 使用AQS作为底层实现的各种并发工具类，包括lock, coiuntDownLatch, CylicBarrier等">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/07/04/JDK源码解析-Executor/线程池UML图.png">
-<meta property="og:updated_time" content="2019-07-04T23:59:31.640Z">
+<meta property="og:updated_time" content="2019-07-05T00:19:21.072Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[JDK源码解析] Executor">
 <meta name="twitter:description" content="这是JDK源码系列的第一篇文章，想先从并发包开始讲起。这一系列的文章只是用来记录学习的过程，可能有很多错误的理解。 在Java源码中，并发包的路径为java-&amp;gt;util-&amp;gt;concurrent，我认为主要可以分为5个部分：  线程池部分。 使用CAS实现的各种原子类型。 使用AQS作为底层实现的各种并发工具类，包括lock, coiuntDownLatch, CylicBarrier等">
@@ -395,7 +395,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  569 字
+                  568 字
                 </span>
               
 
@@ -453,7 +453,8 @@
 <p><br></p>
 <p><strong>内存一致性：</strong></p>
 <p> <code>Actions in a thread prior to submitting a Runnable object to an Executor happen-before its execution begins, perhaps in another thread.</code></p>
-<p> 一个线程<code>提交任务(Runnable)至execute</code>的动作，一定发生在这个 <code>任务(Runnable) 执行(execution)</code>之前。<del>emmmm说实话不是很明白解释的对不对</del></p>
+<p> 一个线程<code>在提交Runnable至Executor之前</code>的动作，一定发生在这个 <code>Runnable本身执行</code>之前。</p>
+<p> <del>emmmm说实话不是很明白解释的对不对</del></p>
 
       
 
