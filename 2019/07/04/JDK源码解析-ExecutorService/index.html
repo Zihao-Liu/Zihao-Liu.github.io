@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
 <meta property="og:description" content="上一篇文章我们讲到了Executor接口，ExecutorService继承了Executor接口，也就是说所有ExecutorService的实现类，也要实现Executor接口。ExecutorService可以说是对Executor的扩展。这个扩展提供管理和终止Executor的方法，还提供了返回Future的方法，对结果进行追踪。 下面代码中提到的  线程完成(completed)字样(除">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-04T23:59:52.862Z">
+<meta property="og:updated_time" content="2019-07-05T00:22:02.840Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[JDK源码解析] ExecutorService">
 <meta name="twitter:description" content="上一篇文章我们讲到了Executor接口，ExecutorService继承了Executor接口，也就是说所有ExecutorService的实现类，也要实现Executor接口。ExecutorService可以说是对Executor的扩展。这个扩展提供管理和终止Executor的方法，还提供了返回Future的方法，对结果进行追踪。 下面代码中提到的  线程完成(completed)字样(除">
@@ -393,7 +393,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.6k 字
+                  1.7k 字
                 </span>
               
 
@@ -440,6 +440,10 @@
 <li>submit方法对execute进行了扩展，可以得到想要的返回结果</li>
 <li>提供了批量提交一批任务到线程池的功能</li>
 </ol>
+<p><br></p>
+<p><strong>内存一致性：</strong></p>
+<p> <code>Actions in a thread prior to the submission of a Runnable or Callable task to an ExecutorService happen-before any actions taken by that task, which in turn happen-before the result is retrieved via Future.get().</code></p>
+<p> 一个线程<code>提交Runnable或Callable至ExecutorService之前</code>所发生的的动作，一定发生在这个<code>Runnable或Callable本身执行</code>之前。这两个动作一定发生在Future.get()返回结果之前。<br> <del>emmmm说实话不是很明白解释的对不对</del></p>
 
       
 
