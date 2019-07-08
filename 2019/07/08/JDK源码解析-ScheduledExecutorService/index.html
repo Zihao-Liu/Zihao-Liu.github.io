@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="JDK源码解析,线程池,">
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="LLLZH&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/tags/MyBatis映射器/index.html">
+<meta name="description" content="在前面的文章中我们分析了ExecutorService，也说过它是对Executor的扩展，而这篇文章我们要讲的ScheduledExecutorService是对ExecutorService的扩展，通过名字我们也可以看出ScheduleExecutorService在ExecutorService的基础中提供了在一定延迟后或者定时进行任务调度的的功能(An ExecutorService th">
+<meta name="keywords" content="JDK源码解析,线程池">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[JDK源码解析] ScheduledExecutorService">
+<meta property="og:url" content="http://yoursite.com/2019/07/08/JDK源码解析-ScheduledExecutorService/index.html">
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
+<meta property="og:description" content="在前面的文章中我们分析了ExecutorService，也说过它是对Executor的扩展，而这篇文章我们要讲的ScheduledExecutorService是对ExecutorService的扩展，通过名字我们也可以看出ScheduleExecutorService在ExecutorService的基础中提供了在一定延迟后或者定时进行任务调度的的功能(An ExecutorService th">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-08T00:26:35.238Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LLLZH&#39;s Blog">
+<meta name="twitter:title" content="[JDK源码解析] ScheduledExecutorService">
+<meta name="twitter:description" content="在前面的文章中我们分析了ExecutorService，也说过它是对Executor的扩展，而这篇文章我们要讲的ScheduledExecutorService是对ExecutorService的扩展，通过名字我们也可以看出ScheduleExecutorService在ExecutorService的基础中提供了在一定延迟后或者定时进行任务调度的的功能(An ExecutorService th">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/MyBatis映射器/">
+  <link rel="canonical" href="http://yoursite.com/2019/07/08/JDK源码解析-ScheduledExecutorService/">
 
 
 
 
 
-  <title>标签: MyBatis映射器 | LLLZH's Blog</title>
+  <title>[JDK源码解析] ScheduledExecutorService | LLLZH's Blog</title>
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -276,130 +281,265 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>MyBatis映射器<small>标签</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/JDK源码解析-ScheduledExecutorService/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zihao Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LLLZH's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/12/08/MyBatis-5-映射器-四-——级联/" itemprop="url">
-              
-                <span itemprop="name">[MyBatis] 5.映射器(四)——级联</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">[JDK源码解析] ScheduledExecutorService</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-08T20:55:15+08:00" content="2018-12-08">
-          12-08
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-08T07:45:42+08:00">
+                2019-07-08
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/JDK源码解析/" itemprop="url" rel="index">
+                    <span itemprop="name">JDK源码解析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/08/JDK源码解析-ScheduledExecutorService/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/08/JDK源码解析-ScheduledExecutorService/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  836 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/08/MyBatis-4-映射器-三-——sql-resultMap元素/" itemprop="url">
-              
-                <span itemprop="name">[MyBatis] 4.映射器(三)——sql/resultMap元素</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-08T17:18:42+08:00" content="2018-12-08">
-          12-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/03/MyBatis-3-映射器-二-——insert-update-delete元素/" itemprop="url">
-              
-                <span itemprop="name">[MyBatis] 3.映射器(二)——insert/update/delete元素</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-03T23:13:29+08:00" content="2018-12-03">
-          12-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+        <p>在前面的文章中我们分析了<a href="https://zihao-liu.github.io/2019/07/04/JDK%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-ExecutorService/" target="_blank" rel="noopener">ExecutorService</a>，也说过它是对<a href="https://zihao-liu.github.io/2019/07/04/JDK%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-Executor/" target="_blank" rel="noopener">Executor</a>的扩展，而这篇文章我们要讲的ScheduledExecutorService是对ExecutorService的扩展，通过名字我们也可以看出ScheduleExecutorService在ExecutorService的基础中提供了<code>在一定延迟后</code>或者<code>定时进行任务调度</code>的的功能(An ExecutorService that can schedule commands to run after a given delay, or to execute periodically)。</p>
+<p>ScheduledExecutorService只是一个接口，还是非常简单的，我们直接从代码入手吧</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * ScheduledExecutorService也可以接受delay为0的调度，可以想象成Executor</span></span><br><span class="line"><span class="comment"> * 中的execute方法和ExecutorService中的submit方法。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 需要注意的，所有的schedule方法只接收 【相对时间】和 【时间段】作为参数，</span></span><br><span class="line"><span class="comment"> * 不接受绝对时间。如果想在某一特定时间运行，可以使用下面语句，</span></span><br><span class="line"><span class="comment"> * schedule(task,date.getTime()-System.currentTimeMillis(),TimeUnit.MILLISECONDS)</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 另外，当时间到达时，任务也可能没有运行，所以这个时间并不是完全精确地，不能</span></span><br><span class="line"><span class="comment"> * 依赖时间的准确性编程</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ScheduledExecutorService</span> <span class="keyword">extends</span> <span class="title">ExecutorService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 创建一个【一次性任务】，在给定的延迟时间到达后，执行该任务</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span>  ScheduledFuture对象可以表示任务的挂起和完成状态，任务未</span></span><br><span class="line"><span class="comment">*          完成时调用ScheduledFuture的get()方法会返回null</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* <span class="doctag">@throws</span> RejectedExecutionException 如果任务无法被调度运行</span></span><br><span class="line"><span class="comment">* <span class="doctag">@throws</span> NullPointerException 任务为null</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> ScheduledFuture&lt;?&gt; schedule(Runnable command,</span><br><span class="line">                            <span class="keyword">long</span> delay, TimeUnit unit);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建一个【一次性任务】，在给定的延迟时间到达后，执行该任务</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> RejectedExecutionException 如果任务无法被调度运行</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NullPointerException 任务为null</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> &lt;V&gt; <span class="function">ScheduledFuture&lt;V&gt; <span class="title">schedule</span><span class="params">(Callable&lt;V&gt; callable,</span></span></span><br><span class="line"><span class="function"><span class="params">                                <span class="keyword">long</span> delay, TimeUnit unit)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建一个【周期性任务】，在initialDelay时间到达后，运行第一次，然后</span></span><br><span class="line"><span class="comment"> * 每过period时间运行一次，即运行时间为:</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 第一次：now + initialDelay</span></span><br><span class="line"><span class="comment"> * 第二次: now + initialDelay + period</span></span><br><span class="line"><span class="comment"> * 第三次: now + initialDelay + 2 * period</span></span><br><span class="line"><span class="comment"> *  ... </span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 如果任务执行过程中遇到异常，那么后续的任务就不会执行了。否则，只有在任务</span></span><br><span class="line"><span class="comment"> * 被取消或者线程池termination的情况下，任务才会终止。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 如果任务的运行时间超过了设置的period间隔，那么后续任务会晚一点运行，</span></span><br><span class="line"><span class="comment"> * 不会有两个任务并发运行的情况</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span>  ScheduledFuture对象可以表示任务的挂起和完成状态，任务被取消时</span></span><br><span class="line"><span class="comment"> *           调用ScheduledFuture的get()方法会抛出异常</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> RejectedExecutionException 如果任务无法被调度运行</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NullPointerException 任务为null</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> IllegalArgumentException period小于等于0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> ScheduledFuture&lt;?&gt; scheduleAtFixedRate(Runnable command,</span><br><span class="line">                        <span class="keyword">long</span> initialDelay, <span class="keyword">long</span> period, TimeUnit unit);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * scheduleAtFixedRate相对于开始时间，任务启动频率固定。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 而该方法是相对于上一次任务执行时间，启动频率固定。即运行时间为:</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 第一次：now + initialDelay</span></span><br><span class="line"><span class="comment"> * 第二次: 第一次任务完成时间 + delay</span></span><br><span class="line"><span class="comment"> * 第三次: 第二次任务完成时间 + delay</span></span><br><span class="line"><span class="comment"> *  ... </span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 如果任务执行过程中遇到异常，那么后续的任务就不会执行了。否则，只有在任务</span></span><br><span class="line"><span class="comment"> * 被取消或者线程池termination的情况下，任务才会终止。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span>  ScheduledFuture对象可以表示任务的挂起和完成状态，任务被取消时</span></span><br><span class="line"><span class="comment"> *           调用ScheduledFuture的get()方法会抛出异常</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> RejectedExecutionException 如果任务无法被调度运行</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NullPointerException 任务为null</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> IllegalArgumentException delay小于等于0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> ScheduledFuture&lt;?&gt; scheduleWithFixedDelay(Runnable command,</span><br><span class="line">                            <span class="keyword">long</span> initialDelay,<span class="keyword">long</span> delay,TimeUnit unit);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
-        
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
+      <div>
         
-            <a class="post-title-link" href="/2018/12/02/MyBatis-2-映射器-一-——select元素/" itemprop="url">
-              
-                <span itemprop="name">[MyBatis] 2.映射器(一)——select元素</span>
-              
-            </a>
+          <div style="text-align:center;color: #ccc;font-size:14px;">----------- 本文结束，感谢阅读 -----------</div>
         
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-02T21:45:54+08:00" content="2018-12-02">
-          12-02
-        </time>
       </div>
-
-    </header>
-  </article>
-
-
-      
     </div>
+    
+    
+    
 
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/qcode.png" alt="Zihao Liu wechat" style="width: 200px; max-width: 100%;">
+    <div>扫一扫，用手机访问本站</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zihao Liu
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://zihao-liu.github.io/2019/07/08/JDK源码解析-ScheduledExecutorService/" title="[JDK源码解析] ScheduledExecutorService">https://zihao-liu.github.io/2019/07/08/JDK源码解析-ScheduledExecutorService/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JDK源码解析/" rel="tag"><i class="fa fa-tag"></i> JDK源码解析</a>
+          
+            <a href="/tags/线程池/" rel="tag"><i class="fa fa-tag"></i> 线程池</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/07/JDK源码解析-ThreadPoolExecutor/" rel="next" title="[JDK源码解析] ThreadPoolExecutor">
+                <i class="fa fa-chevron-left"></i> [JDK源码解析] ThreadPoolExecutor
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -407,6 +547,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -693,6 +840,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

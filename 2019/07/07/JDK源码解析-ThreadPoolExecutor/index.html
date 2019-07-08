@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="本文将要Java线程池部分，最重要的类ThreadPoolExecutor。 首先，我们复习几个概念：  CorePoolSize(核心线程数): 当线程池中的线程数小于corePoolSize时，每当有新任务被提交时，线程池总是倾向于创建一个新线程。 BlockingQueue(阻塞队列): 当线程池中的线程数已经等于corePoolSize时，如果提交新任务的时候，没有线程空闲，那么新提交的任">
+<meta name="description" content="本文将要介绍Java线程池部分，最重要的类ThreadPoolExecutor。 在了解线程池是如何工作的之前。首先应该要了解，为什么要使用线程池，线程池与显式的创建一个线程有什么区别：  线程的创建与销毁是有代价的，是需要耗费时间的。通过线程池，可以管理一组线程，实现这些线程的复用。这样当请求到来时，就会减少上下文切换的时间，也可以避免因线程过多，资源不足的问题。 线程池统一管理一组线程，更好维">
 <meta name="keywords" content="JDK源码解析,线程池">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[JDK源码解析] ThreadPoolExecutor">
 <meta property="og:url" content="http://yoursite.com/2019/07/07/JDK源码解析-ThreadPoolExecutor/index.html">
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
-<meta property="og:description" content="本文将要Java线程池部分，最重要的类ThreadPoolExecutor。 首先，我们复习几个概念：  CorePoolSize(核心线程数): 当线程池中的线程数小于corePoolSize时，每当有新任务被提交时，线程池总是倾向于创建一个新线程。 BlockingQueue(阻塞队列): 当线程池中的线程数已经等于corePoolSize时，如果提交新任务的时候，没有线程空闲，那么新提交的任">
+<meta property="og:description" content="本文将要介绍Java线程池部分，最重要的类ThreadPoolExecutor。 在了解线程池是如何工作的之前。首先应该要了解，为什么要使用线程池，线程池与显式的创建一个线程有什么区别：  线程的创建与销毁是有代价的，是需要耗费时间的。通过线程池，可以管理一组线程，实现这些线程的复用。这样当请求到来时，就会减少上下文切换的时间，也可以避免因线程过多，资源不足的问题。 线程池统一管理一组线程，更好维">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-07T14:39:11.110Z">
+<meta property="og:updated_time" content="2019-07-07T23:31:57.876Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[JDK源码解析] ThreadPoolExecutor">
-<meta name="twitter:description" content="本文将要Java线程池部分，最重要的类ThreadPoolExecutor。 首先，我们复习几个概念：  CorePoolSize(核心线程数): 当线程池中的线程数小于corePoolSize时，每当有新任务被提交时，线程池总是倾向于创建一个新线程。 BlockingQueue(阻塞队列): 当线程池中的线程数已经等于corePoolSize时，如果提交新任务的时候，没有线程空闲，那么新提交的任">
+<meta name="twitter:description" content="本文将要介绍Java线程池部分，最重要的类ThreadPoolExecutor。 在了解线程池是如何工作的之前。首先应该要了解，为什么要使用线程池，线程池与显式的创建一个线程有什么区别：  线程的创建与销毁是有代价的，是需要耗费时间的。通过线程池，可以管理一组线程，实现这些线程的复用。这样当请求到来时，就会减少上下文切换的时间，也可以避免因线程过多，资源不足的问题。 线程池统一管理一组线程，更好维">
 
 
 
@@ -393,7 +393,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  6.1k 字
+                  6.3k 字
                 </span>
               
 
@@ -409,7 +409,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  25 分钟
+                  26 分钟
                 </span>
               
             </div>
@@ -430,8 +430,13 @@
       
 
       
-        <p>本文将要Java线程池部分，最重要的类ThreadPoolExecutor。</p>
-<p>首先，我们复习几个概念：</p>
+        <p>本文将要介绍Java线程池部分，最重要的类ThreadPoolExecutor。</p>
+<p>在了解线程池是如何工作的之前。首先应该要了解，为什么要使用线程池，线程池与显式的创建一个线程有什么区别：</p>
+<ol>
+<li>线程的创建与销毁是有代价的，是需要耗费时间的。通过线程池，可以管理一组线程，实现这些线程的复用。这样当请求到来时，就会减少上下文切换的时间，也可以避免因线程过多，资源不足的问题。</li>
+<li>线程池统一管理一组线程，更好维护。可以将业务逻辑与资源分配解耦。</li>
+</ol>
+<p>简单概括来说，线程池的作用就两点<code>减少创建/销毁线程的消耗</code>和<code>统一管理</code>。为了打到这个目的，Doug Lea大神为我们提供了许多参数去实现不同的线程池，我们可以先复习一下: </p>
 <ol>
 <li>CorePoolSize(核心线程数): 当线程池中的线程数小于corePoolSize时，每当有新任务被提交时，线程池总是倾向于创建一个新线程。</li>
 <li>BlockingQueue(阻塞队列): 当线程池中的线程数已经等于corePoolSize时，如果提交新任务的时候，没有线程空闲，那么新提交的任务会被放入这个阻塞队列中。</li>
@@ -550,6 +555,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/07/08/JDK源码解析-ScheduledExecutorService/" rel="prev" title="[JDK源码解析] ScheduledExecutorService">
+                [JDK源码解析] ScheduledExecutorService <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -628,7 +637,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -717,7 +726,7 @@
       <div class="category-all-page motion-element">
         <div class="category-all">
           <b><i class="fa fa-folder-o"></i> 全部分类</b>
-          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JDK源码解析/">JDK源码解析</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑指南/">踩坑指南</a><span class="category-list-count">1</span></li></ul>
+          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JDK源码解析/">JDK源码解析</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑指南/">踩坑指南</a><span class="category-list-count">1</span></li></ul>
         </div>
       </div>
 
