@@ -424,60 +424,15 @@
 
       
         
-          
-            <p>BlockingQueue是concurrent中的一个集合类，它继承了Queue接口。下面是BlockingQueue和它的实现类的类图。</p>
+          <p>BlockingQueue是concurrent中的一个集合类，它继承了Queue接口。下面是BlockingQueue和它的实现类的类图。</p>
 <img src="/2019/10/15/JDK源码解析-BlockingQueue/BlockingQueue类图.png" title="BlockingQueue类图">
-<p>BlockingQueue在Queue的基础上增加了两种功能：</p>
-<ol>
-<li>在从队列中获取数据，并且queue为空的时候，等待直到queue非空。</li>
-<li>在向队列中添加数据，并且queue已满的时候，等待直到queue有容量。</li>
-</ol>
-<p>为了支持以上两种功能，BlockingQueue共提供了4组操作方式</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>抛出异常</th>
-<th>返回特殊值(null或false)</th>
-<th>阻塞</th>
-<th>超时</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>插入</td>
-<td>add(e)</td>
-<td>offer(e)</td>
-<td>put(e)</td>
-<td>offer(e, time, unit)</td>
-</tr>
-<tr>
-<td>删除</td>
-<td>remove()</td>
-<td>poll()</td>
-<td>take()</td>
-<td>poll(time, unit)</td>
-</tr>
-<tr>
-<td>取值</td>
-<td>element()</td>
-<td>peek()</td>
-<td>无</td>
-<td>无</td>
-</tr>
-</tbody>
-</table>
-<p>BlockingQueue不接受null值，当add(), put(), offer()接受null值会抛出NullPointerException。null被poll方法用来作为指示值。</p>
-<p>BlockingQueue的实现是线程安全的。所有的队列操作都通过内部的锁或其他方式实现了并发控制。但是，批量操作，如：addAll、containsAll、retainAll、removeAll不一定是原子性的。所以有可能在调用allAll时，当一部分元素插入成功后，抛出异常。</p>
-<p>下面是一个典型使用BlockingQueue实现的生产者-消费者模型示例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Producer</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> BlockingQueue queue;</span><br><span class="line">    </span><br><span class="line">    Producer(BlockingQueue q) &#123; </span><br><span class="line">        queue = q; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">while</span> (<span class="keyword">true</span>) &#123; </span><br><span class="line">                queue.put(produce()); </span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException ex) &#123; </span><br><span class="line">          <span class="comment">// ... handle ...</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">Object <span class="title">produce</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="comment">// ... </span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> BlockingQueue queue;</span><br><span class="line"></span><br><span class="line">    Consumer(BlockingQueue q) &#123; </span><br><span class="line">        queue = q; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">while</span> (<span class="keyword">true</span>) &#123; </span><br><span class="line">                consume(queue.take()); </span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException ex) &#123; </span><br><span class="line">          <span class="comment">// ... handle ...</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">consume</span><span class="params">(Object x)</span> </span>&#123; </span><br><span class="line">        <span class="comment">// ... </span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Setup</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        BlockingQueue q = <span class="keyword">new</span> SomeQueueImplementation();</span><br><span class="line">        Producer p = <span class="keyword">new</span> Producer(q);</span><br><span class="line">        Consumer c1 = <span class="keyword">new</span> Consumer(q);</span><br><span class="line">        Consumer c2 = <span class="keyword">new</span> Consumer(q);</span><br><span class="line">        <span class="keyword">new</span> Thread(p).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(c1).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(c2).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><br></p>
-<p><strong>内存一致性：</strong></p>
-<p><code>As with other concurrent collections, actions in a thread prior to placing an object into a
-BlockingQueue happen-before actions subsequent to the access or removal of that element from
-the BlockingQueue in another thread.</code><br>一个线程向BlockingQueue中插入一个元素的操作，总是发生在另一个线程从BlockingQueue中取出该元素的操作之前</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/10/15/JDK源码解析-BlockingQueue/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
 
@@ -2082,7 +2037,7 @@ the BlockingQueue in another thread.</code><br>一个线程向BlockingQueue中�
 <li style="list-style: none"><input type="checkbox" checked> <a href="https://zihao-liu.github.io/2019/07/06/JDK%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-AbstractExecutorService/" target="_blank" rel="noopener">AbstractExecutorService</a></li>
 <li style="list-style: none"><input type="checkbox"> ArrayBlockingQueue</li>
 <li style="list-style: none"><input type="checkbox"> BlockingDeque</li>
-<li style="list-style: none"><input type="checkbox"> BlockingQueue</li>
+<li style="list-style: none"><input type="checkbox" checked> <a href="https://zihao-liu.github.io/2019/10/15/JDK%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-BlockingQueue/" target="_blank" rel="noopener">BlockingQueue</a></li>
 <li style="list-style: none"><input type="checkbox"> BrokenBarrierException</li>
 <li style="list-style: none"><input type="checkbox"> Callable</li>
 <li style="list-style: none"><input type="checkbox"> CancellationException</li>

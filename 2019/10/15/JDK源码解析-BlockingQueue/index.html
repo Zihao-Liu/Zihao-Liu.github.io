@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="BlockingQueue是concurrent中的一个集合类，它继承了Queue接口。下面是BlockingQueue和它的实现类的类图。  BlockingQueue在Queue的基础上增加了两种功能：  在从队列中获取数据，并且queue为空的时候，等待直到queue非空。 在向队列中添加数据，并且queue已满的时候，等待直到queue有容量。  为了支持以上两种功能，BlockingQu">
+<meta name="description" content="BlockingQueue是concurrent中的一个集合类，它继承了Queue接口。下面是BlockingQueue和它的实现类的类图。">
 <meta name="keywords" content="JDK源码解析,线程池">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[JDK源码解析] BlockingQueue">
 <meta property="og:url" content="http://yoursite.com/2019/10/15/JDK源码解析-BlockingQueue/index.html">
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
-<meta property="og:description" content="BlockingQueue是concurrent中的一个集合类，它继承了Queue接口。下面是BlockingQueue和它的实现类的类图。  BlockingQueue在Queue的基础上增加了两种功能：  在从队列中获取数据，并且queue为空的时候，等待直到queue非空。 在向队列中添加数据，并且queue已满的时候，等待直到queue有容量。  为了支持以上两种功能，BlockingQu">
+<meta property="og:description" content="BlockingQueue是concurrent中的一个集合类，它继承了Queue接口。下面是BlockingQueue和它的实现类的类图。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/10/15/JDK源码解析-BlockingQueue/BlockingQueue类图.png">
-<meta property="og:updated_time" content="2019-10-15T15:16:53.051Z">
+<meta property="og:updated_time" content="2019-10-15T15:19:41.096Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[JDK源码解析] BlockingQueue">
-<meta name="twitter:description" content="BlockingQueue是concurrent中的一个集合类，它继承了Queue接口。下面是BlockingQueue和它的实现类的类图。  BlockingQueue在Queue的基础上增加了两种功能：  在从队列中获取数据，并且queue为空的时候，等待直到queue非空。 在向队列中添加数据，并且queue已满的时候，等待直到queue有容量。  为了支持以上两种功能，BlockingQu">
+<meta name="twitter:description" content="BlockingQueue是concurrent中的一个集合类，它继承了Queue接口。下面是BlockingQueue和它的实现类的类图。">
 <meta name="twitter:image" content="http://yoursite.com/2019/10/15/JDK源码解析-BlockingQueue/BlockingQueue类图.png">
 
 
@@ -434,6 +434,7 @@
       
         <p>BlockingQueue是concurrent中的一个集合类，它继承了Queue接口。下面是BlockingQueue和它的实现类的类图。</p>
 <img src="/2019/10/15/JDK源码解析-BlockingQueue/BlockingQueue类图.png" title="BlockingQueue类图">
+<a id="more"></a>
 <p>BlockingQueue在Queue的基础上增加了两种功能：</p>
 <ol>
 <li>在从队列中获取数据，并且queue为空的时候，等待直到queue非空。</li>
@@ -482,7 +483,8 @@
 <p><strong>内存一致性：</strong></p>
 <p><code>As with other concurrent collections, actions in a thread prior to placing an object into a
 BlockingQueue happen-before actions subsequent to the access or removal of that element from
-the BlockingQueue in another thread.</code><br>一个线程向BlockingQueue中插入一个元素的操作，总是发生在另一个线程从BlockingQueue中取出该元素的操作之前</p>
+the BlockingQueue in another thread.</code></p>
+<p>一个线程向BlockingQueue中插入一个元素的操作，总是发生在另一个线程从BlockingQueue中取出该元素的操作之前</p>
 
       
 
