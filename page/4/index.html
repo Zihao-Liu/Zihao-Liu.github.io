@@ -291,6 +291,207 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/13/MySQL-6-索引-四-——覆盖索引、索引排序、冗余索引/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zihao Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LLLZH's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/13/MySQL-6-索引-四-——覆盖索引、索引排序、冗余索引/" itemprop="url">[MySQL] 6.索引(四)——覆盖索引、索引排序、冗余索引</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-13T18:15:21+08:00">
+                2018-12-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/13/MySQL-6-索引-四-——覆盖索引、索引排序、冗余索引/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/13/MySQL-6-索引-四-——覆盖索引、索引排序、冗余索引/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.2k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="覆盖索引"><a href="#覆盖索引" class="headerlink" title="覆盖索引"></a>覆盖索引</h2><p>如果一个索引包含(或者说覆盖)所有需要查询的字段的值，就称之为“覆盖索引”。B-Tree索引存放的是字段的值，如果key中包含所有需要查询字段的值，就是覆盖索引。</p>
+<p>覆盖索引可以极大地提高性能。因为只需要扫描索引，而无须返回表，有以下好处：</p>
+<ul>
+<li>索引条目远小于数据行大小，所以只读取索引可以减少数据访问量。这对缓存的负载很重要，对于I/O密集型应用很有帮助，因为索引比数据小，更容易全部放入内存中。</li>
+<li>因为索引是按照列值顺序存储的，所以对于I/O密集型的范围查询会比随即从磁盘读取每一行数据的I/O要少的多。</li>
+<li>由于InnoDB的聚簇索引，覆盖索引对于InnoDB很有用。InnoDB的二级索引在叶子节点中保存了行的主键值，如果二级主键能够覆盖查询，则可以避免对主键索引的二次查询。</li>
+</ul>
+<p>覆盖索引必须要存储索引类的值，所以MySQL只能使用B-Tree索引做覆盖索引。</p>
+<h2 id="使用索引扫描来做排序"><a href="#使用索引扫描来做排序" class="headerlink" title="使用索引扫描来做排序"></a>使用索引扫描来做排序</h2><p>只有当索引的列顺序和ORDER BY子句的顺序完全一致，并且所有列的排序方向(倒序或正序)都一样时，MySQL才能使用索引来对结果做排序。如果查询需要关联多张表，则只有当ORDER BY子句引用的字段全部为第一个表时，才能使用索引做排序。ORDER BY子句和查找型查询的限制是一样的：需要满足索引的最左前缀的要求。</p>
+<p>当前导列为常量时，ORDER BY子句可以不满足索引的最左前缀的要求。</p>
+<p>下面是一个例子：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> rental (</span><br><span class="line">    ...</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span> (rental_id),</span><br><span class="line">    <span class="keyword">UNIQUE</span> <span class="keyword">KEY</span> rental_date (rental_date, inventory_id, customer_id),</span><br><span class="line">    ...</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">mysql &gt; SELECT ... FROM rental WHERE rental_date = '2005-05-25' ORDER BY inventory_id DESC;</span><br><span class="line"><span class="comment">-- 可以使用索引排序，因为查询为索引第一列提供了常量条件，而使用第二列进行排序。合在一起便形成了索引最左前缀。</span></span><br><span class="line"></span><br><span class="line">mysql &gt; ... WHERE rental_date &gt; '2005-05-25' ORDER BY rental_date, inventory_id;</span><br><span class="line"><span class="comment">-- 可以使用索引排序，因为ORDER BY使用的两列就是索引的最左前缀。</span></span><br><span class="line"></span><br><span class="line">mysql &gt; ... WHERE rental_date = '2005-05-25' ORDER BY inventory_id DESC, customer_id ASC;</span><br><span class="line"><span class="comment">-- 不可以使用索引排序，因为查询使用了两种不同的排序方向。</span></span><br><span class="line"></span><br><span class="line">mysql &gt; WHERE rental_date = '2005-05-25' ORDER BY inventory_id, staff_id;</span><br><span class="line"><span class="comment">-- 不可以使用索引排序，因为ORDER BY中有不在索引中的列。</span></span><br><span class="line"></span><br><span class="line">mysql &gt; WHERE rental_date = '2005-05-25' ORDER BY customer_id;</span><br><span class="line"><span class="comment">-- 不可以使用索引排序，因为WHERE子句和ORDER BY子句中的列无法组合成索引的最左前缀。</span></span><br><span class="line"></span><br><span class="line">mysql &gt; ... WHERE rental_date &gt; '2005-05-25' ORDER BY inventory_id, customer_id;</span><br><span class="line"><span class="comment">-- 不可以使用索引排序，因为在索引列第一列上是范围条件。</span></span><br><span class="line"></span><br><span class="line">mysql &gt; ... WHERE rantal_date = '2005-05-25' AND inventory_id IN (1, 2) ORDER BY customer_id;</span><br><span class="line"><span class="comment">-- 不可以使用索引排序，因为查询在inventory_id列上有多个等于条件，相当于范围查询。</span></span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/12/13/MySQL-6-索引-四-——覆盖索引、索引排序、冗余索引/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+
+      <div>
+        
+      </div>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/13/MyBatis-6-动态SQL/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2134,197 +2335,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/02/LeetCode-9-Palindrome-Number/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zihao Liu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LLLZH's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/02/LeetCode-9-Palindrome-Number/" itemprop="url">[LeetCode] 9.Palindrome Number</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-02T23:05:09+08:00">
-                2018-12-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode解题报告/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode解题报告</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/12/02/LeetCode-9-Palindrome-Number/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/02/LeetCode-9-Palindrome-Number/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  87 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><p>求给定的数是否为回文数。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/12/02/LeetCode-9-Palindrome-Number/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-
-      <div>
-        
-      </div>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2375,7 +2385,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2448,7 +2458,7 @@
       <div class="category-all-page motion-element">
         <div class="category-all">
           <b><i class="fa fa-folder-o"></i> 全部分类</b>
-          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JDK源码解析/">JDK源码解析</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑指南/">踩坑指南</a><span class="category-list-count">1</span></li></ul>
+          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JDK源码解析/">JDK源码解析</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑指南/">踩坑指南</a><span class="category-list-count">1</span></li></ul>
         </div>
       </div>
 
