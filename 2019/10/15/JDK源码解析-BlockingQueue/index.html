@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="JDK源码解析,线程池,">
+  <meta name="keywords" content="JDK源码解析,阻塞队列,">
 
 
 
@@ -80,7 +80,7 @@
 
 
 <meta name="description" content="BlockingQueue是concurrent中的一个集合类，它继承了Queue接口。下面是BlockingQueue和它的实现类的类图。">
-<meta name="keywords" content="JDK源码解析,线程池">
+<meta name="keywords" content="JDK源码解析,阻塞队列">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[JDK源码解析] BlockingQueue">
 <meta property="og:url" content="http://yoursite.com/2019/10/15/JDK源码解析-BlockingQueue/index.html">
@@ -88,7 +88,7 @@
 <meta property="og:description" content="BlockingQueue是concurrent中的一个集合类，它继承了Queue接口。下面是BlockingQueue和它的实现类的类图。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/10/15/JDK源码解析-BlockingQueue/BlockingQueue类图.png">
-<meta property="og:updated_time" content="2019-10-16T14:20:13.666Z">
+<meta property="og:updated_time" content="2019-10-19T11:07:50.331Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[JDK源码解析] BlockingQueue">
 <meta name="twitter:description" content="BlockingQueue是concurrent中的一个集合类，它继承了Queue接口。下面是BlockingQueue和它的实现类的类图。">
@@ -537,7 +537,7 @@ the BlockingQueue in another thread.</code></p>
           
             <a href="/tags/JDK源码解析/" rel="tag"><i class="fa fa-tag"></i> JDK源码解析</a>
           
-            <a href="/tags/线程池/" rel="tag"><i class="fa fa-tag"></i> 线程池</a>
+            <a href="/tags/阻塞队列/" rel="tag"><i class="fa fa-tag"></i> 阻塞队列</a>
           
         </div>
       
@@ -574,6 +574,10 @@ the BlockingQueue in another thread.</code></p>
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/19/JDK源码解析-ArrayBlockingQueue/" rel="prev" title="[JDK源码解析] ArrayBlockingQueue">
+                [JDK源码解析] ArrayBlockingQueue <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -644,7 +648,7 @@ the BlockingQueue in another thread.</code></p>
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-count">53</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -666,7 +670,7 @@ the BlockingQueue in another thread.</code></p>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -717,7 +721,7 @@ the BlockingQueue in another thread.</code></p>
       <div class="category-all-page motion-element">
         <div class="category-all">
           <b><i class="fa fa-folder-o"></i> 全部分类</b>
-          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JDK源码解析/">JDK源码解析</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑指南/">踩坑指南</a><span class="category-list-count">1</span></li></ul>
+          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JDK源码解析/">JDK源码解析</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑指南/">踩坑指南</a><span class="category-list-count">1</span></li></ul>
         </div>
       </div>
 
