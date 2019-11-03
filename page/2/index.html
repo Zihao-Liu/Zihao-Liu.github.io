@@ -291,6 +291,198 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/04/JDK源码解析-ExecutorService/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zihao Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LLLZH's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/04/JDK源码解析-ExecutorService/" itemprop="url">[JDK源码解析] ExecutorService</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-04T21:34:38+08:00">
+                2019-07-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/JDK源码解析/" itemprop="url" rel="index">
+                    <span itemprop="name">JDK源码解析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/04/JDK源码解析-ExecutorService/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/04/JDK源码解析-ExecutorService/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.7k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>上一篇文章我们讲到了<a href="https://zihao-liu.github.io/2019/07/04/JDK%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-Executor/" target="_blank" rel="noopener">Executor接口</a>，ExecutorService继承了Executor接口，也就是说所有ExecutorService的实现类，也要实现Executor接口。ExecutorService可以说是对Executor的扩展。这个扩展<code>提供管理和终止</code>Executor的方法，还提供了返回Future的方法，对结果进行追踪。</p>
+<p>下面代码中提到的  <code>线程完成(completed)</code>字样(除invokeAny中特殊标出的)，指的是线程正常退出或者抛出异常时，都可以被叫做”完成”。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/04/JDK源码解析-ExecutorService/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+
+      <div>
+        
+      </div>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/04/JDK源码解析-Executor/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -665,15 +857,15 @@
 </ul>
 </li>
 <li style="list-style: none"><input type="checkbox" checked> <a href="https://zihao-liu.github.io/2019/07/06/JDK%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-AbstractExecutorService/" target="_blank" rel="noopener">AbstractExecutorService</a></li>
-<li style="list-style: none"><input type="checkbox"> ArrayBlockingQueue</li>
+<li style="list-style: none"><input type="checkbox" checked> <a href="https://zihao-liu.github.io/2019/10/19/JDK%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-ArrayBlockingQueue/" target="_blank" rel="noopener">ArrayBlockingQueue</a></li>
 <li style="list-style: none"><input type="checkbox"> BlockingDeque</li>
 <li style="list-style: none"><input type="checkbox" checked> <a href="https://zihao-liu.github.io/2019/10/15/JDK%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-BlockingQueue/" target="_blank" rel="noopener">BlockingQueue</a></li>
 <li style="list-style: none"><input type="checkbox" checked> BrokenBarrierException</li>
-<li style="list-style: none"><input type="checkbox"> Callable</li>
+<li style="list-style: none"><input type="checkbox" checked> Callable</li>
 <li style="list-style: none"><input type="checkbox" checked> CancellationException</li>
 <li style="list-style: none"><input type="checkbox"> CompletableFuture</li>
 <li style="list-style: none"><input type="checkbox" checked> CompletionException</li>
-<li style="list-style: none"><input type="checkbox"> CompletionService</li>
+<li style="list-style: none"><input type="checkbox" checked> CompletionService</li>
 <li style="list-style: none"><input type="checkbox"> CompletionStage</li>
 <li style="list-style: none"><input type="checkbox"> ConcurrentHashMap</li>
 <li style="list-style: none"><input type="checkbox"> ConcurrentLinkedDeque</li>
@@ -692,7 +884,7 @@
 <li style="list-style: none"><input type="checkbox"> Exchanger</li>
 <li style="list-style: none"><input type="checkbox" checked> ExecutionException</li>
 <li style="list-style: none"><input type="checkbox" checked> <a href="https://zihao-liu.github.io/2019/07/04/JDK%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-Executor/" target="_blank" rel="noopener">Executor</a></li>
-<li style="list-style: none"><input type="checkbox"> ExecutorCompletionService</li>
+<li style="list-style: none"><input type="checkbox" checked> ExecutorCompletionService</li>
 <li style="list-style: none"><input type="checkbox" checked> <a href="https://zihao-liu.github.io/2019/10/22/JDK%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-Executors/" target="_blank" rel="noopener">Executors</a> </li>
 <li style="list-style: none"><input type="checkbox" checked> <a href="https://zihao-liu.github.io/2019/07/04/JDK%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-ExecutorService/" target="_blank" rel="noopener">ExecutorService</a></li>
 <li style="list-style: none"><input type="checkbox"> ForkJoinPool</li>
@@ -2171,209 +2363,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/21/设计模式-9-迭代器模式/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zihao Liu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LLLZH's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/21/设计模式-9-迭代器模式/" itemprop="url">[设计模式] 9.迭代器模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-21T15:38:35+08:00">
-                2019-04-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/04/21/设计模式-9-迭代器模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/21/设计模式-9-迭代器模式/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  620 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Provide a way to access the elements of an aggregate object sequentially without exposing its underlying representation.(它提供一种方法访问一个容器对象中各个元素，而又不需要暴露该对象的内部细节)。</p>
-<img src="/2019/04/21/设计模式-9-迭代器模式/迭代器模式通用类图.png" title="迭代器模式通用类图">
-<p>迭代器模式提供了遍历容器的方便性，容器只要管理增减元素就可以了，需要遍历时交由迭代器进行。迭代器模式中的各个角色：</p>
-<ul>
-<li>Iterator抽象迭代器：抽象迭代器负责定义访问和遍历元素的接口，而且基本上是有固定的3个方法：<ul>
-<li>first()获得第一个元素；</li>
-<li>next()访问下一个元素；</li>
-<li>hasNext()是否已经访问到底部。</li>
-</ul>
-</li>
-<li>ConcreteIterator具体迭代器：具体迭代器角色要实现迭代器接口，完成容器元素的遍历。</li>
-<li>Aggregate抽象容器：容器角色负责提供创建具体迭代器角色的接口，必然提供一个类似createIterator()这样的方法，在Java中一般是iterator()方法。</li>
-<li>Concrete Aggregate具体容器：具体容器实现容器接口定义的方法，创建出容纳迭代器的对象。
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/21/设计模式-9-迭代器模式/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-
-      <div>
-        
-      </div>
-    </li></ul></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2424,7 +2413,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2497,7 +2486,7 @@
       <div class="category-all-page motion-element">
         <div class="category-all">
           <b><i class="fa fa-folder-o"></i> 全部分类</b>
-          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JDK源码解析/">JDK源码解析</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑指南/">踩坑指南</a><span class="category-list-count">1</span></li></ul>
+          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JDK源码解析/">JDK源码解析</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑指南/">踩坑指南</a><span class="category-list-count">1</span></li></ul>
         </div>
       </div>
 
