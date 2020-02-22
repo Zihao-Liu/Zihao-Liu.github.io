@@ -291,6 +291,389 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/21/JDK源码解析-ThreadLocal/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zihao Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LLLZH's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/21/JDK源码解析-ThreadLocal/" itemprop="url">[JDK源码解析] ThreadLocal</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-21T20:39:40+08:00">
+                2020-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/JDK源码解析/" itemprop="url" rel="index">
+                    <span itemprop="name">JDK源码解析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/02/21/JDK源码解析-ThreadLocal/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/02/21/JDK源码解析-ThreadLocal/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.3k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>ThreadLocal提供了基于线程的局部变量。在多线程中，每个线程可以有一份隔离于其他线程的独立的副本。ThreadLocal提供的是线程隔离性，而不是线程间的同步机制，所以不应该被用于线程间的通信来使用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 只要线程一直保持存活，并且ThreadLocal实例可访问，那么每个线程都会隐式的持有一</span></span><br><span class="line"><span class="comment"> * 份 thread-local变量的副本。当线程销毁后，所有的副本都会被垃圾回收</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocal</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> threadLocalHashCode = nextHashCode();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AtomicInteger nextHashCode =</span><br><span class="line">        <span class="keyword">new</span> AtomicInteger();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> HASH_INCREMENT = <span class="number">0x61c88647</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">nextHashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> nextHashCode.getAndAdd(HASH_INCREMENT);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> T <span class="title">initialValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Thread t = Thread.currentThread();</span><br><span class="line">        ThreadLocalMap map = getMap(t);</span><br><span class="line">        <span class="keyword">if</span> (map != <span class="keyword">null</span>) &#123;</span><br><span class="line">            ThreadLocalMap.Entry e = map.getEntry(<span class="keyword">this</span>);</span><br><span class="line">            <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">                T result = (T)e.value;</span><br><span class="line">                <span class="keyword">return</span> result;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> setInitialValue();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> T <span class="title">setInitialValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        T value = initialValue();</span><br><span class="line">        Thread t = Thread.currentThread();</span><br><span class="line">        ThreadLocalMap map = getMap(t);</span><br><span class="line">        <span class="keyword">if</span> (map != <span class="keyword">null</span>)</span><br><span class="line">            map.set(<span class="keyword">this</span>, value);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            createMap(t, value);</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 设置当前线程的变量的副本</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(T value)</span> </span>&#123;</span><br><span class="line">        Thread t = Thread.currentThread();</span><br><span class="line">        <span class="comment">// ThreadLocal内部使用ThreadLocalMap来存储数据，</span></span><br><span class="line">        <span class="comment">// 每个Thread对象，都包含有一个ThreadLocalMap类</span></span><br><span class="line">        <span class="comment">// 型的变量threadLocals。用来保存这个线程的所有</span></span><br><span class="line">        <span class="comment">// 本地变量。ThreadLocalMap使用每个ThreadLocal</span></span><br><span class="line">        <span class="comment">// 实例作为key</span></span><br><span class="line">        ThreadLocalMap map = getMap(t);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 当第一次为线程设置threadLocal变量时，getMap()</span></span><br><span class="line">        <span class="comment">// 返回null，需要先为线程初始化保存线程本地变量的</span></span><br><span class="line">        <span class="comment">// ThreadLocalMap</span></span><br><span class="line">        <span class="keyword">if</span> (map != <span class="keyword">null</span>)</span><br><span class="line">            <span class="comment">// 如果线程中</span></span><br><span class="line">            map.set(<span class="keyword">this</span>, value);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="comment">// 新建一个ThreadLocalMap对象，类似于HashMap</span></span><br><span class="line">            <span class="comment">// 向map中put一条数据，key为该ThreadLocal实例</span></span><br><span class="line">            <span class="comment">// 然后将Map对象赋值给线程t</span></span><br><span class="line">            createMap(t, value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         ThreadLocalMap m = getMap(Thread.currentThread());</span><br><span class="line">         <span class="keyword">if</span> (m != <span class="keyword">null</span>)</span><br><span class="line">             m.remove(<span class="keyword">this</span>);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="function">ThreadLocalMap <span class="title">getMap</span><span class="params">(Thread t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> t.threadLocals;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">createMap</span><span class="params">(Thread t, T firstValue)</span> </span>&#123;</span><br><span class="line">        t.threadLocals = <span class="keyword">new</span> ThreadLocalMap(<span class="keyword">this</span>, firstValue);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalMap</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Entry</span> <span class="keyword">extends</span> <span class="title">WeakReference</span>&lt;<span class="title">ThreadLocal</span>&lt;?&gt;&gt; </span>&#123;</span><br><span class="line">            <span class="comment">/** The value associated with this ThreadLocal. */</span></span><br><span class="line">            Object value;</span><br><span class="line"></span><br><span class="line">            Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;</span><br><span class="line">                <span class="keyword">super</span>(k);</span><br><span class="line">                value = v;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INITIAL_CAPACITY = <span class="number">16</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> Entry[] table;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> size = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> threshold; </span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setThreshold</span><span class="params">(<span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">            threshold = len * <span class="number">2</span> / <span class="number">3</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">nextIndex</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> ((i + <span class="number">1</span> &lt; len) ? i + <span class="number">1</span> : <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">prevIndex</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> ((i - <span class="number">1</span> &gt;= <span class="number">0</span>) ? i - <span class="number">1</span> : len - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 为线程初始化一个ThreadLocalMap，当线程第一次设置ThreadLocal</span></span><br><span class="line"><span class="comment">         * 变量时，会调用这个方法。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        ThreadLocalMap(ThreadLocal&lt;?&gt; firstKey, Object firstValue) &#123;</span><br><span class="line">            table = <span class="keyword">new</span> Entry[INITIAL_CAPACITY];</span><br><span class="line">            <span class="comment">// 计算哈希值，确定存放Entry的槽</span></span><br><span class="line">            <span class="keyword">int</span> i = firstKey.threadLocalHashCode &amp; (INITIAL_CAPACITY - <span class="number">1</span>);</span><br><span class="line">            table[i] = <span class="keyword">new</span> Entry(firstKey, firstValue);</span><br><span class="line">            size = <span class="number">1</span>;</span><br><span class="line">            setThreshold(INITIAL_CAPACITY);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> Entry <span class="title">getEntry</span><span class="params">(ThreadLocal&lt;?&gt; key)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> i = key.threadLocalHashCode &amp; (table.length - <span class="number">1</span>);</span><br><span class="line">            Entry e = table[i];</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 如果直接命中hash则快速返回；否则调用getEntryAfterMiss</span></span><br><span class="line">            <span class="keyword">if</span> (e != <span class="keyword">null</span> &amp;&amp; e.get() == key)</span><br><span class="line">                <span class="keyword">return</span> e;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">return</span> getEntryAfterMiss(key, i, e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> Entry <span class="title">getEntryAfterMiss</span><span class="params">(ThreadLocal&lt;?&gt; key, <span class="keyword">int</span> i, Entry e)</span> </span>&#123;</span><br><span class="line">            Entry[] tab = table;</span><br><span class="line">            <span class="keyword">int</span> len = tab.length;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 遍历slot，直到找到key或者找到空槽(说明key不存在)</span></span><br><span class="line">            <span class="keyword">while</span> (e != <span class="keyword">null</span>) &#123;</span><br><span class="line">                ThreadLocal&lt;?&gt; k = e.get();</span><br><span class="line">                <span class="keyword">if</span> (k == key)</span><br><span class="line">                    <span class="keyword">return</span> e;</span><br><span class="line">                <span class="keyword">if</span> (k == <span class="keyword">null</span>)</span><br><span class="line">                    <span class="comment">// 槽里的key已过期，清除过期key</span></span><br><span class="line">                    expungeStaleEntry(i);</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    i = nextIndex(i, len);</span><br><span class="line">                e = tab[i];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(ThreadLocal&lt;?&gt; key, Object value)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 与HashMap一样，使用数组来存储哈希槽</span></span><br><span class="line">            Entry[] tab = table;</span><br><span class="line">            <span class="keyword">int</span> len = tab.length;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 计算哈希槽值</span></span><br><span class="line">            <span class="keyword">int</span> i = key.threadLocalHashCode &amp; (len-<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 与HashMap不同的是，TheadLocalMap采用的是开放定址法存储各个Entry，</span></span><br><span class="line">            <span class="comment">// 而不是HashMap用的拉链法</span></span><br><span class="line">            <span class="keyword">for</span> (Entry e = tab[i]; e != <span class="keyword">null</span>; e = tab[i = nextIndex(i, len)]) &#123;</span><br><span class="line">                ThreadLocal&lt;?&gt; k = e.get();</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 如果找到了key就用最新值替换</span></span><br><span class="line">                <span class="keyword">if</span> (k == key) &#123;</span><br><span class="line">                    e.value = value;</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 如果key是null，这说明这个ThreadLocal变量已经被remove</span></span><br><span class="line">                <span class="comment">// 即这个槽已经无用了，所以可以用该key替换</span></span><br><span class="line">                <span class="keyword">if</span> (k == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    replaceStaleEntry(key, value, i);</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 如果找到了空槽，那么就把新建的Entry放入到空槽中，</span></span><br><span class="line">            <span class="comment">// 开发定址解决冲突的原理这里不多说</span></span><br><span class="line">            tab[i] = <span class="keyword">new</span> Entry(key, value);</span><br><span class="line">            <span class="keyword">int</span> sz = ++size;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 如过没有已经过期的Entry，并且Entry数量大于阈值，</span></span><br><span class="line">            <span class="comment">// 那么就会触发rehash</span></span><br><span class="line">            <span class="keyword">if</span> (!cleanSomeSlots(i, sz) &amp;&amp; sz &gt;= threshold)</span><br><span class="line">                rehash();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">      </span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(ThreadLocal&lt;?&gt; key)</span> </span>&#123;</span><br><span class="line">            Entry[] tab = table;</span><br><span class="line">            <span class="keyword">int</span> len = tab.length;</span><br><span class="line">            <span class="keyword">int</span> i = key.threadLocalHashCode &amp; (len-<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">for</span> (Entry e = tab[i]; e != <span class="keyword">null</span>; e = tab[i = nextIndex(i, len)]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (e.get() == key) &#123;</span><br><span class="line">                    e.clear();</span><br><span class="line">                    expungeStaleEntry(i);</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 替换一个已经无用的槽，因为使用开放定址法存储Entry，所以不能单纯的替换</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">replaceStaleEntry</span><span class="params">(ThreadLocal&lt;?&gt; key, Object value,</span></span></span><br><span class="line"><span class="function"><span class="params">                                       <span class="keyword">int</span> staleSlot)</span> </span>&#123;</span><br><span class="line">            Entry[] tab = table;</span><br><span class="line">            <span class="keyword">int</span> len = tab.length;</span><br><span class="line">            Entry e;</span><br><span class="line"></span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 向前清理所有过时的Entry，避免太多rehash影响性能</span></span><br><span class="line">            <span class="keyword">int</span> slotToExpunge = staleSlot;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = prevIndex(staleSlot, len); (e = tab[i]) != <span class="keyword">null</span>;  i = prevIndex(i, len))</span><br><span class="line">                <span class="keyword">if</span> (e.get() == <span class="keyword">null</span>)</span><br><span class="line">                    slotToExpunge = i;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 遇到以下情况之一就退出循环：</span></span><br><span class="line">            <span class="comment">// 1. 找到了当前key</span></span><br><span class="line">            <span class="comment">// 2. 找到了staleSlot后的第一个为空的slot</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = nextIndex(staleSlot, len); (e = tab[i]) != <span class="keyword">null</span>; i = nextIndex(i, len)) &#123;</span><br><span class="line">                ThreadLocal&lt;?&gt; k = e.get();</span><br><span class="line">                <span class="comment">// 如果从找到了该key在hash中是存在的，那么就说明key在设置时因为</span></span><br><span class="line">                <span class="comment">// 碰撞(冲突)的原因，没有被放在hashCode所在的位置(staleSlot更靠</span></span><br><span class="line">                <span class="comment">// 近hashCode得到的槽)，所以现在应该把这个key重新放置在staleSlot中</span></span><br><span class="line">                <span class="keyword">if</span> (k == key) &#123;</span><br><span class="line">                    e.value = value;</span><br><span class="line"></span><br><span class="line">                    tab[i] = tab[staleSlot];</span><br><span class="line">                    tab[staleSlot] = e;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (slotToExpunge == staleSlot)</span><br><span class="line">                        slotToExpunge = i;</span><br><span class="line">                    cleanSomeSlots(expungeStaleEntry(slotToExpunge), len);</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 如果i对应的slot已过时，且前面没有过时的slot</span></span><br><span class="line">                <span class="comment">// 就从i开始清理</span></span><br><span class="line">                <span class="keyword">if</span> (k == <span class="keyword">null</span> &amp;&amp; slotToExpunge == staleSlot)</span><br><span class="line">                    slotToExpunge = i;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 如果hash中不存在这个key，就new一个Entry</span></span><br><span class="line">            tab[staleSlot].value = <span class="keyword">null</span>;</span><br><span class="line">            tab[staleSlot] = <span class="keyword">new</span> Entry(key, value);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 如果存在不止一个过时的key，就继续清理</span></span><br><span class="line">            <span class="keyword">if</span> (slotToExpunge != staleSlot)</span><br><span class="line">                cleanSomeSlots(expungeStaleEntry(slotToExpunge), len);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 用来清除已经过时的Entry的方法。</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> staleSlot 已知的要清除的槽对应的下标</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span> staleSlot的下一个为空的槽(下一个说的是nextIndex</span></span><br><span class="line"><span class="comment">         * 得到的槽, 而不是物理意义上的下一个，可能存在循环)</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">expungeStaleEntry</span><span class="params">(<span class="keyword">int</span> staleSlot)</span> </span>&#123;</span><br><span class="line">            Entry[] tab = table;</span><br><span class="line">            <span class="keyword">int</span> len = tab.length;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 首先先清除给定的过时的槽</span></span><br><span class="line">            tab[staleSlot].value = <span class="keyword">null</span>;</span><br><span class="line">            tab[staleSlot] = <span class="keyword">null</span>;</span><br><span class="line">            size--;</span><br><span class="line"></span><br><span class="line">            Entry e;</span><br><span class="line">            <span class="keyword">int</span> i;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 遍历所有槽，直到找到一个没有用到的(即tab[i]==null)的槽停止</span></span><br><span class="line">            <span class="keyword">for</span> (i = nextIndex(staleSlot, len); (e = tab[i]) != <span class="keyword">null</span>; i = nextIndex(i, len)) &#123;</span><br><span class="line">                ThreadLocal&lt;?&gt; k = e.get();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (k == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">// 如果这个槽对应的entry也过时了，把value和对entry</span></span><br><span class="line">                    <span class="comment">// 的引用设置为null，帮助GC</span></span><br><span class="line">                    e.value = <span class="keyword">null</span>;</span><br><span class="line">                    tab[i] = <span class="keyword">null</span>;</span><br><span class="line">                    size--;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// 这个地方涉及到了开放定址法删除元素的策略，因为</span></span><br><span class="line">                    <span class="comment">// 开放定址法存放Entry的位置跟得到的hash值并不是</span></span><br><span class="line">                    <span class="comment">// 完全确定的，可能还会向后探查(probe)。所以如果</span></span><br><span class="line">                    <span class="comment">// 只是单纯的把过时的槽设置为null，可能相同的key</span></span><br><span class="line">                    <span class="comment">// 两次放置的位置不同。</span></span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 重新计算这个槽的key对应的hash值</span></span><br><span class="line">                    <span class="keyword">int</span> h = k.threadLocalHashCode &amp; (len - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 如果新得到的key和之前的不一致，那么就要</span></span><br><span class="line">                    <span class="comment">// 重新"定位"</span></span><br><span class="line">                    <span class="keyword">if</span> (h != i) &#123;</span><br><span class="line">                        <span class="comment">// 先把旧的槽设置为null</span></span><br><span class="line">                        tab[i] = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">                        <span class="comment">// 开放地址法解决冲突，找到下一个空的槽</span></span><br><span class="line">                        <span class="keyword">while</span> (tab[h] != <span class="keyword">null</span>)</span><br><span class="line">                            h = nextIndex(h, len);</span><br><span class="line">                        tab[h] = e;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> i;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">       </span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">cleanSomeSlots</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">boolean</span> removed = <span class="keyword">false</span>;</span><br><span class="line">            Entry[] tab = table;</span><br><span class="line">            <span class="keyword">int</span> len = tab.length;</span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                <span class="comment">// i对应的slot一定包含有效的Entry，所以从下一个</span></span><br><span class="line">                <span class="comment">// 槽开始检查</span></span><br><span class="line">                i = nextIndex(i, len);</span><br><span class="line">                Entry e = tab[i];</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 如果这s个槽里的Entry已经过时，就从中间开始下次</span></span><br><span class="line">                <span class="comment">// 扫描。</span></span><br><span class="line">                <span class="keyword">if</span> (e != <span class="keyword">null</span> &amp;&amp; e.get() == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">// 把n设置为数组的长度，然后不断把n右移</span></span><br><span class="line">                    <span class="comment">// 相当于二分查找，时间复杂度为lg(n)</span></span><br><span class="line">                    n = len;</span><br><span class="line">                    removed = <span class="keyword">true</span>;</span><br><span class="line">                    i = expungeStaleEntry(i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">while</span> ( (n &gt;&gt;&gt;= <span class="number">1</span>) != <span class="number">0</span>);</span><br><span class="line">            <span class="keyword">return</span> removed;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">rehash</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            expungeStaleEntries();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (size &gt;= threshold - threshold / <span class="number">4</span>)</span><br><span class="line">                resize();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 将table的容量*2</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">resize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            Entry[] oldTab = table;</span><br><span class="line">            <span class="keyword">int</span> oldLen = oldTab.length;</span><br><span class="line">            <span class="keyword">int</span> newLen = oldLen * <span class="number">2</span>;</span><br><span class="line">            Entry[] newTab = <span class="keyword">new</span> Entry[newLen];</span><br><span class="line">            <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; oldLen; ++j) &#123;</span><br><span class="line">                Entry e = oldTab[j];</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 如果旧的数组中槽不为空，对应Entry需要放在新数组中</span></span><br><span class="line">                <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    ThreadLocal&lt;?&gt; k = e.get();</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 如果slot中的变量已经过期了，那么就把引用设置为null</span></span><br><span class="line">                    <span class="comment">// 帮助GC</span></span><br><span class="line">                    <span class="keyword">if</span> (k == <span class="keyword">null</span>) &#123;</span><br><span class="line">                        e.value = <span class="keyword">null</span>; <span class="comment">// Help the GC</span></span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="comment">// 重新计算Entry对应的hash值，然后放在新的数组中</span></span><br><span class="line">                        <span class="keyword">int</span> h = k.threadLocalHashCode &amp; (newLen - <span class="number">1</span>);</span><br><span class="line">                        <span class="keyword">while</span> (newTab[h] != <span class="keyword">null</span>)</span><br><span class="line">                            h = nextIndex(h, newLen);</span><br><span class="line">                        newTab[h] = e;</span><br><span class="line">                        count++;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            setThreshold(newLen);</span><br><span class="line">            size = count;</span><br><span class="line">            table = newTab;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 清除所有已经过时的Entry</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">expungeStaleEntries</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            Entry[] tab = table;</span><br><span class="line">            <span class="keyword">int</span> len = tab.length;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; len; j++) &#123;</span><br><span class="line">                Entry e = tab[j];</span><br><span class="line">                <span class="keyword">if</span> (e != <span class="keyword">null</span> &amp;&amp; e.get() == <span class="keyword">null</span>)</span><br><span class="line">                    expungeStaleEntry(j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="ThreadLocal为什么会内存泄漏"><a href="#ThreadLocal为什么会内存泄漏" class="headerlink" title="ThreadLocal为什么会内存泄漏"></a>ThreadLocal为什么会内存泄漏</h2><p>ThreadLocalMap使用ThreadLocal的弱引用作为key，如果一个ThreadLocal没有外部强引用来引用它，那么系统 GC 的时候，这个ThreadLocal势必会被回收，这样一来，ThreadLocalMap中就会出现key为null的Entry，就没有办法访问这些key为null的Entry的value，如果当前线程再迟迟不结束的话，这些key为null的Entry的value就会一直存在一条强引用链：Thread Ref -&gt; Thread -&gt; ThreaLocalMap -&gt; Entry -&gt; value永远无法回收，造成内存泄漏。</p>
+<p>其实，ThreadLocalMap的设计中已经考虑到这种情况，也加上了一些防护措施：在ThreadLocal的get(),set(),remove()的时候都会清除线程ThreadLocalMap里所有key为null的value。</p>
+<p>但是这些被动的预防措施并不能保证不会内存泄漏：</p>
+<ol>
+<li>使用static的ThreadLocal，延长了ThreadLocal的生命周期，可能导致的内存泄漏。</li>
+<li>分配使用了ThreadLocal又不再调用get(),set(),remove()方法，那么就会导致内存泄漏。</li>
+</ol>
+
+          
+        
+      
+
+      <div>
+        
+      </div>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/04/JDK源码解析-ReentrantReadWriteLock/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zihao Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LLLZH's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/04/JDK源码解析-ReentrantReadWriteLock/" itemprop="url">[JDK源码解析] ReentrantReadWriteLock</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-04T21:25:15+08:00">
+                2019-12-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/JDK源码解析/" itemprop="url" rel="index">
+                    <span itemprop="name">JDK源码解析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/04/JDK源码解析-ReentrantReadWriteLock/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/12/04/JDK源码解析-ReentrantReadWriteLock/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.8k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>上一篇文章中降到了ReentrantLock，这篇文章中将要讲到Java中另一种锁ReentrantReadWriteLock。ReentrantLock是一种互斥锁，也就是说同一时间只能有一个线程持有锁。而ReentrantReadWriteLock锁在ReentrantLock的基础上，将锁的粒度划分的更细。分为读锁和写锁。读锁是共享锁，写锁是互斥锁。在读-读竞争的情况下，两个请求都可以获得锁。但是，读-写，写-写竞争的情况下，还是会退化成互斥锁。</p>
+<p>另外，ReentrantReadWriteLock在写锁上支持Condition，但是读锁上不支持会抛出UnsupportedOperationException<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReentrantReadWriteLock</span></span></span><br><span class="line"><span class="class">        <span class="keyword">implements</span> <span class="title">ReadWriteLock</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">6992448646407690164L</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">abstract</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Sync</span> <span class="keyword">extends</span> <span class="title">AbstractQueuedSynchronizer</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">6317671515068378041L</span>;</span><br><span class="line">        <span class="comment">/* </span></span><br><span class="line"><span class="comment">         * ReentrantReadWriteLock与ReentrantLock不同，在ReentrantLock中，使用state</span></span><br><span class="line"><span class="comment">         * 记录了锁重入的数量。但是在ReentrantReadWriteLock中，使用了state的低16位</span></span><br><span class="line"><span class="comment">         * 记录了互斥锁的重入数量。而高16位用来记录持有共享锁的数量。所以在ReentrantReadWriteLock</span></span><br><span class="line"><span class="comment">         * 最大重入数 或者 最大持有共享锁数量 为 65535</span></span><br><span class="line"><span class="comment">         */</span> </span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SHARED_SHIFT   = <span class="number">16</span>;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SHARED_UNIT    = (<span class="number">1</span> &lt;&lt; SHARED_SHIFT);</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_COUNT      = (<span class="number">1</span> &lt;&lt; SHARED_SHIFT) - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> EXCLUSIVE_MASK = (<span class="number">1</span> &lt;&lt; SHARED_SHIFT) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">sharedCount</span><span class="params">(<span class="keyword">int</span> c)</span>    </span>&#123; <span class="keyword">return</span> c &gt;&gt;&gt; SHARED_SHIFT; &#125;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">exclusiveCount</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123; <span class="keyword">return</span> c &amp; EXCLUSIVE_MASK; &#125;</span><br><span class="line"></span><br><span class="line">         <span class="comment">/**</span></span><br><span class="line"><span class="comment">          * 通过ThreadLocal记录每个线程持有读锁的数量</span></span><br><span class="line"><span class="comment">          */</span></span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">HoldCounter</span> </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">            <span class="comment">// Use id, not reference, to avoid garbage retention</span></span><br><span class="line">            <span class="keyword">final</span> <span class="keyword">long</span> tid = getThreadId(Thread.currentThread());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">     </span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">transient</span> HoldCounter cachedHoldCounter;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">transient</span> Thread firstReader = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">int</span> firstReaderHoldCount;</span><br><span class="line"></span><br><span class="line">        Sync() &#123;</span><br><span class="line">            readHolds = <span class="keyword">new</span> ThreadLocalHoldCounter();</span><br><span class="line">            setState(getState()); <span class="comment">// ensures visibility of readHolds</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * Note that tryRelease and tryAcquire can be called by</span></span><br><span class="line"><span class="comment">         * Conditions. So it is possible that their arguments contain</span></span><br><span class="line"><span class="comment">         * both read and write holds that are all released during a</span></span><br><span class="line"><span class="comment">         * condition wait and re-established in tryAcquire.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">tryRelease</span><span class="params">(<span class="keyword">int</span> releases)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!isHeldExclusively())</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> IllegalMonitorStateException();</span><br><span class="line">            <span class="keyword">int</span> nextc = getState() - releases;</span><br><span class="line">            <span class="keyword">boolean</span> free = exclusiveCount(nextc) == <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (free)</span><br><span class="line">                setExclusiveOwnerThread(<span class="keyword">null</span>);</span><br><span class="line">            setState(nextc);</span><br><span class="line">            <span class="keyword">return</span> free;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">tryAcquire</span><span class="params">(<span class="keyword">int</span> acquires)</span> </span>&#123;</span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">             * Walkthrough:</span></span><br><span class="line"><span class="comment">             * 1. If read count nonzero or write count nonzero</span></span><br><span class="line"><span class="comment">             *    and owner is a different thread, fail.</span></span><br><span class="line"><span class="comment">             * 2. If count would saturate, fail. (This can only</span></span><br><span class="line"><span class="comment">             *    happen if count is already nonzero.)</span></span><br><span class="line"><span class="comment">             * 3. Otherwise, this thread is eligible for lock if</span></span><br><span class="line"><span class="comment">             *    it is either a reentrant acquire or</span></span><br><span class="line"><span class="comment">             *    queue policy allows it. If so, update state</span></span><br><span class="line"><span class="comment">             *    and set owner.</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            Thread current = Thread.currentThread();</span><br><span class="line">            <span class="keyword">int</span> c = getState();</span><br><span class="line">            <span class="keyword">int</span> w = exclusiveCount(c);</span><br><span class="line">            <span class="keyword">if</span> (c != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="comment">// (Note: if c != 0 and w == 0 then shared count != 0)</span></span><br><span class="line">                <span class="keyword">if</span> (w == <span class="number">0</span> || current != getExclusiveOwnerThread())</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                <span class="keyword">if</span> (w + exclusiveCount(acquires) &gt; MAX_COUNT)</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">"Maximum lock count exceeded"</span>);</span><br><span class="line">                <span class="comment">// Reentrant acquire</span></span><br><span class="line">                setState(c + acquires);</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (writerShouldBlock() ||</span><br><span class="line">                !compareAndSetState(c, c + acquires))</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            setExclusiveOwnerThread(current);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">tryReleaseShared</span><span class="params">(<span class="keyword">int</span> unused)</span> </span>&#123;</span><br><span class="line">            Thread current = Thread.currentThread();</span><br><span class="line">            <span class="keyword">if</span> (firstReader == current) &#123;</span><br><span class="line">                <span class="comment">// assert firstReaderHoldCount &gt; 0;</span></span><br><span class="line">                <span class="keyword">if</span> (firstReaderHoldCount == <span class="number">1</span>)</span><br><span class="line">                    firstReader = <span class="keyword">null</span>;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    firstReaderHoldCount--;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                HoldCounter rh = cachedHoldCounter;</span><br><span class="line">                <span class="keyword">if</span> (rh == <span class="keyword">null</span> || rh.tid != getThreadId(current))</span><br><span class="line">                    rh = readHolds.get();</span><br><span class="line">                <span class="keyword">int</span> count = rh.count;</span><br><span class="line">                <span class="keyword">if</span> (count &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    readHolds.remove();</span><br><span class="line">                    <span class="keyword">if</span> (count &lt;= <span class="number">0</span>)</span><br><span class="line">                        <span class="keyword">throw</span> unmatchedUnlockException();</span><br><span class="line">                &#125;</span><br><span class="line">                --rh.count;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">                <span class="keyword">int</span> c = getState();</span><br><span class="line">                <span class="keyword">int</span> nextc = c - SHARED_UNIT;</span><br><span class="line">                <span class="keyword">if</span> (compareAndSetState(c, nextc))</span><br><span class="line">                    <span class="comment">// Releasing the read lock has no effect on readers,</span></span><br><span class="line">                    <span class="comment">// but it may allow waiting writers to proceed if</span></span><br><span class="line">                    <span class="comment">// both read and write locks are now free.</span></span><br><span class="line">                    <span class="keyword">return</span> nextc == <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">tryAcquireShared</span><span class="params">(<span class="keyword">int</span> unused)</span> </span>&#123;</span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">             * Walkthrough:</span></span><br><span class="line"><span class="comment">             * 1. 如果有其他线程正持有写锁，获取锁失败</span></span><br><span class="line"><span class="comment">             * 2. 否则，就调用readerShouldBlock方法，检查当前线程是否可以</span></span><br><span class="line"><span class="comment">             *    获得锁。如果可以就用CAS改变state状态，并返回是否获取成功</span></span><br><span class="line"><span class="comment">             * 3. 如果第二步获取锁失败，会fullTryAcquireShared请求锁</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            Thread current = Thread.currentThread();</span><br><span class="line">            <span class="keyword">int</span> c = getState();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 如果当前有线程持有写锁，且持有写锁的线程不是当前想要获取锁的线程</span></span><br><span class="line">            <span class="comment">// 则返回-1，表示获取锁失败</span></span><br><span class="line">            <span class="keyword">if</span> (exclusiveCount(c) != <span class="number">0</span> &amp;&amp;</span><br><span class="line">                getExclusiveOwnerThread() != current)</span><br><span class="line">                <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> r = sharedCount(c);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 1. 首先检查该线程是否应该被阻塞</span></span><br><span class="line"><span class="comment">             *      a) 在公平锁模式下，如果队列中有正在等待的线程，则当前线程应该被阻塞</span></span><br><span class="line"><span class="comment">             *      b) 在非公平模式下，如果队列中第一个等待的线程是想要获得写锁的线程</span></span><br><span class="line"><span class="comment">             *         为了预防写饥饿，则要将当前线程阻塞</span></span><br><span class="line"><span class="comment">             * 2. 如果线程不应该被阻塞，则检查是否达到最大重入个数，在ReentrantReadWriteLock中</span></span><br><span class="line"><span class="comment">             *    是65535</span></span><br><span class="line"><span class="comment">             * 3. 如果没有达到最大重入个数，则使用CAS更改state</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="keyword">if</span> (!readerShouldBlock() &amp;&amp; r &lt; MAX_COUNT &amp;&amp; </span><br><span class="line">                    compareAndSetState(c, c + SHARED_UNIT)) &#123;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (r == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="comment">// r等于0说明当前没有其他线程持有共享锁，则需要更新</span></span><br><span class="line">                    <span class="comment">// 下面两个字段</span></span><br><span class="line">                    firstReader = current;</span><br><span class="line">                    firstReaderHoldCount = <span class="number">1</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (firstReader == current) &#123;</span><br><span class="line">                    <span class="comment">// 如果firstReader是当前线程(即上一次将share state 从0-&gt;1的</span></span><br><span class="line">                    <span class="comment">// 是当前线程)，则更新字段</span></span><br><span class="line">                    firstReaderHoldCount++;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// 获取最近一次获取锁的线程</span></span><br><span class="line">                    HoldCounter rh = cachedHoldCounter;</span><br><span class="line">                   </span><br><span class="line">                    <span class="keyword">if</span> (rh == <span class="keyword">null</span> || rh.tid != getThreadId(current))</span><br><span class="line">                        <span class="comment">// 如果rh为null(因为获取锁与设置cachedHoldCounter的动作不是</span></span><br><span class="line">                        <span class="comment">// 原子的，所以rh可能为null)或者上一次获得锁的线程不是该线程</span></span><br><span class="line">                        <span class="comment">// 就从readHold中获得上次设置的HoldCounter(注意readHolds是</span></span><br><span class="line">                        <span class="comment">// ThreadLocal)，如果这是第一次获得锁，则先初始化readHolds</span></span><br><span class="line">                        <span class="comment">// 然后返回</span></span><br><span class="line">                        cachedHoldCounter = rh = readHolds.get();</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span> (rh.count == <span class="number">0</span>)</span><br><span class="line">                        <span class="comment">// 如果rh.count为0，这说明该线程已经将之前的锁全部释放了</span></span><br><span class="line">                        <span class="comment">// 需要重新设置readHolds</span></span><br><span class="line">                        readHolds.set(rh);</span><br><span class="line">                    <span class="comment">// 更细当前线程持有锁的数量</span></span><br><span class="line">                    rh.count++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 获取锁失败，则尝试一次完成获取锁的版本</span></span><br><span class="line">            <span class="keyword">return</span> fullTryAcquireShared(current);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">final</span> <span class="keyword">int</span> <span class="title">fullTryAcquireShared</span><span class="params">(Thread current)</span> </span>&#123;</span><br><span class="line">            HoldCounter rh = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">                <span class="keyword">int</span> c = getState();</span><br><span class="line">                <span class="keyword">if</span> (exclusiveCount(c) != <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="comment">// 如果有线程持有写锁</span></span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (getExclusiveOwnerThread() != current)</span><br><span class="line">                        <span class="comment">// 如果持有写锁的线程不是当前线程，则获取锁失败，返回-1</span></span><br><span class="line">                        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">                    <span class="comment">// 注意这里如果是当前线程持有读锁，一定不能直接返回-1，</span></span><br><span class="line">                    <span class="comment">// 因为返回-1后，会由AQS进行调度，可能会将该线程阻塞，</span></span><br><span class="line">                    <span class="comment">// 这样该线程就永远无法释放写锁，造成死锁。</span></span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (readerShouldBlock()) &#123;</span><br><span class="line">                    <span class="comment">// 如果当前线程应该被阻塞</span></span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (firstReader == current) &#123;</span><br><span class="line">                        <span class="comment">// 如果是锁重入，则忽略阻塞</span></span><br><span class="line">                        <span class="comment">// assert firstReaderHoldCount &gt; 0;</span></span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (rh == <span class="keyword">null</span>) &#123;</span><br><span class="line">                            rh = cachedHoldCounter;</span><br><span class="line">                            <span class="keyword">if</span> (rh == <span class="keyword">null</span> || rh.tid != getThreadId(current)) &#123;</span><br><span class="line">                                <span class="comment">// 如果之前没有线程获得锁，或者上一个获得锁的</span></span><br><span class="line">                                <span class="comment">// 是其他线程，就将rh设置为当前线程</span></span><br><span class="line">                                rh = readHolds.get();</span><br><span class="line"></span><br><span class="line">                                <span class="comment">// 如果当前线程已经没有持有锁了，就清空ThreadLocal</span></span><br><span class="line">                                <span class="keyword">if</span> (rh.count == <span class="number">0</span>)</span><br><span class="line">                                    readHolds.remove();</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">if</span> (rh.count == <span class="number">0</span>)</span><br><span class="line">                            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (sharedCount(c) == MAX_COUNT)</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">"Maximum lock count exceeded"</span>);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (compareAndSetState(c, c + SHARED_UNIT)) &#123;</span><br><span class="line">                    <span class="comment">// 如果获得锁成功，参照tryAcquireShared方法</span></span><br><span class="line">                    <span class="keyword">if</span> (sharedCount(c) == <span class="number">0</span>) &#123;</span><br><span class="line">                        firstReader = current;</span><br><span class="line">                        firstReaderHoldCount = <span class="number">1</span>;</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (firstReader == current) &#123;</span><br><span class="line">                        firstReaderHoldCount++;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (rh == <span class="keyword">null</span>)</span><br><span class="line">                            rh = cachedHoldCounter;</span><br><span class="line">                        <span class="keyword">if</span> (rh == <span class="keyword">null</span> || rh.tid != getThreadId(current))</span><br><span class="line">                            rh = readHolds.get();</span><br><span class="line">                        <span class="keyword">else</span> <span class="keyword">if</span> (rh.count == <span class="number">0</span>)</span><br><span class="line">                            readHolds.set(rh);</span><br><span class="line">                        rh.count++;</span><br><span class="line">                        cachedHoldCounter = rh; <span class="comment">// cache for release</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">tryWriteLock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            Thread current = Thread.currentThread();</span><br><span class="line">            <span class="keyword">int</span> c = getState();</span><br><span class="line">            <span class="keyword">if</span> (c != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">int</span> w = exclusiveCount(c);</span><br><span class="line">                <span class="keyword">if</span> (w == <span class="number">0</span> || current != getExclusiveOwnerThread())</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                <span class="keyword">if</span> (w == MAX_COUNT)</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">"Maximum lock count exceeded"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!compareAndSetState(c, c + <span class="number">1</span>))</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            setExclusiveOwnerThread(current);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">tryReadLock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            Thread current = Thread.currentThread();</span><br><span class="line">            <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">                <span class="keyword">int</span> c = getState();</span><br><span class="line">                <span class="comment">// 如果有线程持有互斥锁，并且持有互斥锁的不是当前线程</span></span><br><span class="line">                <span class="comment">// 就直接返回false，</span></span><br><span class="line">                <span class="keyword">if</span> (exclusiveCount(c) != <span class="number">0</span> &amp;&amp;</span><br><span class="line">                    getExclusiveOwnerThread() != current)</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                <span class="keyword">int</span> r = sharedCount(c);</span><br><span class="line">                <span class="keyword">if</span> (r == MAX_COUNT)</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">"Maximum lock count exceeded"</span>);</span><br><span class="line">                <span class="keyword">if</span> (compareAndSetState(c, c + SHARED_UNIT)) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (r == <span class="number">0</span>) &#123;</span><br><span class="line">                        firstReader = current;</span><br><span class="line">                        firstReaderHoldCount = <span class="number">1</span>;</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (firstReader == current) &#123;</span><br><span class="line">                        firstReaderHoldCount++;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        HoldCounter rh = cachedHoldCounter;</span><br><span class="line">                        <span class="keyword">if</span> (rh == <span class="keyword">null</span> || rh.tid != getThreadId(current))</span><br><span class="line">                            cachedHoldCounter = rh = readHolds.get();</span><br><span class="line">                        <span class="keyword">else</span> <span class="keyword">if</span> (rh.count == <span class="number">0</span>)</span><br><span class="line">                            readHolds.set(rh);</span><br><span class="line">                        rh.count++;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getReadHoldCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (getReadLockCount() == <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            Thread current = Thread.currentThread();</span><br><span class="line">            <span class="keyword">if</span> (firstReader == current)</span><br><span class="line">                <span class="keyword">return</span> firstReaderHoldCount;</span><br><span class="line"></span><br><span class="line">            HoldCounter rh = cachedHoldCounter;</span><br><span class="line">            <span class="keyword">if</span> (rh != <span class="keyword">null</span> &amp;&amp; rh.tid == getThreadId(current))</span><br><span class="line">                <span class="keyword">return</span> rh.count;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">int</span> count = readHolds.get().count;</span><br><span class="line">            <span class="keyword">if</span> (count == <span class="number">0</span>) readHolds.remove();</span><br><span class="line">            <span class="keyword">return</span> count;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+
+      <div>
+        
+      </div>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/02/JDK源码解析-ReentrantLock/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1819,388 +2202,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/13/JDK源码解析-FutureTask/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zihao Liu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LLLZH's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/13/JDK源码解析-FutureTask/" itemprop="url">[JDK源码解析] FutureTask</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-13T13:43:56+08:00">
-                2019-07-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/JDK源码解析/" itemprop="url" rel="index">
-                    <span itemprop="name">JDK源码解析</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/07/13/JDK源码解析-FutureTask/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/13/JDK源码解析-FutureTask/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  3k 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  13 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>FutureTask通过实现RunnableFuture接口包装了异步运算，并为异步运算提供了一附加功能(可以取消、可以返回结果等)。FutureTask的实现关系大概是这个样子的</p>
-<img src="/2019/07/13/JDK源码解析-FutureTask/FutureTask类图.png" title="FutureTask类图">
-<h2 id="Runnable"><a href="#Runnable" class="headerlink" title="Runnable"></a>Runnable</h2><p>Runnable接口中只有一个run方法，提供给Thread类用来启动线程，单纯的调用Runnable的run方法是无法再启动一个线程的，只有通过Thread类的start方法才可以</p>
-<h2 id="Future"><a href="#Future" class="headerlink" title="Future"></a>Future</h2><p>不管是通过显式创建一个Thread类，还是创建Runnable，都是调用Thread的start()方法来启动线程的。start方法是没有返回结果的，也就是说，我们只能run-and-forget，我们如果想要获得一个返回结果，或者知道线程是否完成了。而Future就可以提供这种能力(当然也有其他方法可以知道线程是否启动完成，但Future更适合来做这件事。源代码分析如下</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/07/13/JDK源码解析-FutureTask/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-
-      <div>
-        
-      </div>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/JDK源码解析-ScheduledExecutorService/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zihao Liu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LLLZH's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/08/JDK源码解析-ScheduledExecutorService/" itemprop="url">[JDK源码解析] ScheduledExecutorService</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-08T07:45:42+08:00">
-                2019-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/JDK源码解析/" itemprop="url" rel="index">
-                    <span itemprop="name">JDK源码解析</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/07/08/JDK源码解析-ScheduledExecutorService/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/08/JDK源码解析-ScheduledExecutorService/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  836 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在前面的文章中我们分析了<a href="https://zihao-liu.github.io/2019/07/04/JDK%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-ExecutorService/" target="_blank" rel="noopener">ExecutorService</a>，也说过它是对<a href="https://zihao-liu.github.io/2019/07/04/JDK%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-Executor/" target="_blank" rel="noopener">Executor</a>的扩展，而这篇文章我们要讲的ScheduledExecutorService是对ExecutorService的扩展，通过名字我们也可以看出ScheduleExecutorService在ExecutorService的基础中提供了<code>在一定延迟后</code>或者<code>定时进行任务调度</code>的的功能(An ExecutorService that can schedule commands to run after a given delay, or to execute periodically)。</p>
-<p>ScheduledExecutorService只是一个接口，还是非常简单的，我们直接从代码入手吧</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * ScheduledExecutorService也可以接受delay为0的调度，可以想象成Executor</span></span><br><span class="line"><span class="comment"> * 中的execute方法和ExecutorService中的submit方法。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 需要注意的，所有的schedule方法只接收 【相对时间】和 【时间段】作为参数，</span></span><br><span class="line"><span class="comment"> * 不接受绝对时间。如果想在某一特定时间运行，可以使用下面语句，</span></span><br><span class="line"><span class="comment"> * schedule(task,date.getTime()-System.currentTimeMillis(),TimeUnit.MILLISECONDS)</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 另外，当时间到达时，任务也可能没有运行，所以这个时间并不是完全精确地，不能</span></span><br><span class="line"><span class="comment"> * 依赖时间的准确性编程</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ScheduledExecutorService</span> <span class="keyword">extends</span> <span class="title">ExecutorService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 创建一个【一次性任务】，在给定的延迟时间到达后，执行该任务</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span>  ScheduledFuture对象可以表示任务的挂起和完成状态，任务未</span></span><br><span class="line"><span class="comment">*          完成时调用ScheduledFuture的get()方法会返回null</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* <span class="doctag">@throws</span> RejectedExecutionException 如果任务无法被调度运行</span></span><br><span class="line"><span class="comment">* <span class="doctag">@throws</span> NullPointerException 任务为null</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> ScheduledFuture&lt;?&gt; schedule(Runnable command,</span><br><span class="line">                            <span class="keyword">long</span> delay, TimeUnit unit);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建一个【一次性任务】，在给定的延迟时间到达后，执行该任务</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> RejectedExecutionException 如果任务无法被调度运行</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NullPointerException 任务为null</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> &lt;V&gt; <span class="function">ScheduledFuture&lt;V&gt; <span class="title">schedule</span><span class="params">(Callable&lt;V&gt; callable,</span></span></span><br><span class="line"><span class="function"><span class="params">                                <span class="keyword">long</span> delay, TimeUnit unit)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建一个【周期性任务】，在initialDelay时间到达后，运行第一次，然后</span></span><br><span class="line"><span class="comment"> * 每过period时间运行一次，即运行时间为:</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 第一次：now + initialDelay</span></span><br><span class="line"><span class="comment"> * 第二次: now + initialDelay + period</span></span><br><span class="line"><span class="comment"> * 第三次: now + initialDelay + 2 * period</span></span><br><span class="line"><span class="comment"> *  ... </span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 如果任务执行过程中遇到异常，那么后续的任务就不会执行了。否则，只有在任务</span></span><br><span class="line"><span class="comment"> * 被取消或者线程池termination的情况下，任务才会终止。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 如果任务的运行时间超过了设置的period间隔，那么后续任务会晚一点运行，</span></span><br><span class="line"><span class="comment"> * 不会有两个任务并发运行的情况</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span>  ScheduledFuture对象可以表示任务的挂起和完成状态，任务被取消时</span></span><br><span class="line"><span class="comment"> *           调用ScheduledFuture的get()方法会抛出异常</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> RejectedExecutionException 如果任务无法被调度运行</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NullPointerException 任务为null</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> IllegalArgumentException period小于等于0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> ScheduledFuture&lt;?&gt; scheduleAtFixedRate(Runnable command,</span><br><span class="line">                        <span class="keyword">long</span> initialDelay, <span class="keyword">long</span> period, TimeUnit unit);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * scheduleAtFixedRate相对于开始时间，任务启动频率固定。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 而该方法是相对于上一次任务执行时间，启动频率固定。即运行时间为:</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 第一次：now + initialDelay</span></span><br><span class="line"><span class="comment"> * 第二次: 第一次任务完成时间 + delay</span></span><br><span class="line"><span class="comment"> * 第三次: 第二次任务完成时间 + delay</span></span><br><span class="line"><span class="comment"> *  ... </span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 如果任务执行过程中遇到异常，那么后续的任务就不会执行了。否则，只有在任务</span></span><br><span class="line"><span class="comment"> * 被取消或者线程池termination的情况下，任务才会终止。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span>  ScheduledFuture对象可以表示任务的挂起和完成状态，任务被取消时</span></span><br><span class="line"><span class="comment"> *           调用ScheduledFuture的get()方法会抛出异常</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> RejectedExecutionException 如果任务无法被调度运行</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NullPointerException 任务为null</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> IllegalArgumentException delay小于等于0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> ScheduledFuture&lt;?&gt; scheduleWithFixedDelay(Runnable command,</span><br><span class="line">                            <span class="keyword">long</span> initialDelay,<span class="keyword">long</span> delay,TimeUnit unit);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-
-      <div>
-        
-      </div>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2251,7 +2252,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-count">60</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2324,7 +2325,7 @@
       <div class="category-all-page motion-element">
         <div class="category-all">
           <b><i class="fa fa-folder-o"></i> 全部分类</b>
-          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JDK源码解析/">JDK源码解析</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑指南/">踩坑指南</a><span class="category-list-count">1</span></li></ul>
+          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JDK源码解析/">JDK源码解析</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑指南/">踩坑指南</a><span class="category-list-count">1</span></li></ul>
         </div>
       </div>
 
@@ -2347,7 +2348,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
