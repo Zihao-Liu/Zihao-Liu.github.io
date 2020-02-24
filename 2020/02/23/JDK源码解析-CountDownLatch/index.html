@@ -82,14 +82,14 @@
 <meta name="description" content="本篇文章主要介绍一个比较常用的并发工具类——countDownLatch。名称直译为中文为”倒数闩”，它的作用也和门闩一样，用来阻挡一组线程的运行，只有当这一组线程全部达到“门闩”时，才能通行。举个例子， 5个人参加会议，只有当5个人都到会场时，才能继续下一步开会的动作。这种场景就很适合使用CountDownLatch。 和Java中其他常用的并发工具一样，CountDownLatch的内部也是通">
 <meta name="keywords" content="JDK源码解析,并发编程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JDK源码解析 CountDownLatch">
+<meta property="og:title" content="[JDK源码解析] CountDownLatch">
 <meta property="og:url" content="http://yoursite.com/2020/02/23/JDK源码解析-CountDownLatch/index.html">
 <meta property="og:site_name" content="LLLZH&#39;s Blog">
 <meta property="og:description" content="本篇文章主要介绍一个比较常用的并发工具类——countDownLatch。名称直译为中文为”倒数闩”，它的作用也和门闩一样，用来阻挡一组线程的运行，只有当这一组线程全部达到“门闩”时，才能通行。举个例子， 5个人参加会议，只有当5个人都到会场时，才能继续下一步开会的动作。这种场景就很适合使用CountDownLatch。 和Java中其他常用的并发工具一样，CountDownLatch的内部也是通">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-23T12:08:46.195Z">
+<meta property="og:updated_time" content="2020-02-24T14:35:39.806Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JDK源码解析 CountDownLatch">
+<meta name="twitter:title" content="[JDK源码解析] CountDownLatch">
 <meta name="twitter:description" content="本篇文章主要介绍一个比较常用的并发工具类——countDownLatch。名称直译为中文为”倒数闩”，它的作用也和门闩一样，用来阻挡一组线程的运行，只有当这一组线程全部达到“门闩”时，才能通行。举个例子， 5个人参加会议，只有当5个人都到会场时，才能继续下一步开会的动作。这种场景就很适合使用CountDownLatch。 和Java中其他常用的并发工具一样，CountDownLatch的内部也是通">
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>JDK源码解析 CountDownLatch | LLLZH's Blog</title>
+  <title>[JDK源码解析] CountDownLatch | LLLZH's Blog</title>
   
 
 
@@ -312,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">JDK源码解析 CountDownLatch</h1>
+          <h1 class="post-title" itemprop="name headline">[JDK源码解析] CountDownLatch</h1>
         
 
         <div class="post-meta">
@@ -432,6 +432,7 @@
       
         <p>本篇文章主要介绍一个比较常用的并发工具类——countDownLatch。名称直译为中文为”倒数闩”，它的作用也和门闩一样，用来阻挡一组线程的运行，只有当这一组线程全部达到“门闩”时，才能通行。举个例子， 5个人参加会议，只有当5个人都到会场时，才能继续下一步开会的动作。这种场景就很适合使用CountDownLatch。</p>
 <p>和Java中其他常用的并发工具一样，CountDownLatch的内部也是通过AQS实现的。如果还不了解AQS的原理，可以先看一下<a href="https://zihao-liu.github.io/2019/11/10/JDK%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-AbstractQueuedSynchronizer/" target="_blank" rel="noopener">这篇文章</a></p>
+<a id="more"></a>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CountDownLatch</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Sync继承了AQS类，用来实现CountDownLatch内部对线程</span></span><br><span class="line"><span class="comment">     * 的调度和管理</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Sync</span> <span class="keyword">extends</span> <span class="title">AbstractQueuedSynchronizer</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">4982264981922014374L</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// count用来表示要阻塞的线程数量，当count个数量都达到“门闩”时，</span></span><br><span class="line">        <span class="comment">// 才能被放行</span></span><br><span class="line">        Sync(<span class="keyword">int</span> count) &#123;</span><br><span class="line">            setState(count);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> getState();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果当前count为0，就立即返回1，对于AQS来说，如果方法</span></span><br><span class="line">        <span class="comment">// 返回1，那么当前线程可以立即获得锁，也就是说可以继续</span></span><br><span class="line">        <span class="comment">// 被调度，不会被阻塞。</span></span><br><span class="line">        <span class="comment">// 否则，返回-1，即当前线程无法获得锁，需要被阻塞，直到</span></span><br><span class="line">        <span class="comment">// count减为0才可以被调度。</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">int</span> <span class="title">tryAcquireShared</span><span class="params">(<span class="keyword">int</span> acquires)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> (getState() == <span class="number">0</span>) ? <span class="number">1</span> : -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// countDown方法会调用该方法，将count-1。当count==0时</span></span><br><span class="line">        <span class="comment">// 唤醒阻塞线程的操作会由AQS来执行</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">tryReleaseShared</span><span class="params">(<span class="keyword">int</span> releases)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">                <span class="keyword">int</span> c = getState();</span><br><span class="line">                <span class="keyword">if</span> (c == <span class="number">0</span>)</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                <span class="keyword">int</span> nextc = c-<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">if</span> (compareAndSetState(c, nextc))</span><br><span class="line">                    <span class="keyword">return</span> nextc == <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Sync sync;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 初始化一个CountDownLatch，count代表了要阻塞的线程数量</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CountDownLatch</span><span class="params">(<span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (count &lt; <span class="number">0</span>) <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"count &lt; 0"</span>);</span><br><span class="line">        <span class="keyword">this</span>.sync = <span class="keyword">new</span> Sync(count);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 当线程调用该方法时，会被阻塞，直到其他线程调用countDown方法，并将count数量</span></span><br><span class="line"><span class="comment">     * 减为0时，才会被唤醒放行。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">await</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        sync.acquireSharedInterruptibly(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">await</span><span class="params">(<span class="keyword">long</span> timeout, TimeUnit unit)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> sync.tryAcquireSharedNanos(<span class="number">1</span>, unit.toNanos(timeout));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 当一个线程调用这个方法时，会将count数量减1。</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 当count数量减为0时，会将阻塞在await的线程放行</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">countDown</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        sync.releaseShared(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
@@ -467,7 +468,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://zihao-liu.github.io/2020/02/23/JDK源码解析-CountDownLatch/" title="JDK源码解析 CountDownLatch">https://zihao-liu.github.io/2020/02/23/JDK源码解析-CountDownLatch/</a>
+    <a href="https://zihao-liu.github.io/2020/02/23/JDK源码解析-CountDownLatch/" title="[JDK源码解析] CountDownLatch">https://zihao-liu.github.io/2020/02/23/JDK源码解析-CountDownLatch/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -521,6 +522,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/24/JDK源码解析-CyclicBarrier/" rel="prev" title="[JDK源码解析] CyclicBarrier">
+                [JDK源码解析] CyclicBarrier <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -591,7 +596,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">62</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -664,7 +669,7 @@
       <div class="category-all-page motion-element">
         <div class="category-all">
           <b><i class="fa fa-folder-o"></i> 全部分类</b>
-          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JDK源码解析/">JDK源码解析</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑指南/">踩坑指南</a><span class="category-list-count">1</span></li></ul>
+          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JDK源码解析/">JDK源码解析</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode解题报告/">LeetCode解题报告</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MyBatis/">MyBatis</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑指南/">踩坑指南</a><span class="category-list-count">1</span></li></ul>
         </div>
       </div>
 
