@@ -2,10 +2,12 @@
 title: JDK源码分析-HashMap
 date: 2022-05-14 16:37:50
 tags: 
- - 源码分析
-categoties:
- - 源码分析
  - JDK
+ - 集合类
+ - 源码分析
+categories:
+ - JDK
+ - 源码分析
 ---
 
 
