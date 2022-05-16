@@ -12,7 +12,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="css/main.css">
 
 
 
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zihao-liu.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zihao-liu.github.io","root":"/","images":"images","scheme":"Pisces","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="js/config.js"></script>
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="LZH&#39;s Blog">
@@ -40,6 +40,8 @@
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>LZH's Blog</title>
   
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-228719331-1","only_pageview":true}</script>
+  <script src="js/third-party/analytics/google-analytics.js"></script>
 
 
 
@@ -59,7 +61,7 @@
 }
 </style>
   <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
+    <link rel="stylesheet" href="css/noscript.css">
   </noscript>
 </head>
 
@@ -95,7 +97,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">1</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">0</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">1</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="index.html" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">6</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">2</span></a></li><li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
   </ul>
 </nav>
 
@@ -131,8 +133,30 @@
 
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="LZH"
+      src="/images/avatar_100x100.png">
   <p class="site-author-name" itemprop="name">LZH</p>
   <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
@@ -189,10 +213,10 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zihao-liu.github.io/2022/05/14/JDK%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-HashMap/">
+    <link itemprop="mainEntityOfPage" href="https://zihao-liu.github.io/Spring%E5%AD%A6%E4%B9%A0-IoC%E5%AE%B9%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar_100x100.png">
       <meta itemprop="name" content="LZH">
     </span>
 
@@ -207,7 +231,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/14/JDK%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-HashMap/" class="post-title-link" itemprop="url">JDK源码分析-HashMap</a>
+          <a href="Spring%E5%AD%A6%E4%B9%A0-IoC%E5%AE%B9%E5%99%A8/" class="post-title-link" itemprop="url">Spring学习-IoC容器</a>
         </h2>
 
         <div class="post-meta-container">
@@ -219,7 +243,138 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-05-14 16:37:50 / 修改时间：16:42:37" itemprop="dateCreated datePublished" datetime="2022-05-14T16:37:50+08:00">2022-05-14</time>
+      <time title="创建时间：2022-05-16 14:37:45 / 修改时间：17:46:42" itemprop="dateCreated datePublished" datetime="2022-05-16T14:37:45+08:00">2022-05-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="categories/Spring-Framework/" itemprop="url" rel="index"><span itemprop="name">Spring Framework</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="categories/Spring-Framework/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="什么是IoC？"><a href="#什么是IoC？" class="headerlink" title="什么是IoC？"></a>什么是IoC？</h1><p>IoC全称是Inversion of Control，直译成中文就是<code>控制反转</code>，也被叫做<code>依赖注入</code>。</p>
+<p>当一个实例被创建时，通过<code>构造方法参数</code>、<code>工厂类方法</code>或者<code>属性的set方法</code>将依赖注入到这个实例中，而不是这个实例主动去创建(比如直接的new)依赖的过程，就被称为IoC。</p>
+<p>那么IoC容器呢？IoC容器就是用来负责管理和协调这些依赖和被依赖对象的框架。在Spring Framework中，IoC的容器主要由<code>beans</code>和<code>context</code>两个包实现。<code>BeanFactory</code>接口提供了管理这些对象的能力，<code>ApplicationContext</code>实现了<code>BeanFactory</code>并提供了额外的能力。</p>
+<p>简单的来说，Spring通过IoC容器来管理对象的生命周期。这些被IoC容器管理的对象，被称作<code>bean</code>，用来维护bean之间关系的信息被称为<code>configuration meta</code>。</p>
+<p><img src="https://docs.spring.io/spring-framework/docs/current/reference/html/images/container-magic.png" alt="IoC容器"></p>
+<blockquote>
+<p>抛开上面抽象的说法。个人认为，bean就像是食材，congiration meta（配置元系信息）就是食谱。而IoC容器就是一个厨师，通过食谱（configuration meta）将这些食材（bean）组合起来成为一道菜（application）。</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="Spring%E5%AD%A6%E4%B9%A0-IoC%E5%AE%B9%E5%99%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zihao-liu.github.io/JDK%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-HashMap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar_100x100.png">
+      <meta itemprop="name" content="LZH">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZH's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | LZH's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="JDK%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-HashMap/" class="post-title-link" itemprop="url">JDK源码分析-HashMap</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-14 16:37:50" itemprop="dateCreated datePublished" datetime="2022-05-14T16:37:50+08:00">2022-05-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-16 14:42:44" itemprop="dateModified" datetime="2022-05-16T14:42:44+08:00">2022-05-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="categories/JDK/" itemprop="url" rel="index"><span itemprop="name">JDK</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="categories/JDK/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">源码分析</span></a>
+        </span>
     </span>
 
   
@@ -247,7 +402,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/4/29/171c4f7451e61530~tplv-t2oaga2asx-image.image" alt="HashMap与HashTable类图"></p>
+          <p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/4/29/171c4f7451e61530~tplv-t2oaga2asx-image.image" alt="HashMap与HashTable类图"></p>
 <h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><ol>
 <li>HashMap与HashTable的关系</li>
 <li>是否线程安全</li>
@@ -263,7 +418,7 @@
 <p>不想看源码解析的同学，可以直接去最下方<a href="#%E9%9D%A2%E8%AF%95%E9%A2%98%E8%A7%A3%E7%AD%94">查看答案</a></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/05/14/JDK%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-HashMap/#more" rel="contents">
+              <a class="btn" href="JDK%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-HashMap/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -308,14 +463,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">25k</span>
+    <span title="站点总字数">29k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">23 分钟</span>
+    <span title="站点阅读时长">27 分钟</span>
   </span>
 </div>
 
@@ -330,15 +485,15 @@
   <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+<script src="js/comments.js"></script><script src="js/utils.js"></script><script src="js/motion.js"></script><script src="js/next-boot.js"></script><script src="js/bookmark.js"></script>
 
   
 
-  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.7/pdfobject.min.js","integrity":"sha256-ph3Dk89VmuTVXG6x/RDzk53SU9LPdAh1tpv0UvnDZ2I="},"url":"/lib/pdf/web/viewer"}</script>
-  <script src="/js/third-party/tags/pdf.js"></script>
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.7/pdfobject.min.js","integrity":"sha256-ph3Dk89VmuTVXG6x/RDzk53SU9LPdAh1tpv0UvnDZ2I="},"url":"lib/pdf/web/viewer.html"}</script>
+  <script src="js/third-party/tags/pdf.js"></script>
 
 
-  <script src="/js/third-party/fancybox.js"></script>
+  <script src="js/third-party/fancybox.js"></script>
 
 
   
@@ -348,7 +503,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
   <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zihao-liu.github.io/"}</script>
-  <script src="/js/third-party/quicklink.js"></script>
+  <script src="js/third-party/quicklink.js"></script>
 
   <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
   <script>
@@ -358,6 +513,14 @@
         pbOptions.position = "bottomCenter";
         pbOptions.networks = "Weibo,Wechat,Douban";
       new needShareButton('#needsharebutton-postbottom', pbOptions);
-  </script>
+  </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"Zihao-Liu","repo":"Zihao-Liu.github.io","client_id":"f78d1499c2b8a499b0d5","client_secret":"9b6e3361a548284ef2f2c394edc03b3e9fab9f20","admin_user":"Zihao-Liu","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"d41d8cd98f00b204e9800998ecf8427e"}</script>
+<script src="js/third-party/comments/gitalk.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+
+
+<script type="text/javascript" src="/js/fold_action.js"></script>
 </body>
 </html>
