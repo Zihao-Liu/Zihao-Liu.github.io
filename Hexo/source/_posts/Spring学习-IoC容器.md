@@ -23,7 +23,7 @@ IoC全称是Inversion of Control，直译成中文就是`控制反转`，也被�
 > 抛开上面抽象的说法。个人认为，bean就像是食材，congiration meta（配置元系信息）就是食谱。而IoC容器就是一个厨师，通过食谱（configuration meta）将这些食材（bean）组合起来成为一道菜（application）。
 <!-- more -->
 
-# 配置元信息(configuration meta)
+# 配置元信息
 正如食谱告诉厨师每样材料需要多少克，需要切成丝还是切成块。
 
 配置元信息也告诉了IoC容器，如何初始化、配置和组装一个对象。IoC容器和元信息之间还需要一种协议（或者说形式）来理解这个过程，一般可以使用以下几种形式：
@@ -82,4 +82,60 @@ IoC全称是Inversion of Control，直译成中文就是`控制反转`，也被�
 ```
 {% endfold %}
 
+# Bean的初始化
 
+1. 使用构造方法初始化
+
+```xml
+<bean id="exampleBean" class="examples.ExampleBean"/>
+<bean name="anotherExample" class="examples.ExampleBeanTwo"/>
+```
+
+2. 使用static方法初始化
+   
+```xml
+<bean id="clientService" class="examples.ClientService" factory-method="createInstance"/>
+<!--  调用 createInstance方法初始化 -->
+```
+```java
+public class ClientService {
+    private static ClientService clientService = new ClientService();
+    private ClientService() {}
+
+    public static ClientService createInstance() {
+        // 调用 createInstance方法初始化
+        return clientService;
+    }
+}
+```
+
+3. 使用实例方法初始化
+
+```xml
+<!-- 工厂类，包含createClientServiceInstance方法 -->
+<bean id="serviceLocator" class="examples.DefaultServiceLocator">
+  <!-- inject any dependencies required by this locator bean -->
+</bean>
+
+<!-- 通过serviceLocator.createClientServiceInstance初始化clientService -->
+<bean id="clientService" factory-bean="serviceLocator" factory-method="createClientServiceInstance"/>
+
+<!-- 通过serviceLocator.createServerServiceInstance初始化serverService -->
+<bean id="serverService" factory-bean="serviceLocator" factory-method="createServerServiceInstance"/>
+```
+```java
+public class DefaultServiceLocator {
+    private static ClientService clientService = new ClientServiceImpl();
+    private static ServerService serverService = new ServerServiceImpl();
+    
+    public ClientService createClientServiceInstance() {
+        return clientService;
+    }
+    public ServerService createServerServiceInstance() {
+        return serverService;
+    }
+}
+```
+------
+# 参考文档
+> [Spring官方文档](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans)
